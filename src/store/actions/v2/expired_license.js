@@ -1,0 +1,1 @@
+export const LICENSE_EXPIRED = "LICENSE_EXPIRED";

@@ -1,0 +1,24 @@
+export const SIGNUP = "signup";
+export const SIGNUP_GENERATE_OTP = "generateotp";
+export const SIGNUP_SUBMIT_OTP = "submitotp";
+export const API_PLANS = "plans";
+export const API_PLANS_DEFAULT = "default";
+export const AP_ACCOUNT_INFO = "accountinfo";
+export const API_PAYMENTS = "payments";
+export const API_GROUPS = "groups";
+export const API_CARDS = "cards";
+
+export const ROUTE_PROJECTS = "/projects";
+export const ROUTE_ACCOUNTS_SUBSCRIPTION = "/subscription";
+export const ROUTE_HOME = "/dashboard";
+export const ROUTE_PAYMENTS = "/payment";
+export const ROUTE_LOGIN = "/login";
+export const ROUTE_SIGNUP = "/signup";
+export const ROUTE_RESET = "/reset";
+export const ROUTE_PROFILE = "/profile";
+export const ROUTE_MEMBERS = "/members";
+export const ROUTE_LICENSE_SUBSCRIPTION = "/lsubscription";
+export const RESET_PASSWORD = "/reset";
+export const ROUTE_FORCE_CHANGE_PASSWORD = "/fcpassword";
+export const ROUTE_PAY_NOW = "/paynow";
+export const ROUTE_INSPECTION_DOWNLOAD = "/inspectiondownload";
