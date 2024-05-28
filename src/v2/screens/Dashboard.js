@@ -18,11 +18,15 @@ import Skull from "../../assets/v2/Skull.svg";
 import moment from "moment";
 import Graphs from "../components/Graphs";
 import { getNormalizeIsolatedAndCumulativeGraphData } from "../../helpers/utils";
+import CostGraph from "../components/CostGraph";
+import RevenueGraph from "../components/RevenueGraph";
+import TimeGraph from "../components/TimeGraph";
+import PerformersTable from "../components/PerformersTable";
 
 const useStyles = makeStyles((theme) => ({
   mainRoot: {
     padding: "2%",
-    backgroundColor: theme.v2.backgrounds.whiteBackgroundShade3,
+    backgroundColor: "#F1F8F5",
   },
   mainHeader: {
     fontSize: 30,
@@ -174,17 +178,19 @@ const Dashboard = (props) => {
   );
   const getProjectsData = useCallback(async () => {
     try {
-      const url = `/groups/${groupId}/projects?p=group:${groupId}&filters=project:${filters.project || ""
-        }|customer:${filters.customer || ""}&sort_by=${sortBy || ""
-        }&sort_direction=${sortDirection}`;
+      const url = `/groups/${groupId}/projects?p=group:${groupId}&filters=project:${
+        filters.project || ""
+      }|customer:${filters.customer || ""}&sort_by=${
+        sortBy || ""
+      }&sort_direction=${sortDirection}`;
       const result = await axios.get(url, {
         headers: {
           Authorization: token,
         },
       });
-      console.log(url)
+      console.log(url);
       if (result.status === 200) {
-        console.log(result.data.message)
+        console.log(result.data.message);
         setData(_.get(result, ["data", "message"]) || []);
       }
     } catch (err) {
@@ -205,7 +211,7 @@ const Dashboard = (props) => {
       if (result.status === 200) {
         setCustomers(_.get(result, ["data", "message"]) || []);
       }
-    } catch (err) { }
+    } catch (err) {}
   }, [groupId, token]);
 
   const getRevenueForecast = useCallback(async () => {
@@ -243,7 +249,7 @@ const Dashboard = (props) => {
           getNormalizeIsolatedAndCumulativeGraphData(tData, null, "%")
         );
       }
-    } catch (err) { }
+    } catch (err) {}
   };
 
   const weekOfMonth = (m) => {
@@ -420,6 +426,10 @@ const Dashboard = (props) => {
           Welcome, {_.get(profile, "first_name") || ""}
         </Typography>
       </Grid>
+      <CostGraph />
+      <RevenueGraph />
+      <TimeGraph />
+      <PerformersTable />
       <Graphs header="Summary" data={graphData} onChange={changeGraph} />
       <Paper className={classes.paper} elevation={0}>
         <Grid container>
@@ -714,8 +724,9 @@ const ActivityLog = (props) => {
         setValue: makeFilters.bind(this, "user"),
         items: users.map((user) => {
           return {
-            name: `${_.get(user, ["user", "first_name"]) || ""} ${_.get(user, ["user", "last_name"]) || ""
-              }`,
+            name: `${_.get(user, ["user", "first_name"]) || ""} ${
+              _.get(user, ["user", "last_name"]) || ""
+            }`,
             value: _.get(user, "user_id"),
           };
         }),
@@ -750,8 +761,8 @@ const ActivityLog = (props) => {
                 row.role === "FIELD_USER"
                   ? classes.field
                   : row.role === "INSPECTOR"
-                    ? classes.inspector
-                    : classes.admin,
+                  ? classes.inspector
+                  : classes.admin,
             },
             {
               type: "default",

@@ -1,0 +1,101 @@
+import { Paper, makeStyles } from "@material-ui/core";
+import React from "react";
+import { Line } from "react-chartjs-2";
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    width: "42.8%",
+    borderRadius: 10,
+    paddingTop: 0,
+    padding: "2%",
+    boxShadow: "none",
+    margin: "2%",
+    marginRight: 0,
+  },
+  title: {
+    fontSize: "20px",
+    fontWeight: "600",
+    color: "#113C23",
+  },
+}));
+
+const options = {
+  responsive: true,
+  scales: {
+    x: {
+      ticks: {
+        color: "#417E5A",
+        font: {
+          size: 9,
+        },
+        maxTicksLimit: 10, // Set the maximum number of ticks to the number of labels
+        autoSkip: false,
+      },
+      grid: {
+        color: "#DCF4EE",
+      },
+    },
+
+    y: {
+      min: 0,
+      max: 200,
+      position: "left",
+      ticks: {
+        callback: function (value, index, values) {
+          return "$ " + value + "k";
+        },
+        color: "#417E5A",
+        font: {
+          size: 9,
+        },
+      },
+      grid: {
+        color: "#DCF4EE",
+      },
+    },
+  },
+
+  plugins: {
+    legend: {
+      labels: {
+        boxWidth: 17,
+        boxHeight: 17,
+      },
+    },
+  },
+
+  elements: {
+    line: {
+      borderWidth: 1.5,
+    },
+  },
+};
+
+const data = {
+  labels: ["Feb", "March", "April", "May"],
+  datasets: [
+    {
+      label: "Total",
+      borderColor: "#113C23",
+      data: [32, 134, 76, 8],
+      fill: {
+        target: 10,
+        above: "rgb(255, 0, 0)", // Area will be red above the origin
+        below: "rgb(0, 0, 255)", // And blue below the origin
+      },
+    },
+  ],
+};
+
+const RevenueGraph = () => {
+  const classes = useStyles();
+  return (
+    <Paper className={classes.paper}>
+      <h2 className={classes.title}>Revenue Forecast</h2>
+
+      <Line data={data} options={options} height={170} />
+    </Paper>
+  );
+};
+
+export default RevenueGraph;

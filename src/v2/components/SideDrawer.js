@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 import { ReactComponent as RightChevron } from "../../assets/v2/RightChevron.svg";
 import { ReactComponent as LeftChevron } from "../../assets/v2/LeftChevron.svg";
 import Logo from "../../assets/v2/Logo.svg";
-import LogoFull from '../../assets/v2/Rus2billlogo.svg'
+import LogoFull from "../../assets/v2/Rus2billlogo.svg";
 import { ReactComponent as Logout } from "../../assets/v2/Logout.svg";
 import { ReactComponent as Home } from "../../assets/v2/Home.svg";
 import { ReactComponent as Projects } from "../../assets/v2/Projects.svg";
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   drawerGrid: {
     height: h,
     paddingLeft: "7%",
-    backgroundColor: theme.v2.backgrounds.darkBackground,
+    backgroundColor: "#113C23",
     overflowX: "hidden",
   },
   iconContainer: {
@@ -84,8 +84,8 @@ const useStyles = makeStyles((theme) => ({
       height: 0.06 * h,
     },
     "&:hover": {
-      backgroundColor: '#363837'
-    }
+      backgroundColor: "#363837",
+    },
   },
   chevron: {
     cursor: "pointer",
@@ -204,11 +204,11 @@ const SideDrawer = (props) => {
           )}
         </Grid>
         <Grid container item xs={12} style={{ paddingTop: 0.05 * h }}>
-          {open ? <img
-            src={LogoFull}
-            alt="logo"
-            width={'90%'}
-          /> : <img src={Logo} alt={"Logo"} />}
+          {open ? (
+            <img src={LogoFull} alt="logo" width={"90%"} />
+          ) : (
+            <img src={Logo} alt={"Logo"} />
+          )}
         </Grid>
         <Grid container item xs={12} style={{ paddingTop: 0.1 * h }}>
           <Button
