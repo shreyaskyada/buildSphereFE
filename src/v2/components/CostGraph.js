@@ -104,6 +104,7 @@ const data = {
       borderColor: "#113C23",
       data: [34, -16, 63, 53, 34, 52, 3],
       yAxisID: "y1",
+      pointBackgroundColor: "#C2E9A0",
     },
     {
       label: "Amount Completed",

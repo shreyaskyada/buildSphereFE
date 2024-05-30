@@ -23,13 +23,12 @@ const options = {
   responsive: true,
   scales: {
     x: {
+      offset: true,
       ticks: {
         color: "#417E5A",
         font: {
           size: 9,
         },
-        maxTicksLimit: 10, // Set the maximum number of ticks to the number of labels
-        autoSkip: false,
       },
       grid: {
         color: "#DCF4EE",
@@ -78,11 +77,7 @@ const data = {
       label: "Total",
       borderColor: "#113C23",
       data: [32, 134, 76, 8],
-      fill: {
-        target: 10,
-        above: "rgb(255, 0, 0)", // Area will be red above the origin
-        below: "rgb(0, 0, 255)", // And blue below the origin
-      },
+      pointBackgroundColor: "#C2E9A0",
     },
   ],
 };
