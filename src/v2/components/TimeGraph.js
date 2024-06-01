@@ -89,12 +89,18 @@ const data = {
       type: "bar",
       backgroundColor: "#417E5A",
       data: [56, 123, 34, 23, 19, 5, 92, 63],
+      datalabels: {
+        display: false,
+      },
     },
     {
       label: "Time Remaining",
       type: "bar",
       backgroundColor: "#C2E9A0",
       data: [-127, -118, -178, -33, -22, -87, -64, -62],
+      datalabels: {
+        display: false,
+      },
     },
   ],
 };
@@ -104,7 +110,6 @@ const TimeGraph = () => {
   return (
     <Paper className={classes.paper}>
       <h2 className={classes.title}>Time Left vs % $ Complete</h2>
-
       <Bar data={data} options={options} height={170} />
     </Paper>
   );

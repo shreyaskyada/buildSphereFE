@@ -71,13 +71,29 @@ const options = {
 };
 
 const data = {
-  labels: ["Feb", "March", "April", "May"],
+  labels: ["Feb", "March", "April", "May", "June", "July"],
   datasets: [
     {
-      label: "Total",
+      label: "Actual Revenue",
       borderColor: "#113C23",
-      data: [32, 134, 76, 8],
+      data: [20, 60, 80, 100],
       pointBackgroundColor: "#C2E9A0",
+      pointBorderColor: "#113C23",
+      datalabels: {
+        display: false,
+      },
+    },
+
+    {
+      label: "Forecast Revenue",
+      borderColor: "#113C23",
+      data: [null, null, null, 100, 140, 165],
+      pointBackgroundColor: "#FBFBFB",
+      pointBorderColor: "#113C23",
+      borderDash: [5, 3],
+      datalabels: {
+        display: false,
+      },
     },
   ],
 };
@@ -87,7 +103,6 @@ const RevenueGraph = () => {
   return (
     <Paper className={classes.paper}>
       <h2 className={classes.title}>Revenue Forecast</h2>
-
       <Line data={data} options={options} height={170} />
     </Paper>
   );

@@ -22,6 +22,7 @@ import CostGraph from "../components/CostGraph";
 import RevenueGraph from "../components/RevenueGraph";
 import TimeGraph from "../components/TimeGraph";
 import PerformersTable from "../components/PerformersTable";
+import CostGraph2 from "../components/CostGraph2";
 
 const useStyles = makeStyles((theme) => ({
   mainRoot: {
@@ -426,7 +427,8 @@ const Dashboard = (props) => {
           Welcome, {_.get(profile, "first_name") || ""}
         </Typography>
       </Grid>
-      <CostGraph />
+      <CostGraph projectsData={data} />
+      <CostGraph2 projectsData={data} />
       <RevenueGraph />
       <TimeGraph />
       <PerformersTable />

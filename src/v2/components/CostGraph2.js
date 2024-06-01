@@ -1,6 +1,8 @@
 import { Paper, makeStyles } from "@material-ui/core";
+
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
+
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import Chart from "chart.js/auto";
 
@@ -23,12 +25,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CostGraph = ({ projectsData }) => {
+const CostGraph2 = ({ projectsData }) => {
   const classes = useStyles();
   const [amountPlannedData, setAmountPlannedData] = useState([]);
   const [amountCompletedData, setAmountCompletedData] = useState([]);
-  const [deltaData, setDeltaData] = useState([]);
+
   const [projectNames, setProjectNames] = useState([]);
+  const [remainingRevenue, setRemainingRevenue] = useState([]);
+  const [revenueOverPlan, setRevenueOverPlan] = useState([]);
 
   useEffect(() => {
     let plannedData = projectsData.map((data, index) => {
@@ -45,13 +49,27 @@ const CostGraph = ({ projectsData }) => {
 
     deltaData[2] = -900;
 
+    const remaining_revenue = deltaData.map((delta) => {
+      if (delta > 0) return delta;
+
+      return null;
+    });
+
+    const revenue_over_plan = deltaData.map((delta) => {
+      if (delta < 0) return Math.abs(delta);
+
+      return null;
+    });
+
     const projectName = projectsData.map((data) => {
       return data.project_name;
     });
 
     setAmountPlannedData(plannedData);
     setAmountCompletedData(completedData);
-    setDeltaData(deltaData);
+
+    setRemainingRevenue(remaining_revenue);
+    setRevenueOverPlan(revenue_over_plan);
     setProjectNames(projectName);
   }, [projectsData]);
 
@@ -90,7 +108,6 @@ const CostGraph = ({ projectsData }) => {
 
       y: {
         position: "left",
-        reverse: true,
         ticks: {
           count: 11,
           callback: function (value) {
@@ -134,9 +151,9 @@ const CostGraph = ({ projectsData }) => {
           size: 10,
           weight: "bold",
         },
-        anchor: "start",
+        anchor: "end",
         offset: -20,
-        align: "end",
+        align: "start",
         formatter: (value) => {
           return `$ ${Math.floor(value)}k`;
         },
@@ -178,7 +195,7 @@ const CostGraph = ({ projectsData }) => {
         label: "Amount Completed",
         borderColor: "#123C23",
         data: amountCompletedData,
-        yAxisID: "y1",
+
         pointBackgroundColor: "#0CA14A",
         pointBorderColor: "#123C23",
         datalabels: {
@@ -198,10 +215,19 @@ const CostGraph = ({ projectsData }) => {
         },
       },
       {
-        label: "Delta",
+        label: "Remaining Revenue",
         type: "bar",
         backgroundColor: "#C2E9A0",
-        data: deltaData,
+        data: remainingRevenue,
+        yAxisID: "y1",
+        barThickness: 18,
+      },
+      {
+        label: "Revenue Over Plan",
+        type: "bar",
+        backgroundColor: "#5E9875",
+        data: revenueOverPlan,
+        yAxisID: "y1",
         barThickness: 18,
       },
     ],
@@ -215,4 +241,4 @@ const CostGraph = ({ projectsData }) => {
   );
 };
 
-export default CostGraph;
+export default CostGraph2;

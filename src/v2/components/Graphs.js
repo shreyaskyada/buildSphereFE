@@ -132,6 +132,9 @@ const Graphs = (props) => {
         fill: true,
         backgroundColor: backgroundColors[index],
         borderColor: borderColors[index],
+        datalabels: {
+          display: false,
+        },
       };
     });
     setData({
