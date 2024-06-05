@@ -1,0 +1,1375 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="">
+      <meta name="author" content=" ">
+      <meta name="generator" content=" ">
+      <title>Rus2Bill - Easy real time monitoring of construction workflow</title>
+      <!-- Bootstrap core CSS -->
+      <link href="css/bootstrap.min.css" rel="stylesheet">
+      <link href="fonts/stylesheet.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <link href="css/style.css" rel="stylesheet">
+      <link href="css/amslide.css" rel="stylesheet">
+      <link rel="stylesheet" href="css/jquery.bxslider.css">
+      <script type="text/javascript">
+         function sendEmail1() {
+            var phoneNumber = $("#phone").val();
+            if (!/^[0-9]+$/.test(phoneNumber)) {
+                  $("#response-message").html("Phone number should contain only digits.");
+                  return;
+            }
+            var formData = $(this).serialize();
+
+            console.log(formData)
+             
+         }
+     </script>
+   </head>
+   <body>
+      <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+         <div class="container">
+            <a class="navbar-brand d-none-small" href="index.html"><img src="images/logo.svg" alt="RUS2Bill" /></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <img src="images/logo.svg" alt="icon" />
+            </button>
+            <div class="collapse navbar-collapse " id="navbarCollapse">
+               <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+                  <li class="nav-item">
+                     <a class="nav-link active" aria-current="page" href="#work-structure">Work Structure</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="#product-features">Product Features</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="#free-demo">FREE Demo</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="faqs.html">FAQs</a>
+                  </li>
+               </ul>
+            </div>
+            <div class="mob-login">
+               <a class="btn btn-login" href="login.html">Login / Sign Up</a>
+            </div>
+         </div>
+      </nav>
+      <main class="main-area">
+         <div class="banner-top-section">
+            <div class="banner-top-over">
+               <div class="container">
+                  <div class="row rw-alc rev-col">
+                     <div class="col-md-6">
+                        <div class="banner-caption">
+                           <h1>Easy real time monitoring of construction workflow</h1>
+                           <p>RUS2Bill Supports Rapid Invoicing of Construction Projects with improved accuracy by allowing for real-time recording Field Progress.</p>
+                           <a href="#free-demo" class="btn btn-success">Schedule a FREE Demo</a>
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="banner-hero">
+                           <div class="banner-hero-in ">
+                              <img src="images/top-banner.png" alt="Top Banner" class="img-fluid" />
+                           </div>
+                           <!--   <img src="images/15-days-trail.svg" alt="15-days-trail" class="img-fluid trial-logo" /> -->
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- How It Slider Area -->
+         <div class="built-box-area vdarea">
+            <div class="container">
+               <div class="video-box text-center">
+                  <h2 class="heading-1">How this app works?</h2>
+                  <!-- How It Slider Start --->
+                  <div class="light-gr-bg amtslidebx-section" >
+                     <div class="testi-fix">
+                        <div class="dskhide smallnavpil"><span id="myselecthd">Field User App</span> <span class="icdcaret" id="opennavpill"><i class="fa fa-caret-down"></i></span></div>
+                        <ul class="nav nav-pills nav-fill amsldie-pill" id="howit2" role="tablist">
+                           <li class="nav-item" role="presentation">
+                              <button class="nav-link active" id="field-tab" data-bs-toggle="tab" data-bs-target="#field" type="button" role="tab" aria-controls="field" aria-selected="true">Field User App</button>
+                           </li>
+                           <li class="nav-item" role="presentation">
+                              <button class="nav-link" id="Audit-tab" data-bs-toggle="tab" data-bs-target="#Audit" type="button" role="tab" aria-controls="Audit" aria-selected="false">Admin App</button>
+                           </li>
+                           <li class="nav-item" role="presentation">
+                              <button class="nav-link" id="Inspector-tab" data-bs-toggle="tab" data-bs-target="#Inspector" type="button" role="tab" aria-controls="Inspector" aria-selected="false">Inspector Audit Flow</button>
+                           </li>
+                        </ul>
+                     </div>
+                     <div class="tab-content" id="myTabContent1">
+                        <div class="tab-pane fade show active" id="field" role="tabpanel" aria-labelledby="field-tab">
+                           <div class="amtslide-section cars-ind-out2 ">
+                              <div class="amtslide-box">
+                                 <div class="testi-fix">
+                                    <div id="amtslideFirst" class="carousel slide" data-bs-interval="false">
+                                       <div class="row">
+                                          <div class="col-lg-4 col-md-3">
+                                             <div class="carousel-sldem filedid thumbindias">
+                                                <button type="button" data-bs-target="#amtslideFirst" data-bs-slide-to="0" class="active currentbtn" aria-current="true" aria-label="Slide 1">
+                                                <span class="sll-t1">Identify Project</span> 
+                                                <span class="sll-desc">Identify the activity location you're performing.</span> 
+                                                </button>
+                                                <button type="button" data-bs-target="#amtslideFirst" data-bs-slide-to="1" aria-label="Slide 2">
+                                                <span class="sll-t1">Define Activity(ies)</span> 
+                                                <span class="sll-desc">Select the appropriate labor code(s) completed at this location.</span> 
+                                                </button>
+                                                <button type="button" data-bs-target="#amtslideFirst" data-bs-slide-to="2" aria-label="Slide 3">
+                                                <span class="sll-t1">Submit Activity</span> 
+                                                <span class="sll-desc">Upload a picture of your redline & submit.</span> 
+                                                </button>
+                                                <!--<button type="button" data-bs-target="#amtslideFirst" data-bs-slide-to="3" aria-label="Slide 4">
+                                                   <span class="sll-t1">Final Steps</span> 
+                                                   <span class="sll-desc">Select the sheet number, ap number, and unit associated that is being changed within the job. Take a picture of the task being performed.</span> 
+                                                   </button>
+                                                   
+                                                   <button type="button" data-bs-target="#amtslideFirst" data-bs-slide-to="4" aria-label="Slide 5">
+                                                   <span class="sll-t1">Save Changes</span> 
+                                                   <span class="sll-desc">The updates</span> 
+                                                   </button>-->
+                                             </div>
+                                          </div>
+                                          <div class="col-lg-8 col-md-9">
+                                             <div class="carousel-inner">
+                                                <div class="carousel-item active">
+                                                   <div class="asr-caption">
+                                                      <div class="row">
+                                                         <div class="col-lg-12">
+                                                            <div class="sld-body">
+                                                               <span class="indesc dskhide">Identify the activity location you're performing.</span> 
+                                                               <img src="images/amtslides/fielduser/1-Field-User-Flow-identify-project.png" alt="identify-project" />
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <!--item 1 -->
+                                                <div class="carousel-item">
+                                                   <div class="asr-caption">
+                                                      <div class="row">
+                                                         <div class="col-lg-12">
+                                                            <div class="sld-body">
+                                                               <span class="indesc dskhide">Select the appropriate labor code(s) completed at this location.</span> 
+                                                               <img src="images/amtslides/fielduser/2-Field-User-Flow-define-activity.png" alt="define-activity" />
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <!--item 2 -->
+                                                <div class="carousel-item">
+                                                   <div class="asr-caption">
+                                                      <div class="row">
+                                                         <div class="col-lg-12">
+                                                            <div class="sld-body">
+                                                               <span class="indesc dskhide">Upload a picture of your redline & submit.</span> 
+                                                               <img src="images/amtslides/fielduser/3-Field-User-Flow-submit-activity.png" alt="submit-activity" />
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <!--item 3-->
+                                                <!--<div class="carousel-item">
+                                                   <div class="asr-caption">
+                                                      <div class="row">
+                                                         <div class="col-lg-12">
+                                                           <div class="sld-body">
+                                                            <span class="indesc dskhide">Select the sheet number, ap number, and unit associated that is being changed within the job. Take a picture of the task being performed.</span> 
+                                                               <img src="images/amtslides/fielduser/4-Field-User-Final-Steps.png" alt="Final Steps" />
+                                                                
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                   </div>
+                                                   <!--item 4-->
+                                                <!--<div class="carousel-item">
+                                                   <div class="asr-caption">
+                                                      <div class="row">
+                                                         <div class="col-lg-12">
+                                                           <div class="sld-body">
+                                                            <span class="indesc dskhide">The updates</span> 
+                                                               <img src="images/amtslides/fielduser/5-Field-User-Save-Changes .png" alt="Save Changes" />
+                                                                
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                   </div>
+                                                   <!--item 5-->
+                                                <button class=" arrowOut1 arr-lft1" type="button" data-bs-target="#amtslideFirst" data-bs-slide="prev">
+                                                <i class="fa fa-caret-left"></i>
+                                                <span class="visually-hidden">Previous</span>
+                                                </button>
+                                                <button class=" arrowOut1 arr-rgt1" type="button" data-bs-target="#amtslideFirst" data-bs-slide="next">
+                                                <i class="fa fa-caret-right"></i>
+                                                <span class="visually-hidden">Next</span>
+                                                </button>  
+                                             </div>
+                                             <div class="carousel-indicators">
+                                                <button type="button" data-bs-target="#amtslideFirst" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                                <button type="button" data-bs-target="#amtslideFirst" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                                <button type="button" data-bs-target="#amtslideFirst" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                                <!--<button type="button" data-bs-target="#amtslideFirst" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                                                   <button type="button" data-bs-target="#amtslideFirst" data-bs-slide-to="4" aria-label="Slide 5"></button>-->
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <!-- Tab User Field -->
+                        <div class="tab-pane fade" id="Audit" role="tabpanel" aria-labelledby="Audit-tab">
+                           <div class="amtslide-section cars-ind-out2 ">
+                              <div class="amtslide-box">
+                                 <div class="testi-fix">
+                                    <div id="amtslideSaftey" class="carousel slide" data-bs-interval="false">
+                                       <div class="row">
+                                          <div class="col-lg-4 col-md-3">
+                                             <div class="carousel-sldem safteyid thumbindias">
+                                                <button type="button" data-bs-target="#amtslideSaftey" data-bs-slide-to="0" class="active currentbtn" aria-current="true" aria-label="Slide 1">
+                                                <span class="sll-t1">Dashboard</span> 
+                                                <span class="sll-desc">Review project status & issues to address</span> 
+                                                </button>
+                                                <button type="button" data-bs-target="#amtslideSaftey" data-bs-slide-to="1" aria-label="Slide 2">
+                                                <span class="sll-t1">Project Details & Job Details</span> 
+                                                <span class="sll-desc">Add new project or review project details and address project issues.</span> 
+                                                </button>
+                                                <button type="button" data-bs-target="#amtslideSaftey" data-bs-slide-to="2" aria-label="Slide 3">
+                                                <span class="sll-t1">Create Reports</span> 
+                                                <span class="sll-desc">Export custom reports about status, finances, and quality.</span> 
+                                                </button>
+                                                <!--<button type="button" data-bs-target="#amtslideSaftey" data-bs-slide-to="3" aria-label="Slide 4">
+                                                   <span class="sll-t1">Location</span> 
+                                                   <span class="sll-desc">Select a preexisting work area or enter a new work location by clicking New Safety Audit.</span> 
+                                                   </button>
+                                                   
+                                                   <button type="button" data-bs-target="#amtslideSaftey" data-bs-slide-to="4" aria-label="Slide 5">
+                                                   <span class="sll-t1">Information</span> 
+                                                   <span class="sll-desc">Enter the job number, contractor name, and work location.</span> 
+                                                   </button>
+                                                   
+                                                   <button type="button" data-bs-target="#amtslideSaftey" data-bs-slide-to="5" aria-label="Slide 6">
+                                                   <span class="sll-t1">Category</span> 
+                                                   <span class="sll-desc">Select the type of work being performed.</span> 
+                                                   </button>
+                                                   
+                                                   <button type="button" data-bs-target="#amtslideSaftey" data-bs-slide-to="6" aria-label="Slide 7">
+                                                   <span class="sll-t1">People</span> 
+                                                   <span class="sll-desc">Select the project where you’re performing the safety audit.</span> 
+                                                   </button>
+                                                   
+                                                   <button type="button" data-bs-target="#amtslideSaftey" data-bs-slide-to="7" aria-label="Slide 8">
+                                                   <span class="sll-t1">PPE</span> 
+                                                   <span class="sll-desc">Select a preexisting work area or enter a new work location by clicking New Safety Audit.</span> 
+                                                   </button>
+                                                   
+                                                   <button type="button" data-bs-target="#amtslideSaftey" data-bs-slide-to="8" aria-label="Slide 9">
+                                                   <span class="sll-t1">Safety Risk 1 through 4</span> 
+                                                   <span class="sll-desc">Answer the questions-yes or no. As the safety auditor,have the option to upload a photo of what is being seen real-time at the work site.</span> 
+                                                   </button>
+                                                   
+                                                   <button type="button" data-bs-target="#amtslideSaftey" data-bs-slide-to="9" aria-label="Slide 10">
+                                                   <span class="sll-t1">Anything else?</span> 
+                                                   <span class="sll-desc">Upload photo and add note (if needed). Click finish to finalize safety audit.</span> 
+                                                   </button>-->
+                                             </div>
+                                          </div>
+                                          <div class="col-lg-8 col-md-9">
+                                             <div class="carousel-inner">
+                                                <div class="carousel-item active">
+                                                   <div class="asr-caption">
+                                                      <div class="row">
+                                                         <div class="col-lg-12">
+                                                            <div class="sld-body">
+                                                               <span class="indesc dskhide">Review project status & issues to address.</span> 
+                                                               <img src="images/amtslides/admin/1-Admin-App-Flow-dashboard.png" alt="dashboard" />
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <!--item 1 -->
+                                                <div class="carousel-item">
+                                                   <div class="asr-caption">
+                                                      <div class="row">
+                                                         <div class="col-lg-12">
+                                                            <div class="sld-body">
+                                                               <span class="indesc dskhide">Add new project or review project details and address project issues.</span> 
+                                                               <img src="images/amtslides/admin/2-Admin-App-Flow-project-and-job-details.png" alt="project-and-job-details" />
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <!--item 2 -->
+                                                <div class="carousel-item">
+                                                   <div class="asr-caption">
+                                                      <div class="row">
+                                                         <div class="col-lg-12">
+                                                            <div class="sld-body">
+                                                               <span class="indesc dskhide">Export custom reports about status, finances, and quality.</span> 
+                                                               <img src="images/amtslides/admin/3-Admin-App-Flow-create-reports.png" alt="create-reports" />
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <!--item 3-->
+                                                <!--<div class="carousel-item">
+                                                   <div class="asr-caption">
+                                                      <div class="row">
+                                                         <div class="col-lg-12">
+                                                           <div class="sld-body">
+                                                            <span class="indesc dskhide">Select a preexisting work area or enter a new work location by clicking New Safety Audit.</span> 
+                                                               <img src="images/amtslides/saftey/4-Safety-Audit-Flow-Location.png" alt="Safety-Audit-Location" />
+                                                                
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                   </div>
+                                                   <!--item 4-->
+                                                <!-- <div class="carousel-item">
+                                                   <div class="asr-caption">
+                                                      <div class="row">
+                                                         <div class="col-lg-12">
+                                                           <div class="sld-body">
+                                                            <span class="indesc dskhide">Enter the job number, contractor name, and work location</span> 
+                                                               <img src="images/amtslides/saftey/5-Safety-Audit-Flow-Information.png" alt="Safety-Audit-Information" />
+                                                                
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                   </div>
+                                                   <!--item 5-->
+                                                <!-- <div class="carousel-item">
+                                                   <div class="asr-caption">
+                                                      <div class="row">
+                                                         <div class="col-lg-12">
+                                                           <div class="sld-body">
+                                                            <span class="indesc dskhide">Select the type of work being performed.</span> 
+                                                               <img src="images/amtslides/saftey/6-Safety-Audit-Flow-Category.png" alt="Safety-Audit-Category" />
+                                                                
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                   </div>
+                                                   <!--item 6-->
+                                                <!--<div class="carousel-item">
+                                                   <div class="asr-caption">
+                                                      <div class="row">
+                                                         <div class="col-lg-12">
+                                                           <div class="sld-body">
+                                                            <span class="indesc dskhide">select the project where you’re performing the safety audit.</span> 
+                                                               <img src="images/amtslides/saftey/7-Safety-Audit-Flow-People.png" alt="Safety-Audit-People" />
+                                                                
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                   </div>
+                                                   <!--item 7-->
+                                                <!-- <div class="carousel-item">
+                                                   <div class="asr-caption">
+                                                      <div class="row">
+                                                         <div class="col-lg-12">
+                                                           <div class="sld-body">
+                                                            <span class="indesc dskhide">Select a preexisting work area or enter a new work location by clicking New Safety Audit.</span> 
+                                                               <img src="images/amtslides/saftey/8-Safety-Audit-Flow-PPE.png" alt="Safety-Audit-PPE" />
+                                                                
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                   </div>
+                                                   <!--item 8-->
+                                                <!--<div class="carousel-item">
+                                                   <div class="asr-caption">
+                                                      <div class="row">
+                                                         <div class="col-lg-12">
+                                                           <div class="sld-body">
+                                                            <span class="indesc dskhide">Answer the questions-yes or no. As the safety auditor,have the option to upload a photo of what is being seen real-time at the work site.</span> 
+                                                               <img src="images/amtslides/saftey/9-Safety-Audit-Flow-Safety-Risk-1-through-4.png" alt="Safety-Audit-Safety-Risk-1-through" />
+                                                                
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                   </div>
+                                                   <!--item 9-->
+                                                <!-- <div class="carousel-item">
+                                                   <div class="asr-caption">
+                                                      <div class="row">
+                                                         <div class="col-lg-12">
+                                                           <div class="sld-body">
+                                                            <span class="indesc dskhide">Upload photo and add note (if needed). Click finish to finalize safety audit.</span> 
+                                                               <img src="images/amtslides/saftey/10-Safety-Audit-Flow-Anything-else_.png" alt="Safety-Audit-Anything-else" />
+                                                                
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                   </div>
+                                                   <!--item 11-->
+                                                <button class=" arrowOut1 arr-lft1" type="button" data-bs-target="#amtslideSaftey" data-bs-slide="prev">
+                                                <i class="fa fa-caret-left"></i>
+                                                <span class="visually-hidden">Previous</span>
+                                                </button>
+                                                <button class=" arrowOut1 arr-rgt1" type="button" data-bs-target="#amtslideSaftey" data-bs-slide="next">
+                                                <i class="fa fa-caret-right"></i>
+                                                <span class="visually-hidden">Next</span>
+                                                </button>  
+                                             </div>
+                                             <div class="carousel-indicators">
+                                                <button type="button" data-bs-target="#amtslideSaftey" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                                <button type="button" data-bs-target="#amtslideSaftey" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                                <button type="button" data-bs-target="#amtslideSaftey" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                                <!-- <button type="button" data-bs-target="#amtslideSaftey" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                                                   <button type="button" data-bs-target="#amtslideSaftey" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                                                   <button type="button" data-bs-target="#amtslideSaftey" data-bs-slide-to="5" aria-label="Slide 6"></button>
+                                                   <button type="button" data-bs-target="#amtslideSaftey" data-bs-slide-to="6" aria-label="Slide 7"></button>
+                                                   <button type="button" data-bs-target="#amtslideSaftey" data-bs-slide-to="7" aria-label="Slide 8"></button>
+                                                   <button type="button" data-bs-target="#amtslideSaftey" data-bs-slide-to="8" aria-label="Slide 9"></button>
+                                                   <button type="button" data-bs-target="#amtslideSaftey" data-bs-slide-to="9" aria-label="Slide 10"></button>-->
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <!-- Tab Saftey End -->
+                        <div class="tab-pane fade" id="Inspector" role="tabpanel" aria-labelledby="Inspector-tab">
+                           <div class="amtslide-section cars-ind-out2 ">
+                              <div class="amtslide-box">
+                                 <div class="testi-fix">
+                                    <div id="amtslideInspect" class="carousel slide" data-bs-interval="false">
+                                       <div class="row">
+                                          <div class="col-lg-4 col-md-3">
+                                             <div class="carousel-sldem inspectid thumbindias">
+                                                <button type="button" data-bs-target="#amtslideInspect" data-bs-slide-to="0" class="active currentbtn" aria-current="true" aria-label="Slide 1">
+                                                <span class="sll-t1">Login</span> 
+                                                <span class="sll-desc">Enter the credentials your organization has established for you.</span> 
+                                                </button>
+                                                <button type="button" data-bs-target="#amtslideInspect" data-bs-slide-to="1" aria-label="Slide 2">
+                                                <span class="sll-t1">Inspection</span> 
+                                                <span class="sll-desc">Identify the activity location to be inspected.</span> 
+                                                </button>
+                                                <button type="button" data-bs-target="#amtslideInspect" data-bs-slide-to="2" aria-label="Slide 3">
+                                                <span class="sll-t1">Redline</span> 
+                                                <span class="sll-desc">Validate the contractors submitted redline.</span> 
+                                                </button>
+                                                <button type="button" data-bs-target="#amtslideInspect" data-bs-slide-to="3" aria-label="Slide 4">
+                                                <span class="sll-t1">Signature / Upload</span> 
+                                                <span class="sll-desc">Sign off and document the inspection.</span> 
+                                                </button>
+                                                <!--<button type="button" data-bs-target="#amtslideInspect" data-bs-slide-to="4" aria-label="Slide 5">
+                                                   <span class="sll-t1">Signature / Upload Final Photo</span> 
+                                                   <span class="sll-desc">Photo of the inspector work site.</span> 
+                                                   </button>
+                                                   
+                                                   <button type="button" data-bs-target="#amtslideInspect" data-bs-slide-to="5" aria-label="Slide 6">
+                                                   <span class="sll-t1">Final Submission</span> 
+                                                   <span class="sll-desc">Report Submitted Confirmation.</span> 
+                                                   </button>-->
+                                             </div>
+                                          </div>
+                                          <div class="col-lg-8 col-md-9">
+                                             <div class="carousel-inner">
+                                                <div class="carousel-item active">
+                                                   <div class="asr-caption">
+                                                      <div class="row">
+                                                         <div class="col-lg-12">
+                                                            <div class="sld-body">
+                                                               <span class="indesc dskhide">Enter the credentials your organization has established for you.</span> 
+                                                               <img src="images/amtslides/inspector/1-Inspector-Audit-Flow-Login.png" alt="Login" />
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <!--item 1 -->
+                                                <div class="carousel-item">
+                                                   <div class="asr-caption">
+                                                      <div class="row">
+                                                         <div class="col-lg-12">
+                                                            <div class="sld-body">
+                                                               <span class="indesc dskhide">Identify the activity location to be inspected.</span> 
+                                                               <img src="images/amtslides/inspector/2-Inspector-Audit-Flow-inspection-location.png" alt="inspection-location" />
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <!--item 2 -->
+                                                <div class="carousel-item">
+                                                   <div class="asr-caption">
+                                                      <div class="row">
+                                                         <div class="col-lg-12">
+                                                            <div class="sld-body">
+                                                               <span class="indesc dskhide">Validate the contractors submitted redline.</span> 
+                                                               <img src="images/amtslides/inspector/3-Inspector-Audit-Flow-Redline.png" alt="Redline" />
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <!--item 3-->
+                                                <div class="carousel-item">
+                                                   <div class="asr-caption">
+                                                      <div class="row">
+                                                         <div class="col-lg-12">
+                                                            <div class="sld-body">
+                                                               <span class="indesc dskhide">Sign off and document the inspection.</span> 
+                                                               <img src="images/amtslides/inspector/4-Inspector-Audit-Flow-sign-and-upload.png" alt="sign-and-upload" />
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <!--item 4-->
+                                                <!-- <div class="carousel-item">
+                                                   <div class="asr-caption">
+                                                      <div class="row">
+                                                         <div class="col-lg-12">
+                                                           <div class="sld-body">
+                                                            <span class="indesc dskhide">Photo of the inspector work site.</span> 
+                                                               <img src="images/amtslides/inspector/5-Inspector-Audit-Flow-Signature _Upload-Final-Photo.png" alt="Save Changes" />
+                                                                
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                   </div>
+                                                   <!--item 5-->
+                                                <!--<div class="carousel-item">
+                                                   <div class="asr-caption">
+                                                      <div class="row">
+                                                         <div class="col-lg-12">
+                                                           <div class="sld-body">
+                                                            <span class="indesc dskhide">Report Submitted Confirmation.</span> 
+                                                               <img src="images/amtslides/inspector/6-Inspector-Audit-Flow-Final-Submission.png" alt="Save Changes" />
+                                                                
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                   </div>
+                                                   <!--item 6-->
+                                                <button class=" arrowOut1 arr-lft1" type="button" data-bs-target="#amtslideInspect" data-bs-slide="prev">
+                                                <i class="fa fa-caret-left"></i>
+                                                <span class="visually-hidden">Previous</span>
+                                                </button>
+                                                <button class=" arrowOut1 arr-rgt1" type="button" data-bs-target="#amtslideInspect" data-bs-slide="next">
+                                                <i class="fa fa-caret-right"></i>
+                                                <span class="visually-hidden">Next</span>
+                                                </button>  
+                                             </div>
+                                             <div class="carousel-indicators">
+                                                <button type="button" data-bs-target="#amtslideInspect" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                                <button type="button" data-bs-target="#amtslideInspect" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                                <button type="button" data-bs-target="#amtslideInspect" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                                <button type="button" data-bs-target="#amtslideInspect" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                                                <!--<button type="button" data-bs-target="#amtslideInspect" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                                                   <button type="button" data-bs-target="#amtslideInspect" data-bs-slide-to="5" aria-label="Slide 6"></button>-->
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <!-- Tab Inspector End -->
+                     </div>
+                  </div>
+                  <!-- How It Slider End --->
+               </div>
+            </div>
+         </div>
+         <!-- How It Slider Area End -->
+         <!-- Built with -->
+         <div class="built-box-area pd-100" id="work-structure">
+            <div class="container">
+               <div class="clear-50"></div>
+               <div class="title-grn">
+                  <h1>Simple Work Structure</h1>
+               </div>
+               <div class="built-box-inner">
+                  <h2 class="heading-1">Built with three types<br> of users in mind.</h2>
+                  <div class="clear-40"></div>
+                  <div class="box-3-built slider">
+                     <div class="item">
+                        <div class="box-3 rd-bx  pd-box">
+                           <div class="box-3-mid">
+                              <div class="box-3-head">
+                                 <img src="images/admins.svg" alt="admins" />
+                                 <h3>Admin users</h3>
+                              </div>
+                              <p>Admin users are the back office, who sends out your invoices.</p>
+                              <hr>
+                              <div class="row">
+                                 <div class="col-md-7 col-7">
+                                    <div class="built-price">
+                                       <p>Less than 20 licenses</p>
+                                       <span class="currency-blt">$</span>
+                                       <span class="amount-blt">50</span>
+                                       <span class="duration-blt">Monthly</span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-5 col-5">
+                                    <div class="box-3-bottom">
+                                       <a class="btn btn-white-gr" href="signup">Sign Up</a>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <!--Box End -->
+                     <div class="item">
+                        <div class="box-3 gr-bx pd-box">
+                           <div class="box-3-mid">
+                              <div class="box-3-head">
+                                 <img src="images/feild-users.svg" alt="feild-users" />
+                                 <h3>Field Users</h3>
+                              </div>
+                              <p>Field Users are the front line, who report all the work being done in real time.</p>
+                              <hr>
+                              <div class="row">
+                                 <div class="col-md-7 col-7">
+                                    <div class="built-price">
+                                       <p>Less than 20 licenses</p>
+                                       <span class="currency-blt">$</span>
+                                       <span class="amount-blt">25</span>
+                                       <span class="duration-blt">Monthly</span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-5 col-5">
+                                    <div class="box-3-bottom">
+                                       <a class="btn btn-white-gr" href="signup">Sign Up</a>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <!--Box End -->
+                     <div class="item">
+                        <div class="box-3 bl-bx pd-box">
+                           <div class="box-3-mid">
+                              <div class="box-3-head">
+                                 <img src="images/inspectors.svg" alt="inspectors" />
+                                 <h3>Inspectors</h3>
+                              </div>
+                              <p>Inspectors protect your investment as they submit safety reports and document incidents.</p>
+                              <hr>
+                              <div class="row">
+                                 <div class="col-md-7 col-7">
+                                    <div class="built-price">
+                                       <p>Less than 20 licenses</p>
+                                       <span class="currency-blt">$</span>
+                                       <span class="amount-blt">25</span>
+                                       <span class="duration-blt">Monthly</span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-5 col-5">
+                                    <div class="box-3-bottom">
+                                       <a class="btn btn-white-gr" href="signup">Sign Up</a>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <!--Box End -->
+                  </div>
+               </div>
+               <div class="clear-50"></div>
+               <div class="box-part2">
+                  <div class="row">
+                     <div class="col-lg-4 blk-bx brd-rds form-sidebx">
+                        <div class="box-part2-one">
+                           <div class="box-3-head">
+                              <img src="images/enterprise.svg" alt="enterprise" />
+                              <h3>Enterprise</h3>
+                           </div>
+                           <div class="box-3-mid ">
+                              <div class="hide-desk grn-text">
+                                 <p>Greater than 20 license</p>
+                                 <div class="built-price wh-curr mb-3">
+                                    <span class="currency-blt-big">$</span>
+                                    <span class="amount-blt-big">5K</span>
+                                    <span class="duration-blt-big">Starting</span>
+                                 </div>
+                                 <hr>
+                              </div>
+                              <ul class="list-tick">
+                                 <li>Unit Logic</li>
+                                 <li>Make Field Life Easier!</li>
+                                 <li>EZ As-Built</li>
+                                 <li>24/7 Tool Support</li>
+                                 <li>Custom Development Options</li>
+                                 <li>including White Label</li>
+                              </ul>
+                              <div class="hide-desk">
+                                 <button id="contactShow" class="btn btn-green">Contact Us</button>
+                              </div>
+                              <div class="hide-mob">
+                                 <hr>
+                                 <p class="text-white">Greater than 20 license</p>
+                                 <div class="built-price wh-curr mb-3">
+                                    <span class="currency-blt-big">$</span>
+                                    <span class="amount-blt-big">5K</span>
+                                    <span class="duration-blt-big">Starting</span>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-8">
+                        <div class="box-part2-two">
+                           <form id="inquiry-form"  method="post" action="javascript:sendEmail()">
+                              <div class="mb-3">
+                                 <input type="text" class="form-control" name="name" id="name" placeholder="Name*" required>
+                                 <span id="alt1" style="color:red;"></span>
+                              </div>
+                              <div class="mb-3">
+                                 <input type="text" class="form-control" name="compname" id="compname" placeholder="Company Name">
+                              </div>
+                              <div class="mb-3">
+                                 <input type="email" class="form-control" name="email" id="email" placeholder="Business Email*">
+                                 <span id="alt3" style="color:red;"></span>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="mb-3">
+                                       <input type="tel" class="form-control" name="phone" id="phone" pattern="[0-9]{10}" placeholder="Phone Number*" required>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="mb-3">
+                                       <select class="form-select" name="csize" id="csize" required>
+                                          <option selected disabled>- Select Company Size -</option>
+                                          <option value="30">less than 30 </option>
+                                          <option value="40">less than 40 </option>
+                                          <option value="50">less than 50 </option>
+                                          <option value="50">50+ </option>
+                                       </select>
+                                       <span id="alt4" style="color:red;"></span>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="mb-3">
+                                 <textarea class="form-control" name="message" id="message" rows="4" placeholder="How did you hear about us?*" required></textarea>
+                              </div>
+                              <button type="submit" class="btn btn-green" >Send Message</button>
+                           </form>
+                           <div id="response-message"></div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="clearfix"></div>
+         <!-- Build End -->
+         <!-- Product Feature Start -->
+         <div class="product-section pd-100 cars-ind-out" id="product-features">
+            <div class="container">
+               <div class="product-section-fxw">
+                  <div class="title-grn">
+                     <h1>Product Features</h1>
+                  </div>
+                  <div class="clear-10"></div>
+                  <div class="product-area">
+                     <div class="middle-product-slide">
+                        <div class="car-caption">
+                           <div class="row">
+                              <div class="col-lg-6 col-md-6">
+                                 <div class="common-head pfx-width">
+                                    <h2 class="heading-1">Assign roles to <br>the entire team</h2>
+                                    <p>Make sure all your sub-contractors send invoices in one format and all invoices will be tailor made for your end customer! No extra work needed!</p>
+                                    <p>Partial billing, Total Billing has never been faster! Download your completed unit totals from the field at any time with Redline backups and INVOICE your customer.</p>
+                                 </div>
+                              </div>
+                              <div class="col-lg-6  col-md-6">
+                                 <div class="car-image">
+                                    <img src="images/assign-roles.svg" class="d-block " alt="assign-roles">
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="clear-50"></div>
+                        <div class="car-caption mb-0">
+                           <div class="row">
+                              <div class="col-lg-6  col-md-6 hide-moby">
+                                 <div class="car-image">
+                                    <img src="images/rus-units.svg" class="d-block rus-im" alt="rus-units">
+                                 </div>
+                              </div>
+                              <div class="col-lg-6  col-md-6">
+                                 <div class="common-head pfx-width">
+                                    <h2 class="heading-1">Visualize your RUS “Units” at a Glance</h2>
+                                    <div class="car-image hide-deskby mb-4">
+                                       <img src="images/rus-units.svg" class="d-block rus-im" alt="rus-units">
+                                    </div>
+                                    <p>As work is completed, you can see daily and weekly how much value is to be change requested or amended to your contract or order.</p>
+                                    <p>This way, you and your client are not surprised at the end of the job and most importantly NO WAITING after the job is complete to final bill your customer.</p>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="clear-30"></div>
+         </div>
+         <!-- Product Feature End -->
+         <!-- Key Feature start -->
+         <div class="bg-light pd-100" id="key-features">
+            <div class="container">
+               <div class="text-center">
+                  <h1 class="heading-1">Key Features</h1>
+               </div>
+               <div class="clear-20"></div>
+               <div class="multigrid-slide-box">
+                  <div class="item">
+                     <div class="box-feat">
+                        <div class="box-feat-head">
+                           <img src="images/Work-Smarter.svg" alt="" class="key-icon">
+                        </div>
+                        <div class="box-feat-mid">
+                           <h3>Work Smarter</h3>
+                           <p>Will capture project information on the go and eliminates all mundane activities in spreadsheets and phone calls to manage efficiency in any utility construction project.</p>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- item 1 end -->
+                  <div class="item">
+                     <div class="box-feat">
+                        <div class="box-feat-head">
+                           <img src="images/all-in-one-solution.svg" alt="all-in-one-solution" class="key-icon">
+                        </div>
+                        <div class="box-feat-mid">
+                           <h3>All In One Solution</h3>
+                           <p>Built to organize field work activity, puts all the units in one place, and allows immediate exports of verifiable records on demand. We can build, record, inspect, and invoice.</p>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- item 2 end -->
+                  <div class="item">
+                     <div class="box-feat">
+                        <div class="box-feat-head">
+                           <img src="images/customizable-RUS-unit-database.svg" alt="Customizable RUS Unit Database" class="key-icon">
+                        </div>
+                        <div class="box-feat-mid">
+                           <h3>Customizable RUS Unit Database</h3>
+                           <p>Existing carriers, you can create customized data bases. Also perfect for USDA Grant awardees can use RUS2BILL to gain access to new databases.</p>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- item 3 end -->
+                  <div class="item">
+                     <div class="box-feat">
+                        <div class="box-feat-head">
+                           <img src="images/Real-Time-Progress-Reporting.svg" alt="Real Time Progress Reporting" class="key-icon">
+                        </div>
+                        <div class="box-feat-mid">
+                           <h3>Real Time Progress Reporting</h3>
+                           <p>Improves project control with real-time reporting on status and empowers rapid invoicing of construction projects.</p>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- item 4 end -->
+                  <div class="item">
+                     <div class="box-feat">
+                        <div class="box-feat-head">
+                           <img src="images/Built-For-the-Field.svg" alt="Built For the Field" class="key-icon">
+                        </div>
+                        <div class="box-feat-mid">
+                           <h3>Built For the Field</h3>
+                           <p>Field users only enter information they already have to document. In fact, the RUS2BILL helps users who are not familiar with RUS units with descriptions and suggestions of units to add.</p>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- item 4 end -->
+                  <div class="item">
+                     <div class="box-feat">
+                        <div class="box-feat-head">
+                           <img src="images/Control-Changes-No-Surprises.svg" alt="Control Changes, No Surprises" class="key-icon">
+                        </div>
+                        <div class="box-feat-mid">
+                           <h3>Control Changes, No Surprises</h3>
+                           <p>You’ll have the ability to eliminate unforeseen costs and delayed revenues by monitoring project changes in real time.</p>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- item 4 end -->
+               </div>
+               <!-- Testimonials Start --->
+               <div class="testimonial-section pd-100 cars-ind-out ">
+                  <div class="text-center mb-4">
+                     <h2 class="heading-1">Testimonials</h2>
+                  </div>
+                  <div class="testimonial-box">
+                     <div id="testimonialFirst" class="carousel slide " data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                           <div class="carousel-item active">
+                              <div class="car-caption">
+                                 <div class="row">
+                                    <div class="col-lg-12">
+                                       <div class="test-body">
+                                          <p><i class="fa  fa-quote-left"></i></p>
+                                          <p class="content-tst">“This is an app aimed at construction professionals and provides a thorough means of managing multiple projects across multiple people and teams including field users, admins, and inspectors”</p>
+                                          <p class="name-test">– Karl Naso</p>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <!--item 1-->
+                           <div class="carousel-item">
+                              <div class="car-caption">
+                                 <div class="row">
+                                    <div class="col-lg-12">
+                                       <div class="test-body">
+                                          <p><i class="fa  fa-quote-left"></i></p>
+                                          <p class="content-tst">“The different roles do allow for strong collaboration on real-time progress and to have a lot of the pieces of a construction project in one place. RUS2BILL gives the opportunity to my field workers to feel more in charge of their role with real-time reporting.””</p>
+                                          <p class="name-test">– Mike | Construction company owner</p>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <!--item 2-->
+                           <div class="carousel-item">
+                              <div class="car-caption">
+                                 <div class="row">
+                                    <div class="col-lg-12">
+                                       <div class="test-body">
+                                          <p><i class="fa  fa-quote-left"></i></p>
+                                          <p class="content-tst">“Superior Project Management capability including Contact Management per job, Submittal & RFIs workflows and approvals with ease of communication on mobile devices. Also, syncing with Microsoft excel spreadsheets is a time-saver, and allows views for updated project schedules.</p>
+                                          <p class="name-test">– Mike Stanley Jr</p>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <!--item 3-->
+                        </div>
+                        <div class="carousel-indicators ">
+                           <button type="button" data-bs-target="#testimonialFirst" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                           <button type="button" data-bs-target="#testimonialFirst" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                           <button type="button" data-bs-target="#testimonialFirst" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        </div>
+                        <button class=" arrowOut arr-lft" type="button" data-bs-target="#testimonialFirst" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class=" arrowOut arr-rgt" type="button" data-bs-target="#testimonialFirst" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                        </button>
+                     </div>
+                  </div>
+               </div>
+               <!-- Testimonials End --->
+               <div class="clear"></div>
+               <!-- Free Dem Start --->
+               <div class="text-center mb-5 hide-mob" id="free-demo">
+                  <h1 class="heading-1">FREE Demo</h1>
+               </div>
+               <div class="free-demo">
+                  <div class="row">
+                     <div class="col-lg-5 blk-bx brd-rds mobview2">
+                        <div class="box-part2-one sch-box ">
+                           <div class="schd-img pd-box hide-mob">
+                              <img src="images/Rus2bill-logo-drkbg.svg" alt="Rus2bill-logo-drkbg" />
+                           </div>
+                           <div class="schd-mid pd-box sm-inline">
+                              <img src="images/Rus2bill-Icon.svg" alt="Rus2bill-Icon" class="hide-desk" />
+                              <h3 class="heading-2">Schedule a <br>FREE Demo</h3>
+                              <h3 class="freedemocall">Or Call us at <br>+1 (440) 904-6496</h3>
+                           </div>
+                           <div class="scdemon-sec hide-desk">
+                              <button type="button" id="scheduleShow" class="dmsch btn btn-white-gr">Schedule Demo</button>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-7  hide-mob sch-frmb">
+                        <div class="box-part2-two">
+                           <form id="inquiry-form2" action="javascript:sendEmail()" method="post">
+                              <div class="mb-3">
+                                 <input type="text" class="form-control" name="name2" id="name2" placeholder="Name*" required>
+                                 <span id="alt1" style="color:red;"></span>
+                              </div>
+                              <div class="mb-3">
+                                 <input type="text" class="form-control" name="compname2" id="compname2" placeholder="Company Name">
+                              </div>
+                              <div class="mb-3">
+                                 <input type="email" class="form-control" name="email2" id="email2" placeholder="Business Email*">
+                                 <span id="alt3" style="color:red;"></span>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="mb-3">
+                                       <input type="tel" class="form-control" name="phone2" id="phone2" pattern="[0-9]{10}" placeholder="Phone Number*" required>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="mb-3">
+                                       <select class="form-select" name="csize2" id="csize2" required>
+                                          <option selected disabled>- Select Company Size -</option>
+                                          <option value="30">less than 30 </option>
+                                          <option value="40">less than 40 </option>
+                                          <option value="50">less than 50 </option>
+                                          <option value="50">50+ </option>
+                                       </select>
+                                       <span id="alt4" style="color:red;"></span>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="mb-3">
+                                       <input type="date" class="form-control date-icon"  name="date2" id="date2" placeholder="Select Date"> 
+                                       <script type="text/javascript">
+                                          $(function(){
+                                              var dtToday = new Date();
+                                           
+                                              var month = dtToday.getMonth() + 1;
+                                              var day = dtToday.getDate();
+                                              var year = dtToday.getFullYear();
+                                              if(month < 10)
+                                                  month = '0' + month.toString();
+                                              if(day < 10)
+                                               day = '0' + day.toString();
+                                              var maxDate = year + '-' + month + '-' + day;
+                                              $('#date').attr('min', maxDate);
+                                          });
+                                       </script>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="mb-3">
+                                       <input type="time" class="form-control time-icon" name="time2" id="time2" placeholder="Select Time"> 
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="mb-3">
+                                 <textarea class="form-control" name="message2" id="message2" rows="4" placeholder="How did you hear about us?*" required></textarea>
+                              </div>
+                              <button type="submit" class="btn btn-green btn-right">Submit</button>
+                           </form>
+                           <div id="response-message2"></div>
+                        </div>
+                     </div>
+                     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                     <script src="ajax-form/scriptEnquiry.js"></script>
+                      <script src="ajax-form/scriptDemo.js"></script>
+                  </div>
+               </div>
+               <!-- Free Demo End -->
+            </div>
+         </div>
+         <!-- Key Feature End -->
+         <!-- Social Area Start -->
+         <div class="gm-socially-active pd-100 light-gr-bg">
+            <div class="container cont-comp">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="soc-cont">
+                        <div class="gm-big-social-icons  mb-5">
+                           <!--<a target="_blank" href="#"><i class="fa fa-facebook"></i></a>-->
+                           <a target="_blank" href="https://www.instagram.com/rus2bill/"><i class="fa fa-instagram"></i></a>
+                           <a target="_blank" href="https://www.linkedin.com/company/rus2bill/"><i class="fa fa-linkedin"></i></a>
+                        </div>
+                        <h2 class="heading-1">We’re socially active. Follow us.</h2>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- Social Area End -->
+         <!-- FAQ -->
+         <section class="faq-section pd-100">
+            <div class="container">
+               <div class="title-grn">
+                  <h1>FAQs</h1>
+               </div>
+               <div class="mb-5">
+                  <h2 class="heading-1">Lets clear your doubts.</h2>
+               </div>
+               <div class="faq-box">
+                  <div class="accordion black-acord mb-4" id="faqHome">
+                     <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                           <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                           How do I sign up for Rus2Bill ?
+                           </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqHome">
+                           <div class="accordion-body">
+                              If you’re ready, just click the sign-up button and you’ll be redirected to fill in your credentials and your account will be created! Please sign up for a free demo if you need more information and one of our experts will schedule a meeting time that accommodates to your schedule. 
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                           Is RUS2BILL available on the Apple play store and Android Market Place?
+                           </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqHome">
+                           <div class="accordion-body">
+                              Yes, RUS2Bill is available on both the Apple play store and Android Market Place! 
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThree">
+                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                           How many members of my team can be a part of my RUS2BILL account?
+                           </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqHome">
+                           <div class="accordion-body">
+                              When you sign-up, you’re provided Super Admin access in desktop view and one free field worker account via mobile app view. Freely add and remove users as you’re charged for only active accounts. 
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading4">
+                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+                           How often do I get charged for my RUS2BILL account?
+                           </button>
+                        </h2>
+                        <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#faqHome">
+                           <div class="accordion-body">
+                              To sign-up, there’s an initial $70 charge that includes your Super Admin account and one free field worker account. When you need to add more members, there will be a $50 charge per added member. 
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading5">
+                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                           Do Field Users have the same access as Super Admins?
+                           </button>
+                        </h2>
+                        <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#faqHome">
+                           <div class="accordion-body">
+                              No, Field Users will only have access to the mobile app. Super Admins have access to both desktop and mobile view, keeping all financial information private to the super admin account view. 
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="viewBtn">
+                     <a href="faqs.html" class="btn btn-green">View All </a>
+                  </div>
+               </div>
+            </div>
+         </section>
+         <!-- Faq End -->
+         <!-- Footer Start -->
+         <footer>
+            <div class="container">
+               <div class="row">
+                  <div class="col-lg-8">
+                     <div class="foot-left">
+                        <div class="foot-social mb-5 mt-2 hide-desk">
+                           <!--<a href="#" target="_blank"><img src="images/FB-fotter.svg" alt="FB-fotter" class="sc-ft"></a>-->
+                           <a href="https://www.instagram.com/rus2bill/" target="_blank"><img src="images/Insta-footer.svg" alt="Insta-footer" class="sc-ft"></a>
+                           <a href="https://www.linkedin.com/company/rus2bill/" target="_blank"><img src="images/Linkedin-Footer.svg" alt="Linkedin-Footer" class="sc-ft"></a>
+                           <img src="images/call.svg" alt="Insta-footer" class="sc-ft"><a href="tel:+1(440) 904-6496" class="ft-call">+1 (440) 904-6496</a>
+                        </div>
+                        <img src="images/Rus2bill-logo-drkbg.svg" alt="footer-logo" class="mb-3 footer-logo" />
+                        <h4 class="mb-4 hide-mob">&copy; RUS2BILL is a registered trademark</h4>
+                        <div class="copy-mobile">
+                           <p>&copy;2023 RUS2BILL</p>
+                        </div>
+                        <div class="foot-social hide-mob">
+                           <!--<a href="#" target="_blank"><img src="images/FB-fotter.svg" alt="FB-fotter" class="sc-ft"></a>-->
+                           <a href="https://www.instagram.com/rus2bill/" target="_blank"><img src="images/Insta-footer.svg" alt="Insta-footer" class="sc-ft"></a>
+                           <a href="https://www.linkedin.com/company/rus2bill/" target="_blank"><img src="images/Linkedin-Footer.svg" alt="Linkedin-Footer" class="sc-ft"></a>
+                           <img src="images/call.svg" alt="Insta-footer" class="sc-ft"><a href="tel:+1(440) 904-6496" class="ft-call">+1 (440) 904-6496</a>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-4">
+                     <div class="foot-right">
+                        <p>We strive to make our website content accessible and user-friendly. If you are having difficulty viewing the content on this website or navigating the site, please contact our Customer Service Team via hello@rus2bill.com we will be happy to assist you.</p>
+                        <div class="ft-list">
+                           <ul>
+                              <li> <a href="privacy.html"  >Privacy </a></li>
+                              <li> <a href="terms-and-conditions.html"  >Terms & Conditions</a></li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="fxd-icon">
+                  <a href="signup"><img src="images/15-days-trail.svg" alt="15-days-trail" class="img-fluid trial-logo-fx" /></a>
+               </div>
+            </div>
+         </footer>
+         <!-- Footer end -->
+      </main>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> 
+      <script src="js/jquery.bxslider.min.js"></script>
+      <script src="js/bootstrap.bundle.min.js"></script>
+      <script src="js/common.js"></script>
+      <script type="text/javascript">
+         function validate_user() {
+           var a = document.forms["user_form"]["user_name"].value;
+           if (a==null || a == "") {
+         	$("#alt1").text("Name must be filled out");
+         	return false;
+           }
+           else{
+         	  $("#alt1").text("");
+           }	
+         
+           var b = document.forms["user_form"]["user_csize"].value;
+           if (b==null || b == "") {
+         	$("#alt4").text("Company Size must be filled out");
+         	return false;
+           }
+           else{
+         	  $("#alt4").text("");
+           }
+          
+           var c = document.forms["user_form"]["user_email"].value;
+           if (c==null || c == "") {
+         	$("#alt3").text("Email must be filled out");
+         	return false;
+           }
+           else{
+         	  $("#alt3").text("");
+           }
+         		  
+         }
+      </script>
+      <script type="text/javascript">
+         var myCarousel = document.querySelector('#amtslideFirst');
+         var myCarousel1 = document.querySelector('#amtslideSaftey');
+         var myCarousel2 = document.querySelector('#amtslideInspect');
+         
+         
+         var carousel = new bootstrap.Carousel(myCarousel, {
+            wrap: false
+         });
+          var carousel1 = new bootstrap.Carousel(myCarousel1, {
+            wrap: false
+         });
+         
+          var carousel2 = new bootstrap.Carousel(myCarousel2, {
+            wrap: false
+         });
+         
+         
+            
+            $( document ).ready(function() {	
+            var myCarousel = document.getElementById('amtslideFirst')
+            var myCarousel1 = document.getElementById('amtslideSaftey')
+            var myCarousel2 = document.getElementById('amtslideInspect')
+           
+            
+            
+            
+            myCarousel.addEventListener('slid.bs.carousel', function () {
+             var ele = $('#amtslideFirst .carousel-indicators button.active');
+             
+            		var sdc = ele.data('bs-slide-to');         		
+            		 $(".filedid button[data-bs-slide-to="+sdc+"]").addClass('currentbtn').siblings().removeClass('currentbtn');
+                     $('.currentbtn').addClass('active');
+                    $('.currentbtn').prevAll().addClass('active');
+                    $('.currentbtn').nextAll().removeClass('active');
+            		
+                    
+            });
+            
+             myCarousel1.addEventListener('slid.bs.carousel', function () {
+             var ele1 = $('#amtslideSaftey .carousel-indicators button.active');
+             
+            		var sdc1 = ele1.data('bs-slide-to');         		
+            		 $(".safteyid button[data-bs-slide-to="+sdc1+"]").addClass('currentbtn').siblings().removeClass('currentbtn');
+                     $('.currentbtn').addClass('active');
+                    $('.currentbtn').prevAll().addClass('active');
+                    $('.currentbtn').nextAll().removeClass('active');
+            		
+                    
+            }); 
+            
+            
+            myCarousel2.addEventListener('slid.bs.carousel', function () {
+             var ele2 = $('#amtslideInspect .carousel-indicators button.active');
+             
+            		var sdc2 = ele2.data('bs-slide-to');         		
+            		 $(".inspectid button[data-bs-slide-to="+sdc2+"]").addClass('currentbtn').siblings().removeClass('currentbtn');
+                     $('.currentbtn').addClass('active');
+                    $('.currentbtn').prevAll().addClass('active');
+                    $('.currentbtn').nextAll().removeClass('active');
+            		
+                    
+            });
+            
+          
+            
+            });
+            
+             
+              
+      </script>
+      <script>
+         $(document).ready(function(){
+            $('#contactShow').click(function(){
+               $('.box-part2 .col-lg-8').toggle();
+            });
+            
+            $('#scheduleShow').click(function(){
+               $('.sch-frmb').toggle();
+            });
+            
+            
+            
+            $('#opennavpill').click(function(){
+               $('.amsldie-pill').toggle();
+                
+            }); 
+               
+               
+               var width = $(window).width();
+         if (width <= 768) {
+         
+             $('#howit2 li button').click(function(){
+                var mvl = $(this).text();
+                 $('#myselecthd').text(mvl);
+                $('.amsldie-pill').toggle();
+               });
+         } else {
+         //code for other devices
+         }
+            
+            
+         });
+         
+      </script>
+      <script src="js/jquery.bxslider.min.js"></script>
+      <script src="js/bootstrap.bundle.min.js"></script>
+      <script src="js/common.js"></script>
+   </body>
+</html>

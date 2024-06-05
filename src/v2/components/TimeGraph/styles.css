@@ -1,0 +1,38 @@
+.topBarContainer {
+    display: flex;
+    align-items: center;
+}
+
+.custom-legend3 {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin-left: 0px;
+    padding-left: 50px;
+}
+
+.custom-legend3 li {
+    width: 85px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.custom-legend3 :nth-child(1) div {
+    width: 22px;
+    height: 18px;
+    background-color: #417E5A;
+}
+
+.custom-legend3 :nth-child(2) div {
+    width: 18px;
+    height: 18px;
+    background-color: #C2E9A0;
+}
+
+.legendText {
+    font-size: 9px;
+    font-weight: 600;
+    color: #417E5A;
+}

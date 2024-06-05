@@ -1,0 +1,86 @@
+.topBarContainer {
+    display: flex;
+    align-items: center;
+}
+
+.custom-legend {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin-left: 0px;
+    padding-left: 10px;
+
+}
+
+.custom-legend li {
+    width: 85px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+ul :nth-child(1) div {
+    width: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+ul :nth-child(1) div .legendSymbolSpan1 {
+    width: 100%;
+    height: 1.5px;
+    background-color: #123C23;
+    margin-top: 8px;
+}
+
+ul :nth-child(1) div .legendSymbolSpan2 {
+    width: 6px;
+    height: 6px;
+    background-color: #0CA14A;
+    border: 2px solid #123C23;
+    border-radius: 100%;
+    position: relative;
+    top: -5px;
+}
+
+ul :nth-child(2) div {
+    width: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+ul :nth-child(2) div .legendSymbolSpan1 {
+    width: 100%;
+    border-top: 2px dashed #5E9875;
+    margin-top: 8px;
+}
+
+ul :nth-child(2) div .legendSymbolSpan2 {
+    width: 6px;
+    height: 6px;
+    background-color: #FFFFFF;
+    border: 2px solid #5E9875;
+    border-radius: 100%;
+    position: relative;
+    top: -5px;
+}
+
+ul :nth-child(3) div {
+    width: 22px;
+    height: 18px;
+    background-color: #C2E9A0;
+}
+
+ul :nth-child(4) div {
+    width: 21px;
+    height: 17px;
+    background-color: #417E5A;
+}
+
+.legendText {
+    font-size: 9px;
+    font-weight: 600;
+    color: #417E5A;
+}

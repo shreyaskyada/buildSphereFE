@@ -18,11 +18,11 @@ import Skull from "../../assets/v2/Skull.svg";
 import moment from "moment";
 import Graphs from "../components/Graphs";
 import { getNormalizeIsolatedAndCumulativeGraphData } from "../../helpers/utils";
-import CostGraph from "../components/CostGraph";
-import RevenueGraph from "../components/RevenueGraph";
-import TimeGraph from "../components/TimeGraph";
+
 import PerformersTable from "../components/PerformersTable";
-import CostGraph2 from "../components/CostGraph2";
+import CostGraph from "../components/CostGraph/CostGraph";
+import RevenueGraph from "../components/RevenueGraph/RevenueGraph";
+import TimeGraph from "../components/TimeGraph/TimeGraph";
 
 const useStyles = makeStyles((theme) => ({
   mainRoot: {
@@ -38,7 +38,8 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: "1%",
     fontSize: 35,
     fontWeight: "bold",
-    color: theme.v2.fonts.colors.blackShade1,
+    color: "#113C23",
+    fontFamily: "Manrope",
   },
   paper: {
     width: "100%",
@@ -170,6 +171,7 @@ const Dashboard = (props) => {
   const [sortBy, setSortBy] = useState();
   const [sortDirection, setSortDirection] = useState("asc");
   const [graphData, setGraphData] = useState([]);
+  const [forecastGraphData, setForecastGraphData] = useState([]);
   const token = useSelector((state) => state.auth.token);
   const profile = useSelector((state) =>
     JSON.parse(_.get(state, ["auth", "profile"]))
@@ -190,6 +192,16 @@ const Dashboard = (props) => {
         },
       });
       console.log(url);
+
+      const result2 = await axios.get(
+        `/projects?p=group:${groupId}&f=${filters}&s=${sortBy}:${sortDirection}`,
+        {
+          headers: { Authorization: token },
+        }
+      );
+
+      setForecastGraphData(_.get(result2, ["data", "message"]) || []);
+
       if (result.status === 200) {
         console.log(result.data.message);
         setData(_.get(result, ["data", "message"]) || []);
@@ -428,11 +440,10 @@ const Dashboard = (props) => {
         </Typography>
       </Grid>
       <CostGraph projectsData={data} />
-      <CostGraph2 projectsData={data} />
-      <RevenueGraph />
-      <TimeGraph />
+      <RevenueGraph projectsData={forecastGraphData} />
+      <TimeGraph projectsData={forecastGraphData} />
       <PerformersTable />
-      <Graphs header="Summary" data={graphData} onChange={changeGraph} />
+      {/* <Graphs header="Summary" data={graphData} onChange={changeGraph} /> */}
       <Paper className={classes.paper} elevation={0}>
         <Grid container>
           <Grid item xs={6}>

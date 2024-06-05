@@ -1,0 +1,302 @@
+ 
+
+
+/* How It */
+.amtslide-section {padding-top:50px; padding-bottom:50px;}
+.amtslidebx-section {  overflow-x: hidden;}
+.amtslide-box {position:relative;}
+
+.thumbindias {text-align: left;
+}
+
+.sld-body {
+  width: 100%;
+  background: #FFF;
+  border-radius: 17px;
+  text-align: left;
+  margin: 0 auto;
+  padding: 0px 60px 0px;
+  text-align:center;
+ }
+.sld-body img {
+   margin-bottom: 10px;
+  max-height: 528px;
+  display:inline-block;
+  margin:0 auto;
+}
+
+ 
+.sld-foot { 
+	width: 100%;  }
+  
+
+.sld-body .fa {
+	font-size: 35px;
+	margin-bottom: 22px;
+}
+.quote-icon {
+    position: absolute;
+    left: 7%;
+    top: -39px;
+}
+.testi-btm-img {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+ 
+
+.testi-fix { max-width:920px; width:100%; margin:0 auto;}
+
+.amtslide-section.cars-ind-out2 .carousel-indicators {
+  bottom: -56px;
+  position: relative;
+}
+
+.amtslide-box .carousel-indicators [data-bs-target] {
+    box-sizing: content-box;
+    flex: 0 1 auto;
+    width: 12px;
+    height: 12px;
+    padding: 0;
+    margin-right: 5px;
+    margin-left: 5px;
+     background-color: #DEDEDE;
+     border: 0 !important;
+    border-top: 0px solid transparent;
+    border-bottom: 0px solid transparent;
+    opacity: 1;
+     border-radius: 50%;
+    top: -17px;
+    position: relative;
+}
+.amtslide-box .item { margin: 0 10px;}
+.cars-ind-out2 .carousel-indicators .active {
+     background-color: #1E2327 !important;
+}
+ .arrowOut1 {
+    background: #F0F0F2;
+   border: 1px solid #E8E8E8;
+    display: inline-block;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    padding: 2px;
+    position: absolute;
+    top: 40%;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: #1D1D1F;
+    text-align: center;
+	box-shadow:none !important;
+	text-shadow:none !important;
+}
+.arrowOut1.arr-rgt1 {
+	right: 15px;
+}
+.arrowOut1.arr-lft1 {
+	left: 15px;
+}
+
+ 
+/* New css */
+.carousel-sldem > button  {
+  text-align:left;
+  background:transparent; border:none; padding:10px 0 ;
+  
+}
+
+.carousel-sldem > button.active {
+  
+}
+
+.sll-t1 { display:block; font: normal normal 400 16px/24px Niveau Grotesk; color:#707070; }
+.sll-desc{display:block;color:#B1B1B1; line-height:20px; font-size:14px; font-weight:400; min-height: 45px;}
+ 
+ .thumbindias button { position:relative; padding-left: 32px;}
+ .thumbindias button:before { content:'\f10c'; color:#A8A8A8; position:absolute; font: normal normal normal 16px/1 FontAwesome; left:0; top:17px;}
+ .thumbindias button.active:before { content:'\f058'; color:#00C371;}
+ 
+ 
+.thumbindias button::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 74%;
+  background: #D8D8D8;
+  left: 5px;
+  top: 35px;
+  display: block;
+  margin-bottom:5px;
+}
+
+.thumbindias button.active::after {background: #00C371;}
+ 
+.thumbindias button:last-child::after {content:none;}
+ 
+.thumbindias button.active .sll-t1 {color:#04A349;font-size: 20px;}
+.thumbindias button.active .sll-desc {color:#24231F;}
+ 
+ 
+  .amsldie-pill .nav-link {color:#B1B1B1; font: normal normal 400 28px/70px Niveau Grotesk; border-bottom: 1px solid #eee; border-radius:0px; position:relative;}
+ .amsldie-pill .nav-link.active {background-color: #fff;
+  color: #04a349 !important;}
+  
+  .amsldie-pill .nav-link.active:after {content:""; position:absolute; width:100%; height:2px; background:#00C371; left:0; right:0; bottom:0px; display:block;}
+ 
+ .dskhide {display:none;}
+ 
+ 
+ 
+ 
+/* Responsive Start----------------------------*/
+
+@media screen and (min-width:768px) and (max-width:990px){ 
+	
+ 
+.arrowOut1.arr-lft1 {
+    left: 18%;
+}
+.arrowOut1.arr-rgt1 {
+    right: 18%;
+}
+	
+}
+ 
+@media (max-width:539px){
+ 
+.arrowOut1 {bottom: -18px;}
+.arrowOut1.arr-lft1 {
+    left: unset;
+    right: 84px;
+}
+.arrowOut1.arr-rgt1 {
+    right: 20px;
+}
+.amtslide-box .carousel-inner {
+     overflow: visible;
+}
+.amtslide-box .carousel-indicators {
+    position: absolute;
+    right: unset;
+    bottom: 0;
+    left: 0;
+}
+ 
+}
+
+@media (max-width:767px){
+ 
+
+.arrowOut1 { display:none;}
+ 
+.arrowOut1 {bottom: -18px;}
+.arrowOut1.arr-lft1 {
+    left: unset;
+    right: 84px;
+}
+.arrowOut1.arr-rgt1 {
+    right: 20px;
+}
+.amtslide-box .carousel-inner {
+     overflow: visible;
+}
+.amtslide-box .carousel-indicators {
+    position: absolute;
+    right: unset;
+    bottom: 0;
+    left: 0;
+}
+  
+.amsldie-pill .nav-link {
+   font: normal normal 400 14px/30px Niveau Grotesk;
+  
+}
+
+.carousel-sldem { display:flex; justify-content: space-around;flex-wrap: wrap; margin-bottom:20px;}
+  .thumbindias button::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: #D8D8D8;
+    left: 29px;
+    top: 8px;
+    display: block;
+    margin-bottom: 5px;
+	
+  }
+.thumbindias button {
+     text-align: center;
+    padding: 21px 8px 17px;
+	flex: 1 1 auto;
+  }
+.thumbindias button::before {
+  
+  position: absolute;
+  font: normal normal normal 16px/1 FontAwesome;
+  left: 0;
+  top: 0;
+  right: 0;
+  z-index: 2;
+    background: #fff;
+    width: 20px;
+    margin: 0 auto;
+}
+.sll-desc { display:none;}
+.sll-t1 {
+  display: block;
+  font: normal normal 400 12px/14px Niveau Grotesk;
+  color: #707070;
+  font-size: 10px;
+}
+.thumbindias button.active .sll-t1 {color:#04A349;font-size: 10px;}
+.sld-body {
+   
+  padding: 0px 0px 0px;
+ 
+}
+.sld-body img {
+   max-height: unset;
+   margin: 0 auto;
+  height: auto;
+  width: 100%;
+  max-width:330px;
+}
+ .dskhide {display:block !important;}
+ 
+ .indesc {color: #1E2327;
+  line-height: 20px;
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom:25px;
+  
+  }
+  .icdcaret {
+  width: 17px;
+  height: 17px;
+  display: inline-block;
+  background: #E6F0E7;
+  position: relative;
+  line-height: 17px;
+  border-radius: 20px;
+  margin-left: 7px;
+  cursor:pointer;
+}
+  .smallnavpil { font: normal normal 400 15px/70px Niveau Grotesk;
+  color: #04A349;}
+ 
+ #howit2 { display:none;}
+ .amsldie-pill  { display:block;}
+}
+ 
+ 
+
+
+
+ 
