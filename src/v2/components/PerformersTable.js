@@ -115,7 +115,7 @@ const useStyles = makeStyles((theme) => ({
 
   paper: {
     width: "42.8%",
-    height: "31vw",
+    height: "32.7vw",
     borderRadius: 10,
     padding: "2%",
     paddingTop: 0,
@@ -124,6 +124,12 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 0,
     marginTop: 0,
     overflow: "auto",
+    [theme.breakpoints.down(1250)]: {
+      width: "100%",
+      marginRight: "2%",
+      height: "35vw",
+      margin: "2%",
+    },
   },
 
   title: {

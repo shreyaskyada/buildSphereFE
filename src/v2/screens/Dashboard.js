@@ -23,6 +23,7 @@ import PerformersTable from "../components/PerformersTable";
 import CostGraph from "../components/CostGraph/CostGraph";
 import RevenueGraph from "../components/RevenueGraph/RevenueGraph";
 import TimeGraph from "../components/TimeGraph/TimeGraph";
+import ProjectSummaryCard from "../components/ProjectSummaryCard/ProjectSummaryCard";
 
 const useStyles = makeStyles((theme) => ({
   mainRoot: {
@@ -443,6 +444,10 @@ const Dashboard = (props) => {
       <RevenueGraph projectsData={forecastGraphData} />
       <TimeGraph projectsData={forecastGraphData} />
       <PerformersTable />
+      <ProjectSummaryCard id="id1" />
+      <ProjectSummaryCard id="id2" />
+      <ProjectSummaryCard id="id3" />
+      <ProjectSummaryCard id="id4" />
       {/* <Graphs header="Summary" data={graphData} onChange={changeGraph} /> */}
       <Paper className={classes.paper} elevation={0}>
         <Grid container>

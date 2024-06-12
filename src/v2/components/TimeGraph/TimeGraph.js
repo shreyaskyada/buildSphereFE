@@ -1,7 +1,7 @@
 import { Paper, makeStyles } from "@material-ui/core";
 import _ from "lodash";
 import moment from "moment";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import "./styles.css";
 
@@ -15,6 +15,10 @@ const useStyles = makeStyles((theme) => ({
     margin: "2%",
     marginRight: 0,
     marginTop: 0,
+    [theme.breakpoints.down(1250)]: {
+      width: "100%",
+      margin: "2%",
+    },
   },
   title: {
     fontSize: "18px",
@@ -27,8 +31,10 @@ const TimeGraph = ({ projectsData }) => {
   const [projectNames, setProjectNames] = useState([]);
   const [remainingRevenue, setRemainingRevenue] = useState([]);
   const [remainingTime, setRemainingTime] = useState([]);
-  const chartRef = useRef(null);
   const classes = useStyles();
+  const [chartInstance, setChartInstance] = useState(null);
+
+  const chartHeight = projectNames.length > 8 ? projectNames.length * 25 : 200;
 
   useEffect(() => {
     const remaining_revenue = projectsData.map((data) => {
@@ -79,7 +85,8 @@ const TimeGraph = ({ projectsData }) => {
       return data.project_name;
     });
 
-    setProjectNames(projectName);
+    // setProjectNames(projectName);
+    setProjectNames([...projectName, ...projectName]);
   }, [projectsData]);
 
   const options = {
@@ -90,6 +97,7 @@ const TimeGraph = ({ projectsData }) => {
         min: -100,
         max: 100,
         ticks: {
+          display: projectNames.length <= 8,
           callback: function (value, index, values) {
             return Math.abs(value) + "%";
           },
@@ -100,6 +108,9 @@ const TimeGraph = ({ projectsData }) => {
         },
         grid: {
           display: true,
+          drawTicks: false,
+          drawBorder: false,
+
           color: (context) => {
             return context.tick.value === 0 ? "#A5C4C9" : "#DCF4EE";
           },
@@ -150,7 +161,59 @@ const TimeGraph = ({ projectsData }) => {
     },
   };
 
+  const options2 = {
+    responsive: true,
+    maintainAspectRatio: false,
+    layout: {
+      padding: {
+        left: 99,
+      },
+    },
+    indexAxis: "y",
+    scales: {
+      x: {
+        min: -100,
+        max: 100,
+        afterFit: (c) => {
+          c.height = 40;
+        },
+        ticks: {
+          autoSkip: false,
+          callback: function (value) {
+            return Math.abs(value) + "%";
+          },
+          color: "#123c23",
+          font: {
+            size: 12,
+          },
+        },
+        grid: {
+          borderColor: "#A5C4C9",
+          color: (context) => {
+            return context.tick.value === 0 ? "#A5C4C9" : "#DCF4EE";
+          },
+        },
+      },
+      y: {
+        ticks: {
+          display: false,
+        },
+        grid: {
+          drawTicks: false,
+          color: "#DCF4EE",
+        },
+      },
+    },
+
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+  };
+
   const data = {
+    // labels: [...projectNames, ...projectNames],
     labels: projectNames,
     datasets: [
       {
@@ -158,7 +221,8 @@ const TimeGraph = ({ projectsData }) => {
         type: "bar",
         backgroundColor: "#417E5A",
         hoverBackgroundColor: "#417E5A",
-        data: remainingRevenue,
+        data: [...remainingRevenue, ...remainingRevenue],
+        // data: remainingRevenue,
         barThickness: 16,
         datalabels: {
           display: true,
@@ -180,7 +244,8 @@ const TimeGraph = ({ projectsData }) => {
         type: "bar",
         backgroundColor: "#C2E9A0",
         hoverBackgroundColor: "#C2E9A0",
-        data: remainingTime,
+        data: [...remainingTime, ...remainingTime],
+        // data: remainingTime,
         barThickness: 16,
 
         datalabels: {
@@ -203,25 +268,22 @@ const TimeGraph = ({ projectsData }) => {
   };
 
   useEffect(() => {
-    const chart = chartRef.current;
-
-    if (chart) {
+    if (chartInstance) {
       const legendContainer = document.getElementById("legend3");
-
       if (legendContainer) {
-        legendContainer.innerHTML = chart.generateLegend();
+        legendContainer.innerHTML = chartInstance.generateLegend();
 
         const legendItems = legendContainer.getElementsByTagName("li");
         for (let i = 0; i < legendItems.length; i++) {
           legendItems[i].addEventListener("click", () => {
-            const dataset = chart.data.datasets[i];
+            const dataset = chartInstance.data.datasets[i];
             dataset.hidden = !dataset.hidden;
-            chart.update("active");
+            chartInstance.update();
           });
         }
       }
     }
-  }, [chartRef.current]);
+  }, [chartInstance]);
 
   return (
     <Paper className={classes.paper}>
@@ -230,21 +292,35 @@ const TimeGraph = ({ projectsData }) => {
         <div id="legend3"></div>
       </div>
 
-      <Bar
-        ref={chartRef}
-        data={data}
-        options={options}
-        height={200}
-        plugins={[
-          {
-            id: "custom-legend3",
-            beforeInit: function (chart) {
-              chart.generateLegend = function () {
-                const datasets = this.data.datasets;
-                let legendHtml = '<ul class="custom-legend3">';
+      <div
+        style={{
+          height: "430px",
+        }}
+      >
+        <div
+          style={{
+            maxHeight: "390px",
+            overflowY: "auto",
+            overflowX: "hidden",
+            paddingRight: "10px",
+          }}
+        >
+          <Bar
+            ref={(ref) => setChartInstance(ref)}
+            key={chartHeight}
+            data={data}
+            options={options}
+            height={chartHeight}
+            plugins={[
+              {
+                id: "custom-legend3",
+                beforeInit: function (chart) {
+                  chart.generateLegend = function () {
+                    const datasets = this.data.datasets;
+                    let legendHtml = '<ul class="custom-legend3">';
 
-                datasets.forEach((dataset, index) => {
-                  legendHtml += `
+                    datasets.forEach((dataset, index) => {
+                      legendHtml += `
                       <li>
                         <div class="legendSymbol">
                       
@@ -252,15 +328,26 @@ const TimeGraph = ({ projectsData }) => {
                        <p class="legendText"> ${dataset.label}</p>
                       </li>
                     `;
-                });
+                    });
 
-                legendHtml += "</ul>";
-                return legendHtml;
-              };
-            },
-          },
-        ]}
-      />
+                    legendHtml += "</ul>";
+                    return legendHtml;
+                  };
+                },
+              },
+            ]}
+          />
+        </div>
+        {projectNames.length > 8 && (
+          <div
+            style={{
+              height: "40px",
+            }}
+          >
+            <Bar data={data} options={options2} />
+          </div>
+        )}
+      </div>
     </Paper>
   );
 };

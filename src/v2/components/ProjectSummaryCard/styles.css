@@ -1,0 +1,160 @@
+.projectSummaryCardContainer {
+    width: 43.5%;
+    height: 260px;
+    background-color: white;
+    margin-left: 2%;
+    margin-top: 2%;
+    border-radius: 10px;
+    padding-left: 25px;
+    padding-right: 20px;
+}
+
+.projectSummaryCardTop {
+    display: flex;
+    justify-content: space-between;
+}
+
+.projectName {
+    font-size: 18px;
+    color: #113C23;
+}
+
+.projectProgress {
+    font-size: 15px;
+    color: #113C23;
+    margin-top: -5px;
+}
+
+.progressBar {
+    display: flex;
+    align-items: center;
+    width: 276px;
+    height: 12px;
+    background-color: #C2E9A0;
+    margin-top: -10px;
+    border-radius: 8px;
+}
+
+.innerProgressBar1 {
+    height: 12px;
+    width: 40%;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-color: #00530C;
+}
+
+.innerProgressBar2 {
+    height: 12px;
+    width: 30%;
+    background: repeating-linear-gradient(to right,
+            #0CA14A,
+            #0CA14A 3px,
+            transparent 4px,
+            transparent 7px);
+}
+
+.innerProgressBarSymbol {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background-color: #0CA14A;
+    border: 4px solid #FBFBFC;
+    box-shadow: 0px 3px 6px #00000029;
+    margin-left: 1px;
+}
+
+.projectSchedule {
+    font-size: 15px;
+    color: #0CA14A;
+    margin-top: 5px;
+}
+
+.projectIssue {
+    color: #24231F;
+    font-size: 15px;
+    margin-top: 20px;
+}
+
+.projectIssueSvgContainer {
+    display: flex;
+    margin-left: -5px;
+    margin-top: -5px;
+}
+
+.projectSummaryCardBottom {
+    display: flex;
+    margin-top: 5px;
+}
+
+.jobStatus {
+    margin-top: 30px;
+    font-size: 15px;
+    color: #24231F;
+    margin-right: 40px;
+}
+
+.jobsSummary {
+    margin-left: 30px;
+}
+
+.jobsSummary1,
+.jobsSummary2 {
+    display: flex;
+    font-size: 15px;
+    color: #84A391;
+    gap: 30px
+}
+
+.jobsSummary2 {
+    margin-top: -15px;
+}
+
+.jobsSummary1 div {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.jobsSummary1 span {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+}
+
+.jobsSummary2 div {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.jobsSummary2 span {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+}
+
+.completed span {
+    background-color: #00530C;
+}
+
+.paused span {
+    background-color: #E3BD68;
+}
+
+.inProgress span {
+    background-color: #59A77B;
+}
+
+.cancelled span {
+    background-color: #E36767;
+}
+
+.chartContainer {
+    width: 100px;
+    height: 100px;
+    border: 3px solid #DBF4EE;
+    border-radius: 50%;
+    display: inline-block;
+}

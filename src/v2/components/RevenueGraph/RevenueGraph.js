@@ -1,5 +1,5 @@
 import { Paper, makeStyles } from "@material-ui/core";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import moment from "moment";
 import _ from "lodash";
@@ -14,6 +14,10 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "none",
     margin: "2%",
     marginRight: 0,
+    [theme.breakpoints.down(1250)]: {
+      width: "100%",
+      marginRight: "2%",
+    },
   },
   title: {
     width: "35%",
@@ -30,7 +34,10 @@ const RevenueGraph = ({ projectsData }) => {
   const [amountPlannedData, setAmountPlannedData] = useState([]);
   const [actualRevenue, setActualRevenue] = useState([]);
   const [forecastRevenue, setForecastRevenue] = useState([]);
-  const chartRef = useRef(null);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [chartInstance, setChartInstance] = useState(null);
+
+  const chartHeight = screenWidth < 1250 ? 120 : 200;
 
   const months = [
     "jan",
@@ -47,13 +54,24 @@ const RevenueGraph = ({ projectsData }) => {
   ];
   const currentMonth = Number(moment(new Date()).format("MM"));
 
+  const handleResize = () => {
+    setScreenWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   useEffect(() => {
     const plannedData = projectsData.map((data, index) => {
-      return data.planned_value / 1000;
+      return data.planned_value;
     });
 
     const completedData = projectsData.map((data) => {
-      return data.actual_value / 1000;
+      return data.actual_value;
     });
 
     const forecastMonth = projectsData.map((data) => {
@@ -112,6 +130,11 @@ const RevenueGraph = ({ projectsData }) => {
   }, [projectsData]);
 
   const options = {
+    layout: {
+      padding: {
+        top: 20,
+      },
+    },
     scales: {
       x: {
         offset: true,
@@ -130,8 +153,13 @@ const RevenueGraph = ({ projectsData }) => {
       y: {
         position: "left",
         ticks: {
-          callback: function (value, index, values) {
-            return "$ " + value + "k";
+          count: 11,
+          callback: function (value) {
+            if (value <= 999) return "$" + value;
+
+            if (value <= 999999) return "$ " + value / 1000 + "k";
+
+            return "$" + value / 1000000 + "m";
           },
           color: "#123C23",
           font: {
@@ -176,7 +204,13 @@ const RevenueGraph = ({ projectsData }) => {
             return null;
           }
 
-          if (value !== null) return `$ ${Math.floor(value * 1000)}`;
+          if (value !== null) {
+            if (value <= 999) return `$ ${value.toFixed(2)}`;
+
+            if (value <= 999999) return `$ ${(value / 1000).toFixed(2)}k`;
+
+            return `$ ${(value / 1000000).toFixed(2)}m`;
+          }
         },
       },
 
@@ -195,7 +229,7 @@ const RevenueGraph = ({ projectsData }) => {
             if (label) {
               label += ": ";
             }
-            label += "$" + (context.raw * 1000).toLocaleString();
+            label += "$" + context.raw.toLocaleString();
             return label;
           },
         },
@@ -257,25 +291,22 @@ const RevenueGraph = ({ projectsData }) => {
   };
 
   useEffect(() => {
-    const chart = chartRef.current;
-
-    if (chart) {
+    if (chartInstance) {
       const legendContainer = document.getElementById("legend2");
-
       if (legendContainer) {
-        legendContainer.innerHTML = chart.generateLegend();
+        legendContainer.innerHTML = chartInstance.generateLegend();
 
         const legendItems = legendContainer.getElementsByTagName("li");
         for (let i = 0; i < legendItems.length; i++) {
           legendItems[i].addEventListener("click", () => {
-            const dataset = chart.data.datasets[i];
+            const dataset = chartInstance.data.datasets[i];
             dataset.hidden = !dataset.hidden;
-            chart.update("active");
+            chartInstance.update();
           });
         }
       }
     }
-  }, [chartRef.current]);
+  }, [chartInstance]);
 
   return (
     <Paper className={classes.paper}>
@@ -285,10 +316,11 @@ const RevenueGraph = ({ projectsData }) => {
       </div>
       <div>
         <Line
-          ref={chartRef}
+          ref={(ref) => setChartInstance(ref)}
+          key={chartHeight}
           data={data}
           options={options}
-          height={200}
+          height={chartHeight}
           plugins={[
             {
               id: "custom-legend2",
@@ -304,7 +336,18 @@ const RevenueGraph = ({ projectsData }) => {
                       <span class="legendSymbolSpan1"></span>
                       <span class="legendSymbolSpan2"></span>
                       </div>
-                     <p class="legendText"> ${dataset.label}</p>
+                     <p class="legendText"> ${dataset.label} <br/> ${
+                      index === 0
+                        ? `<span class='legendSubText'>(Cumulative Values)</span>`
+                        : ""
+                    }
+                    ${
+                      index === 1
+                        ? `<span class='legendSubText'>(Isolative Values)</span>`
+                        : ""
+                    }
+                    </p>
+                      
                     </li>
                   `;
                   });

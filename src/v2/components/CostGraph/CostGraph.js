@@ -1,5 +1,5 @@
 import { Paper, makeStyles } from "@material-ui/core";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { Chart } from "chart.js";
@@ -17,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "none",
     margin: "2%",
     marginRight: 0,
+    [theme.breakpoints.down(1250)]: {
+      width: "100%",
+      marginRight: "2%",
+    },
   },
 
   title: {
@@ -25,33 +29,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "600",
     color: "#113C23",
     paddingLeft: "6%",
-  },
-
-  revenueOverPlaneWrapper: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "5px",
-  },
-
-  revenueOverPlaneLabel: {
-    color: "#417E5A",
-    fontSize: "9px",
-    fontWeight: 600,
-    transform: "rotate(-90deg)",
-  },
-
-  remainingRevenueWrapper: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "15px",
-    marginTop: "200%",
-  },
-
-  remainingRevenueLabel: {
-    color: "#417E5A",
-    fontSize: "9px",
-    fontWeight: 600,
-    transform: "rotate(-90deg)",
   },
 }));
 
@@ -62,19 +39,33 @@ const CostGraph = ({ projectsData }) => {
   const [projectNames, setProjectNames] = useState([]);
   const [remainingRevenue, setRemainingRevenue] = useState([]);
   const [revenueOverPlan, setRevenueOverPlan] = useState([]);
-  const chartRef = useRef(null);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [chartInstance, setChartInstance] = useState(null);
+
+  const chartHeight = screenWidth < 1250 ? 120 : 200;
+
+  const handleResize = () => {
+    setScreenWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     let plannedData = projectsData.map((data, index) => {
-      return data.planned_value / 1000;
+      return data.planned_value;
     });
 
     const completedData = projectsData.map((data) => {
-      return data.actual_value / 1000;
+      return data.actual_value;
     });
 
     let deltaData = projectsData.map((data) => {
-      return (data.planned_value - data.actual_value) / 1000;
+      return data.planned_value - data.actual_value;
     });
 
     const remaining_revenue = deltaData.map((delta) => {
@@ -84,7 +75,7 @@ const CostGraph = ({ projectsData }) => {
     });
 
     const revenue_over_plan = deltaData.map((delta) => {
-      if (delta < 0) return delta;
+      if (delta < 0) return Math.abs(delta);
 
       return null;
     });
@@ -101,11 +92,18 @@ const CostGraph = ({ projectsData }) => {
   }, [projectsData]);
 
   const options = {
+    layout: {
+      padding: {
+        top: 10,
+      },
+    },
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
       x: {
         ticks: {
           autoSkip: false,
+          maxRotation: 0,
           color: "#123C23",
           font: {
             size: 9,
@@ -118,40 +116,19 @@ const CostGraph = ({ projectsData }) => {
       },
 
       y: {
-        min: (Math.max(...remainingRevenue) + 500) * -1,
-        max: Math.max(...remainingRevenue) + 500,
-        position: "left",
-        reverse: true,
-
-        ticks: {
-          count: 11,
-          callback: function (value) {
-            return "$ " + Math.abs(Math.floor(value)) + "k";
-          },
-
-          color: "#123C23",
-          font: {
-            size: 12,
-            family: "Arial, sans-serif",
-          },
-        },
-
-        grid: {
-          display: true,
-          color: (context) => {
-            return context.tick.value === 0 ? "#A5C4C9" : "#DCF4EE";
-          },
-        },
-      },
-
-      y1: {
-        position: "right",
         min: 0,
-        max: Math.max(...amountPlannedData) + 500,
+        max:
+          Math.max(...amountPlannedData) +
+          (Math.max(...amountPlannedData) > 1000000 ? 100000 : 10000),
         ticks: {
           count: 11,
+          display: projectNames.length <= 6,
           callback: function (value) {
-            return "$ " + Math.floor(value) + "k";
+            if (value <= 999) return `$ ${Math.floor(value)}`;
+
+            if (value <= 999999) return `$ ${Math.floor(value / 1000)}k`;
+
+            return `$ ${(value / 1000000).toFixed(2)}m`;
           },
           color: "#123C23",
           font: {
@@ -160,13 +137,35 @@ const CostGraph = ({ projectsData }) => {
           },
         },
         grid: {
-          display: false,
+          drawTicks: projectNames.length <= 6,
+          drawBorder: projectNames.length <= 6,
           color: "#DCF4EE",
         },
       },
     },
 
     plugins: {
+      datalabels: {
+        display: true,
+        color: "#113C23",
+        font: {
+          size: 12,
+          weight: "bold",
+          family: "Manrope, sans-serif",
+        },
+        anchor: "end",
+        offset: -20,
+        align: "start",
+        formatter: (value) => {
+          if (value !== null) {
+            if (value <= 999) return `$ ${value.toFixed(2)}`;
+
+            if (value <= 999999) return `$ ${(value / 1000).toFixed(2)}k`;
+
+            return `$ ${(value / 1000000).toFixed(2)}m`;
+          }
+        },
+      },
       htmlLegend: {
         containerID: "custom-legend",
       },
@@ -181,10 +180,75 @@ const CostGraph = ({ projectsData }) => {
             if (label) {
               label += ": ";
             }
-            label += "$" + Math.abs(context.raw * 1000).toLocaleString();
+            label += "$" + Math.abs(context.raw).toLocaleString();
             return label;
           },
         },
+      },
+    },
+
+    elements: {
+      line: {
+        borderWidth: 1.5,
+      },
+    },
+  };
+
+  const options2 = {
+    layout: {
+      padding: {
+        bottom: 44,
+      },
+    },
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        ticks: {
+          display: false,
+        },
+        grid: {
+          drawTicks: false,
+          borderColor: "#DCF4EE",
+          color: "#DCF4EE",
+        },
+      },
+
+      y: {
+        min: 0,
+        max:
+          Math.max(...amountPlannedData) +
+          (Math.max(...amountPlannedData) > 1000000 ? 100000 : 10000),
+
+        afterFit: (c) => {
+          c.width = 80;
+        },
+        ticks: {
+          count: 11,
+          callback: function (value) {
+            if (value <= 999) return `$ ${Math.floor(value)}`;
+
+            if (value <= 999999) return `$ ${Math.floor(value / 1000)}k`;
+
+            return `$ ${(value / 1000000).toFixed(2)}m`;
+          },
+          color: "#123C23",
+          font: {
+            size: 12,
+            family: "Arial, sans-serif",
+          },
+        },
+        grid: {
+          borderColor: "#DCF4EE",
+          color: "#DCF4EE",
+        },
+      },
+    },
+
+    plugins: {
+      datalabels: { display: false },
+      legend: {
+        display: false,
       },
     },
 
@@ -202,7 +266,6 @@ const CostGraph = ({ projectsData }) => {
         label: "Amount Completed",
         borderColor: "#123C23",
         data: amountCompletedData,
-        yAxisID: "y1",
         pointBackgroundColor: "#0CA14A",
         pointHoverBackgroundColor: "#0CA14A",
         pointHoverRadius: 3,
@@ -215,7 +278,6 @@ const CostGraph = ({ projectsData }) => {
         label: "Amount Planned",
         borderColor: "#5E9875",
         data: amountPlannedData,
-        yAxisID: "y1",
         pointBackgroundColor: "#FFFFFF",
         pointBorderColor: "#5E9875",
         pointHoverRadius: 3,
@@ -231,21 +293,6 @@ const CostGraph = ({ projectsData }) => {
         hoverBackgroundColor: "#C2E9A0",
         data: remainingRevenue,
         barThickness: 18,
-        datalabels: {
-          display: true,
-          color: "#113C23",
-          font: {
-            size: 12,
-            weight: "bold",
-            family: "Manrope, sans-serif",
-          },
-          anchor: "start",
-          offset: -20,
-          align: "end",
-          formatter: (value) => {
-            if (value !== null) return `$ ${Math.floor(value)}k`;
-          },
-        },
       },
       {
         label: "Revenue Over Plan",
@@ -254,109 +301,78 @@ const CostGraph = ({ projectsData }) => {
         hoverBackgroundColor: "#5E9875",
         data: revenueOverPlan,
         barThickness: 18,
-        datalabels: {
-          display: true,
-          color: "#113C23",
-          font: {
-            size: 12,
-            weight: "bold",
-            family: "Manrope, sans-serif",
-          },
-          anchor: "end",
-          offset: -20,
-          align: "start",
-          formatter: (value) => {
-            if (value !== null) return `$ ${Math.abs(Math.floor(value))}k`;
-          },
-        },
       },
     ],
   };
 
   useEffect(() => {
-    const chart = chartRef.current;
-
-    if (chart) {
+    if (chartInstance) {
       const legendContainer = document.getElementById("legend");
-
       if (legendContainer) {
-        legendContainer.innerHTML = chart.generateLegend();
+        legendContainer.innerHTML = chartInstance.generateLegend();
 
         const legendItems = legendContainer.getElementsByTagName("li");
         for (let i = 0; i < legendItems.length; i++) {
           legendItems[i].addEventListener("click", () => {
-            const dataset = chart.data.datasets[i];
+            const dataset = chartInstance.data.datasets[i];
             dataset.hidden = !dataset.hidden;
-            chart.update("active");
+            chartInstance.update();
           });
         }
       }
     }
-  }, [chartRef.current]);
+  }, [chartInstance]);
 
   return (
-    <Paper className={classes.paper}>
-      <div className="topBarContainer">
-        <h2 className={classes.title}>Plan vs Actual Cost</h2>
-        <div id="legend"></div>
-      </div>
-      <div style={{ display: "flex" }}>
-        <div style={{ width: "8%", paddingTop: "5%" }}>
-          <div className={classes.revenueOverPlaneWrapper}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              shape-rendering="geometricPrecision"
-              text-rendering="geometricPrecision"
-              image-rendering="optimizeQuality"
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              viewBox="0 0 404 511.5"
-              fill="#417E5A"
-              style={{ height: "12px" }}
-            >
-              <path
-                fill-rule="nonzero"
-                d="m219.24 72.97.54 438.53h-34.95l-.55-442.88L25.77 241.96 0 218.39 199.73 0 404 222.89l-25.77 23.58z"
-              />
-            </svg>
-            <p className={classes.revenueOverPlaneLabel}>Revenue Over Plan</p>
-          </div>
-          <div className={classes.remainingRevenueWrapper}>
-            <p className={classes.remainingRevenueLabel}>Remaining Revenue</p>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              shape-rendering="geometricPrecision"
-              text-rendering="geometricPrecision"
-              image-rendering="optimizeQuality"
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              viewBox="0 0 404 511.51"
-              fill="#417E5A"
-              style={{ height: "12px" }}
-            >
-              <path
-                fill-rule="nonzero"
-                d="M184.29 442.88 184.83 0h34.95l-.54 438.53 158.99-173.49L404 288.61l-204.27 222.9L0 293.11l25.77-23.57z"
-              />
-            </svg>
-          </div>
+    <>
+      <Paper className={classes.paper}>
+        <div className="topBarContainer">
+          <h2 className={classes.title}>Plan vs Actual Cost</h2>
+          <div id="legend"></div>
         </div>
-        <div style={{ width: "92%" }}>
-          <Line
-            ref={chartRef}
-            data={data}
-            options={options}
-            height={200}
-            plugins={[
-              {
-                id: "custom-legend",
-                beforeInit: function (chart) {
-                  chart.generateLegend = function () {
-                    const datasets = this.data.datasets;
-                    let legendHtml = '<ul class="custom-legend">';
 
-                    datasets.forEach((dataset, index) => {
-                      legendHtml += `
+        <div style={{ display: "flex", width: "100%" }}>
+          {projectNames.length > 6 && (
+            <div style={{ width: "80px", marginRight: "-3px" }}>
+              <Line key={chartHeight} options={options2} height={chartHeight} />
+            </div>
+          )}
+
+          <div
+            style={{
+              width: `${
+                projectNames.length <= 6
+                  ? "calc(100% - 0px)"
+                  : "calc(100% - 80px)"
+              }`,
+              overflowX: `${projectNames.length <= 6 ? "hidden" : "auto"}`,
+              paddingLeft: `${projectNames.length <= 6 ? "30px" : "0px"}`,
+            }}
+          >
+            <div
+              style={{
+                minWidth: "100%",
+                width: `${projectNames.length * 80}px`,
+                height: "400px",
+                paddingBottom: `${projectNames.length <= 6 ? "0px" : "10px"}`,
+              }}
+            >
+              <Line
+                key={chartHeight}
+                ref={(ref) => setChartInstance(ref)}
+                data={data}
+                options={options}
+                height={chartHeight}
+                plugins={[
+                  {
+                    id: "custom-legend",
+                    beforeInit: function (chart) {
+                      chart.generateLegend = function () {
+                        const datasets = this.data.datasets;
+                        let legendHtml = '<ul class="custom-legend">';
+
+                        datasets.forEach((dataset, index) => {
+                          legendHtml += `
                       <li>
                         <div class="legendSymbol">
                         <span class="legendSymbolSpan1"></span>
@@ -365,18 +381,20 @@ const CostGraph = ({ projectsData }) => {
                        <p class="legendText"> ${dataset.label}</p>
                       </li>
                     `;
-                    });
+                        });
 
-                    legendHtml += "</ul>";
-                    return legendHtml;
-                  };
-                },
-              },
-            ]}
-          />
+                        legendHtml += "</ul>";
+                        return legendHtml;
+                      };
+                    },
+                  },
+                ]}
+              />
+            </div>
+          </div>
         </div>
-      </div>
-    </Paper>
+      </Paper>
+    </>
   );
 };
 
