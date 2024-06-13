@@ -3,6 +3,16 @@
     align-items: center;
 }
 
+.costChartNoData {
+    height: 330px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: #113C23;
+}
+
 .custom-legend {
     display: flex;
     flex-wrap: wrap;

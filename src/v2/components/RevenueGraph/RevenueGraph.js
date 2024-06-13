@@ -36,6 +36,7 @@ const RevenueGraph = ({ projectsData }) => {
   const [forecastRevenue, setForecastRevenue] = useState([]);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [chartInstance, setChartInstance] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const chartHeight = screenWidth < 1250 ? 120 : 200;
 
@@ -101,7 +102,8 @@ const RevenueGraph = ({ projectsData }) => {
     var sum = 0;
 
     for (let i = minMonth; i <= maxMonth; i++) {
-      sum = sum + tempSum[i];
+      sum = sum + (tempSum[i] || 0);
+
       if (i <= currentMonth) {
         tempCompletedData.push(tempSum[i]);
         tempPlannedData.push(null);
@@ -127,6 +129,9 @@ const RevenueGraph = ({ projectsData }) => {
     setAmountCompletedData(tempCompletedData);
     setAmountPlannedData(tempPlannedData);
     setMonthsLabel(months.slice(minMonth - 1, maxMonth));
+    setTimeout(() => {
+      setLoading(false);
+    }, 5000);
   }, [projectsData]);
 
   const options = {
@@ -314,33 +319,36 @@ const RevenueGraph = ({ projectsData }) => {
         <h2 className={classes.title}>Revenue Forecast</h2>
         <div id="legend2"></div>
       </div>
-      <div>
-        <Line
-          ref={(ref) => setChartInstance(ref)}
-          key={chartHeight}
-          data={data}
-          options={options}
-          height={chartHeight}
-          plugins={[
-            {
-              id: "custom-legend2",
-              beforeInit: function (chart) {
-                chart.generateLegend = function () {
-                  const datasets = this.data.datasets;
-                  let legendHtml = '<ul class="custom-legend2">';
+      {projectsData.length === 0 && !loading ? (
+        <p className="revenueChartNoData">No Data</p>
+      ) : (
+        <div>
+          <Line
+            ref={(ref) => setChartInstance(ref)}
+            key={chartHeight}
+            data={data}
+            options={options}
+            height={chartHeight}
+            plugins={[
+              {
+                id: "custom-legend2",
+                beforeInit: function (chart) {
+                  chart.generateLegend = function () {
+                    const datasets = this.data.datasets;
+                    let legendHtml = '<ul class="custom-legend2">';
 
-                  datasets.forEach((dataset, index) => {
-                    legendHtml += `
+                    datasets.forEach((dataset, index) => {
+                      legendHtml += `
                     <li>
                       <div class="legendSymbol">
                       <span class="legendSymbolSpan1"></span>
                       <span class="legendSymbolSpan2"></span>
                       </div>
                      <p class="legendText"> ${dataset.label} <br/> ${
-                      index === 0
-                        ? `<span class='legendSubText'>(Cumulative Values)</span>`
-                        : ""
-                    }
+                        index === 0
+                          ? `<span class='legendSubText'>(Cumulative Values)</span>`
+                          : ""
+                      }
                     ${
                       index === 1
                         ? `<span class='legendSubText'>(Isolative Values)</span>`
@@ -350,16 +358,17 @@ const RevenueGraph = ({ projectsData }) => {
                       
                     </li>
                   `;
-                  });
+                    });
 
-                  legendHtml += "</ul>";
-                  return legendHtml;
-                };
+                    legendHtml += "</ul>";
+                    return legendHtml;
+                  };
+                },
               },
-            },
-          ]}
-        />
-      </div>
+            ]}
+          />
+        </div>
+      )}
     </Paper>
   );
 };

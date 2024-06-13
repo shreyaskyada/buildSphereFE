@@ -41,6 +41,7 @@ const CostGraph = ({ projectsData }) => {
   const [revenueOverPlan, setRevenueOverPlan] = useState([]);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [chartInstance, setChartInstance] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const chartHeight = screenWidth < 1250 ? 120 : 200;
 
@@ -89,6 +90,9 @@ const CostGraph = ({ projectsData }) => {
     setRemainingRevenue(remaining_revenue);
     setRevenueOverPlan(revenue_over_plan);
     setProjectNames(projectName);
+    setTimeout(() => {
+      setLoading(false);
+    }, 5000);
   }, [projectsData]);
 
   const options = {
@@ -118,8 +122,10 @@ const CostGraph = ({ projectsData }) => {
       y: {
         min: 0,
         max:
-          Math.max(...amountPlannedData) +
-          (Math.max(...amountPlannedData) > 1000000 ? 100000 : 10000),
+          Math.max(...amountPlannedData, ...amountCompletedData) +
+          (Math.max(...amountPlannedData, ...amountCompletedData) > 1000000
+            ? 100000
+            : 100000),
         ticks: {
           count: 11,
           display: projectNames.length <= 6,
@@ -217,8 +223,10 @@ const CostGraph = ({ projectsData }) => {
       y: {
         min: 0,
         max:
-          Math.max(...amountPlannedData) +
-          (Math.max(...amountPlannedData) > 1000000 ? 100000 : 10000),
+          Math.max(...amountPlannedData, ...amountCompletedData) +
+          (Math.max(...amountPlannedData, ...amountCompletedData) > 1000000
+            ? 1000000
+            : 100000),
 
         afterFit: (c) => {
           c.width = 80;
@@ -331,48 +339,55 @@ const CostGraph = ({ projectsData }) => {
           <div id="legend"></div>
         </div>
 
-        <div style={{ display: "flex", width: "100%" }}>
-          {projectNames.length > 6 && (
-            <div style={{ width: "80px", marginRight: "-3px" }}>
-              <Line key={chartHeight} options={options2} height={chartHeight} />
-            </div>
-          )}
+        {projectsData.length === 0 && !loading ? (
+          <p className="costChartNoData">No Data</p>
+        ) : (
+          <div style={{ display: "flex", width: "100%" }}>
+            {projectNames.length > 6 && (
+              <div style={{ width: "80px", marginRight: "-3px" }}>
+                <Line
+                  key={chartHeight}
+                  options={options2}
+                  height={chartHeight}
+                />
+              </div>
+            )}
 
-          <div
-            style={{
-              width: `${
-                projectNames.length <= 6
-                  ? "calc(100% - 0px)"
-                  : "calc(100% - 80px)"
-              }`,
-              overflowX: `${projectNames.length <= 6 ? "hidden" : "auto"}`,
-              paddingLeft: `${projectNames.length <= 6 ? "30px" : "0px"}`,
-            }}
-          >
             <div
               style={{
-                minWidth: "100%",
-                width: `${projectNames.length * 80}px`,
-                height: "400px",
-                paddingBottom: `${projectNames.length <= 6 ? "0px" : "10px"}`,
+                width: `${
+                  projectNames.length <= 6
+                    ? "calc(100% - 0px)"
+                    : "calc(100% - 80px)"
+                }`,
+                overflowX: `${projectNames.length <= 6 ? "hidden" : "auto"}`,
+                paddingLeft: `${projectNames.length <= 6 ? "30px" : "0px"}`,
               }}
             >
-              <Line
-                key={chartHeight}
-                ref={(ref) => setChartInstance(ref)}
-                data={data}
-                options={options}
-                height={chartHeight}
-                plugins={[
-                  {
-                    id: "custom-legend",
-                    beforeInit: function (chart) {
-                      chart.generateLegend = function () {
-                        const datasets = this.data.datasets;
-                        let legendHtml = '<ul class="custom-legend">';
+              <div
+                style={{
+                  minWidth: "100%",
+                  width: `${projectNames.length * 80}px`,
+                  height: "400px",
+                  paddingBottom: `${projectNames.length <= 6 ? "0px" : "10px"}`,
+                }}
+              >
+                <Line
+                  key={chartHeight}
+                  ref={(ref) => setChartInstance(ref)}
+                  data={data}
+                  options={options}
+                  height={chartHeight}
+                  plugins={[
+                    {
+                      id: "custom-legend",
+                      beforeInit: function (chart) {
+                        chart.generateLegend = function () {
+                          const datasets = this.data.datasets;
+                          let legendHtml = '<ul class="custom-legend">';
 
-                        datasets.forEach((dataset, index) => {
-                          legendHtml += `
+                          datasets.forEach((dataset, index) => {
+                            legendHtml += `
                       <li>
                         <div class="legendSymbol">
                         <span class="legendSymbolSpan1"></span>
@@ -381,18 +396,19 @@ const CostGraph = ({ projectsData }) => {
                        <p class="legendText"> ${dataset.label}</p>
                       </li>
                     `;
-                        });
+                          });
 
-                        legendHtml += "</ul>";
-                        return legendHtml;
-                      };
+                          legendHtml += "</ul>";
+                          return legendHtml;
+                        };
+                      },
                     },
-                  },
-                ]}
-              />
+                  ]}
+                />
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </Paper>
     </>
   );

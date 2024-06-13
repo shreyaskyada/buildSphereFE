@@ -1,4 +1,5 @@
 import {
+  Box,
   Grid,
   makeStyles,
   MenuItem,
@@ -11,6 +12,7 @@ import DashboardProject from "../components/DashboardProject";
 import _ from "lodash";
 import clsx from "clsx";
 import ArrowDown from "../../assets/v2/ArrowDown.svg";
+import filterIcon from "../../assets/v2/Filter.svg";
 import CollapsibleTableContainer from "../components/CollapsibleTableContainer";
 import axios from "../../axios";
 import { useSelector } from "react-redux";
@@ -24,6 +26,10 @@ import CostGraph from "../components/CostGraph/CostGraph";
 import RevenueGraph from "../components/RevenueGraph/RevenueGraph";
 import TimeGraph from "../components/TimeGraph/TimeGraph";
 import ProjectSummaryCard from "../components/ProjectSummaryCard/ProjectSummaryCard";
+import CustomerFilter from "../components/CustomerFilter/CustomerFilter";
+import ProjectFilter from "../components/ProjectFilter/ProjectFilter";
+import JobFilter from "../components/JobFilter/JobFilter";
+import StatusFilter from "../components/StatusFilter/StatusFilter";
 
 const useStyles = makeStyles((theme) => ({
   mainRoot: {
@@ -34,12 +40,21 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 30,
     fontWeight: "bold",
   },
+
+  topBar: { display: "flex", alignItems: "center" },
+
   welcomeTxt: {
     paddingLeft: "3%",
-    paddingBottom: "1%",
-    fontSize: 35,
+    fontSize: 25,
     fontWeight: "bold",
     color: "#113C23",
+    fontFamily: "Manrope",
+  },
+
+  filterText: {
+    fontSize: "15px",
+    color: "#113C23",
+    marginLeft: "10px",
     fontFamily: "Manrope",
   },
   paper: {
@@ -87,6 +102,11 @@ const useStyles = makeStyles((theme) => ({
     borderBottomLeftRadius: 10,
     border: `1px solid ${theme.v2.borders.lightGrey}`,
     width: "97%",
+  },
+  filterBar: {
+    display: "flex",
+    alignItems: "center",
+    marginLeft: "100px",
   },
   sortBy: {
     fontSize: 14,
@@ -167,12 +187,14 @@ const Dashboard = (props) => {
   const classes = useStyles();
   const [selectedHeader, setSelectedHeader] = useState(0);
   const [data, setData] = useState([]);
+  const [projectsData, setProjectsData] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [filters, setFilters] = useState({});
+  const [filters2, setFilters2] = useState({});
   const [sortBy, setSortBy] = useState();
   const [sortDirection, setSortDirection] = useState("asc");
   const [graphData, setGraphData] = useState([]);
-  const [forecastGraphData, setForecastGraphData] = useState([]);
+  const [forecastProjectData, setForecastProjectData] = useState([]);
   const token = useSelector((state) => state.auth.token);
   const profile = useSelector((state) =>
     JSON.parse(_.get(state, ["auth", "profile"]))
@@ -194,15 +216,6 @@ const Dashboard = (props) => {
       });
       console.log(url);
 
-      const result2 = await axios.get(
-        `/projects?p=group:${groupId}&f=${filters}&s=${sortBy}:${sortDirection}`,
-        {
-          headers: { Authorization: token },
-        }
-      );
-
-      setForecastGraphData(_.get(result2, ["data", "message"]) || []);
-
       if (result.status === 200) {
         console.log(result.data.message);
         setData(_.get(result, ["data", "message"]) || []);
@@ -211,6 +224,47 @@ const Dashboard = (props) => {
       console.log(err);
     }
   }, [groupId, token, filters, sortBy, sortDirection]);
+
+  const filterForecastProjectData = (data) => {
+    if (filters2?.customer && filters2?.customer !== "0") {
+      const id = filters2?.customer;
+      const temp = data.filter((project) => {
+        return id === project.customer;
+      });
+      setForecastProjectData(temp);
+    }
+  };
+
+  const getProjectsData2 = useCallback(async () => {
+    try {
+      const url = `/groups/${groupId}/projects?p=group:${groupId}&filters=customer:${
+        filters2.customer || ""
+      }`;
+      const result = await axios.get(url, {
+        headers: {
+          Authorization: token,
+        },
+      });
+
+      const result2 = await axios.get(`/projects?p=group:${groupId}`, {
+        headers: { Authorization: token },
+      });
+
+      setForecastProjectData(_.get(result2, ["data", "message"]) || []);
+
+      if (result.status === 200) {
+        setProjectsData(_.get(result, ["data", "message"]) || []);
+      }
+
+      filterForecastProjectData(result2.data.message);
+    } catch (err) {
+      console.log(err);
+    }
+  }, [groupId, token, filters2]);
+
+  useEffect(() => {
+    getProjectsData2();
+  }, [filters2]);
 
   const getCustomers = useCallback(async () => {
     try {
@@ -433,21 +487,38 @@ const Dashboard = (props) => {
       getUnitsPerWeek();
     }
   };
+
   return (
     <Grid container className={classes.mainRoot}>
-      <Grid item xs={12}>
+      <Grid className={classes.topBar} item xs={12}>
         <Typography className={classes.welcomeTxt}>
           Welcome, {_.get(profile, "first_name") || ""}
         </Typography>
+        <Box className={classes.filterBar}>
+          <img
+            src={filterIcon}
+            alt="filterIcon"
+            style={{ height: "17px", fill: "green" }}
+          />
+          <Typography className={classes.filterText}>Filter</Typography>
+          <CustomerFilter
+            customers={customers}
+            filters={filters2}
+            setFilters={setFilters2}
+          />
+          <ProjectFilter />
+          <JobFilter />
+          <StatusFilter />
+        </Box>
       </Grid>
-      <CostGraph projectsData={data} />
-      <RevenueGraph projectsData={forecastGraphData} />
-      <TimeGraph projectsData={forecastGraphData} />
+      <CostGraph projectsData={projectsData} />
+      <RevenueGraph projectsData={forecastProjectData} />
+      <TimeGraph projectsData={forecastProjectData} />
       <PerformersTable />
-      <ProjectSummaryCard id="id1" />
-      <ProjectSummaryCard id="id2" />
-      <ProjectSummaryCard id="id3" />
-      <ProjectSummaryCard id="id4" />
+      {projectsData?.map((project, index) => {
+        return <ProjectSummaryCard id={"id" + index} project={project} />;
+      })}
+
       {/* <Graphs header="Summary" data={graphData} onChange={changeGraph} /> */}
       <Paper className={classes.paper} elevation={0}>
         <Grid container>

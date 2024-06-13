@@ -33,6 +33,7 @@ const TimeGraph = ({ projectsData }) => {
   const [remainingTime, setRemainingTime] = useState([]);
   const classes = useStyles();
   const [chartInstance, setChartInstance] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const chartHeight = projectNames.length > 8 ? projectNames.length * 25 : 200;
 
@@ -85,8 +86,11 @@ const TimeGraph = ({ projectsData }) => {
       return data.project_name;
     });
 
-    // setProjectNames(projectName);
-    setProjectNames([...projectName, ...projectName]);
+    setProjectNames(projectName);
+    // setProjectNames([...projectName, ...projectName]);
+    setTimeout(() => {
+      setLoading(false);
+    }, 5000);
   }, [projectsData]);
 
   const options = {
@@ -221,8 +225,8 @@ const TimeGraph = ({ projectsData }) => {
         type: "bar",
         backgroundColor: "#417E5A",
         hoverBackgroundColor: "#417E5A",
-        data: [...remainingRevenue, ...remainingRevenue],
-        // data: remainingRevenue,
+        // data: [...remainingRevenue, ...remainingRevenue],
+        data: remainingRevenue,
         barThickness: 16,
         datalabels: {
           display: true,
@@ -244,8 +248,8 @@ const TimeGraph = ({ projectsData }) => {
         type: "bar",
         backgroundColor: "#C2E9A0",
         hoverBackgroundColor: "#C2E9A0",
-        data: [...remainingTime, ...remainingTime],
-        // data: remainingTime,
+        // data: [...remainingTime, ...remainingTime],
+        data: remainingTime,
         barThickness: 16,
 
         datalabels: {
@@ -292,35 +296,38 @@ const TimeGraph = ({ projectsData }) => {
         <div id="legend3"></div>
       </div>
 
-      <div
-        style={{
-          height: "430px",
-        }}
-      >
+      {projectsData.length === 0 && !loading ? (
+        <p className="timeChartNoData">No Data</p>
+      ) : (
         <div
           style={{
-            maxHeight: "390px",
-            overflowY: "auto",
-            overflowX: "hidden",
-            paddingRight: "10px",
+            MaxHeight: "430px",
           }}
         >
-          <Bar
-            ref={(ref) => setChartInstance(ref)}
-            key={chartHeight}
-            data={data}
-            options={options}
-            height={chartHeight}
-            plugins={[
-              {
-                id: "custom-legend3",
-                beforeInit: function (chart) {
-                  chart.generateLegend = function () {
-                    const datasets = this.data.datasets;
-                    let legendHtml = '<ul class="custom-legend3">';
+          <div
+            style={{
+              maxHeight: "390px",
+              overflowY: "auto",
+              overflowX: "hidden",
+              paddingRight: "10px",
+            }}
+          >
+            <Bar
+              ref={(ref) => setChartInstance(ref)}
+              key={chartHeight}
+              data={data}
+              options={options}
+              height={chartHeight}
+              plugins={[
+                {
+                  id: "custom-legend3",
+                  beforeInit: function (chart) {
+                    chart.generateLegend = function () {
+                      const datasets = this.data.datasets;
+                      let legendHtml = '<ul class="custom-legend3">';
 
-                    datasets.forEach((dataset, index) => {
-                      legendHtml += `
+                      datasets.forEach((dataset, index) => {
+                        legendHtml += `
                       <li>
                         <div class="legendSymbol">
                       
@@ -328,26 +335,27 @@ const TimeGraph = ({ projectsData }) => {
                        <p class="legendText"> ${dataset.label}</p>
                       </li>
                     `;
-                    });
+                      });
 
-                    legendHtml += "</ul>";
-                    return legendHtml;
-                  };
+                      legendHtml += "</ul>";
+                      return legendHtml;
+                    };
+                  },
                 },
-              },
-            ]}
-          />
-        </div>
-        {projectNames.length > 8 && (
-          <div
-            style={{
-              height: "40px",
-            }}
-          >
-            <Bar data={data} options={options2} />
+              ]}
+            />
           </div>
-        )}
-      </div>
+          {projectNames.length > 8 && (
+            <div
+              style={{
+                height: "40px",
+              }}
+            >
+              <Bar data={data} options={options2} />
+            </div>
+          )}
+        </div>
+      )}
     </Paper>
   );
 };

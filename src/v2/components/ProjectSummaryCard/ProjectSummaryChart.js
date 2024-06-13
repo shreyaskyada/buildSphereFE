@@ -2,8 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import "./styles.css";
 
-const ProjectSummaryChart = ({ id }) => {
+const ProjectSummaryChart = ({ id, project }) => {
   const [chartInstance, setChartInstance] = useState(null);
+  const completed = Number(project.Completed);
+  const paused = Number(project["On Hold"]);
+  const ongoing = Number(project.Ongoing);
+  const cancelled = Number(project.Cancelled);
+  const totalJobs = completed + paused + ongoing + cancelled;
+  const chartData = [completed, ongoing, paused, cancelled, totalJobs];
 
   const options = {
     rotation: 86 * Math.PI,
@@ -36,7 +42,7 @@ const ProjectSummaryChart = ({ id }) => {
     labels: ["Completed", "In Progress", "Paused", "Cancelled", ""],
     datasets: [
       {
-        data: [9, 3, 4, 14, 30],
+        data: chartData,
         backgroundColor: [
           "#00530C",
           "#59A77B",
@@ -49,7 +55,7 @@ const ProjectSummaryChart = ({ id }) => {
     ],
   };
 
-  const total = 30;
+  const total = totalJobs;
 
   const plugins = [
     {
@@ -93,21 +99,21 @@ const ProjectSummaryChart = ({ id }) => {
           <div class="jobsSummary1">
             <div class="completed">
               <span></span>
-              <p>Completed (9)</p>
+              <p>Completed (${completed})</p>
             </div>
             <div class="paused">
               <span></span>
-              <p>Paused (4)</p>
+              <p>Paused (${paused})</p>
             </div>
           </div>
           <div class="jobsSummary2">
             <div class="inProgress">
               <span></span>
-              <p>In Progress (3)</p>
+              <p>In Progress (${ongoing})</p>
             </div>
             <div class="cancelled">
               <span></span>
-              <p>Cancelled (14)</p>
+              <p>Cancelled (${cancelled})</p>
             </div>
           </div>
         </div>

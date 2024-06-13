@@ -115,7 +115,7 @@ const useStyles = makeStyles((theme) => ({
 
   paper: {
     width: "42.8%",
-    height: "32.7vw",
+    height: "29.7vw",
     borderRadius: 10,
     padding: "2%",
     paddingTop: 0,
