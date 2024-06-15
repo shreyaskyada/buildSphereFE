@@ -37,12 +37,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProjectFilter = () => {
+const ProjectFilter = ({ projectsData, filters, setFilters }) => {
   const classes = useStyles();
   const MenuProps = {
     PaperProps: {
       style: {
-        maxHeight: 300,
+        maxHeight: 320,
         maxWidth: 200,
         minWidth: 130,
       },
@@ -66,6 +66,9 @@ const ProjectFilter = () => {
             </Grid>
           );
         }}
+        onChange={(e) => {
+          setFilters({ ...filters, project: e.target.value });
+        }}
         defaultValue={"0"}
         MenuProps={MenuProps}
       >
@@ -73,15 +76,17 @@ const ProjectFilter = () => {
           <MenuItem key={-1} value={"0"} className={classes.menulabels}>
             Project
           </MenuItem>,
-          <MenuItem key={-1} value={"1"} className={classes.menulabels}>
-            Project 1
-          </MenuItem>,
-          <MenuItem key={-1} value={"2"} className={classes.menulabels}>
-            Project 2
-          </MenuItem>,
-          <MenuItem key={-1} value={"3"} className={classes.menulabels}>
-            Project 3
-          </MenuItem>,
+          ...projectsData.map((project, index) => {
+            return (
+              <MenuItem
+                key={index}
+                value={project.id}
+                className={classes.menulabels}
+              >
+                {project.project_name}
+              </MenuItem>
+            );
+          }),
         ]}
       </Select>
     </div>

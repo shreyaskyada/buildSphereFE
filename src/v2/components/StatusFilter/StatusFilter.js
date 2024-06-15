@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const StatusFilter = () => {
+const StatusFilter = ({ filters, setFilters }) => {
   const classes = useStyles();
   const MenuProps = {
     PaperProps: {
@@ -65,6 +65,9 @@ const StatusFilter = () => {
             </Grid>
           );
         }}
+        onChange={(e) => {
+          setFilters({ ...filters, status: e.target.value });
+        }}
         defaultValue={"0"}
         MenuProps={MenuProps}
       >
@@ -72,14 +75,14 @@ const StatusFilter = () => {
           <MenuItem key={-1} value={"0"} className={classes.menulabels}>
             Status
           </MenuItem>,
-          <MenuItem key={-1} value={"1"} className={classes.menulabels}>
-            Status 1
+          <MenuItem key={-1} value={"Ongoing"} className={classes.menulabels}>
+            Ongoing
           </MenuItem>,
-          <MenuItem key={-1} value={"2"} className={classes.menulabels}>
-            Status 2
+          <MenuItem key={-1} value={"Completed"} className={classes.menulabels}>
+            Completed
           </MenuItem>,
-          <MenuItem key={-1} value={"3"} className={classes.menulabels}>
-            Status 3
+          <MenuItem key={-1} value={"Cancelled"} className={classes.menulabels}>
+            Cancelled
           </MenuItem>,
         ]}
       </Select>

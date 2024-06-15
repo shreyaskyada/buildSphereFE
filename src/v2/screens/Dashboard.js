@@ -188,6 +188,7 @@ const Dashboard = (props) => {
   const [selectedHeader, setSelectedHeader] = useState(0);
   const [data, setData] = useState([]);
   const [projectsData, setProjectsData] = useState([]);
+  const [projects, setProjects] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [filters, setFilters] = useState({});
   const [filters2, setFilters2] = useState({});
@@ -195,6 +196,7 @@ const Dashboard = (props) => {
   const [sortDirection, setSortDirection] = useState("asc");
   const [graphData, setGraphData] = useState([]);
   const [forecastProjectData, setForecastProjectData] = useState([]);
+
   const token = useSelector((state) => state.auth.token);
   const profile = useSelector((state) =>
     JSON.parse(_.get(state, ["auth", "profile"]))
@@ -226,12 +228,48 @@ const Dashboard = (props) => {
   }, [groupId, token, filters, sortBy, sortDirection]);
 
   const filterForecastProjectData = (data) => {
+    var tempData = data;
     if (filters2?.customer && filters2?.customer !== "0") {
       const id = filters2?.customer;
-      const temp = data.filter((project) => {
+      tempData = tempData.filter((project) => {
         return id === project.customer;
       });
-      setForecastProjectData(temp);
+      setForecastProjectData(tempData);
+    }
+
+    if (filters2?.project && filters2?.project !== "0") {
+      const id = filters2?.project;
+      tempData = tempData.filter((project) => {
+        return id === project.project_Id;
+      });
+      setForecastProjectData(tempData);
+    }
+
+    if (filters2?.status && filters2?.status !== "0") {
+      const status = filters2?.status;
+      tempData = tempData.filter((project) => {
+        return status === project.status;
+      });
+      setForecastProjectData(tempData);
+    }
+  };
+
+  const filterProjectsData = (data) => {
+    var tempData = data;
+    if (filters2?.project && filters2?.project !== "0") {
+      const id = filters2?.project;
+      tempData = tempData.filter((project) => {
+        return id === project.id;
+      });
+      setProjectsData(tempData);
+    }
+
+    if (filters2?.status && filters2?.status !== "0") {
+      const status = filters2?.status;
+      tempData = tempData.filter((project) => {
+        return status === project.status;
+      });
+      setProjectsData(tempData);
     }
   };
 
@@ -246,17 +284,17 @@ const Dashboard = (props) => {
         },
       });
 
+      setProjectsData(_.get(result, ["data", "message"]) || []);
+      setProjects(_.get(result, ["data", "message"]) || []);
+
       const result2 = await axios.get(`/projects?p=group:${groupId}`, {
         headers: { Authorization: token },
       });
 
       setForecastProjectData(_.get(result2, ["data", "message"]) || []);
 
-      if (result.status === 200) {
-        setProjectsData(_.get(result, ["data", "message"]) || []);
-      }
-
       filterForecastProjectData(result2.data.message);
+      filterProjectsData(result.data.message);
     } catch (err) {
       console.log(err);
     }
@@ -506,9 +544,13 @@ const Dashboard = (props) => {
             filters={filters2}
             setFilters={setFilters2}
           />
-          <ProjectFilter />
+          <ProjectFilter
+            projectsData={projects}
+            filters={filters2}
+            setFilters={setFilters2}
+          />
           <JobFilter />
-          <StatusFilter />
+          <StatusFilter filters={filters2} setFilters={setFilters2} />
         </Box>
       </Grid>
       <CostGraph projectsData={projectsData} />
