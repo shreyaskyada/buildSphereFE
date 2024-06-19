@@ -9,10 +9,11 @@ const ProjectSummaryChart = ({ id, project }) => {
   const ongoing = Number(project.Ongoing);
   const cancelled = Number(project.Cancelled);
   const totalJobs = completed + paused + ongoing + cancelled;
-  const chartData = [completed, ongoing, paused, cancelled, totalJobs];
+  const chartData = [completed, ongoing, paused, cancelled];
 
   const options = {
-    rotation: 86 * Math.PI,
+    rotation: -90,
+    circumference: 180,
     plugins: {
       datalabels: {
         display: false,
@@ -23,33 +24,15 @@ const ProjectSummaryChart = ({ id, project }) => {
       legend: {
         display: false,
       },
-
-      tooltip: {
-        enabled: true,
-        filter: function (tooltipItem) {
-          return tooltipItem.label !== "";
-        },
-        callbacks: {
-          label: function (context) {
-            return `${context.label}: ${context.raw}`;
-          },
-        },
-      },
     },
   };
 
   const data = {
-    labels: ["Completed", "In Progress", "Paused", "Cancelled", ""],
+    labels: ["Completed", "In Progress", "Paused", "Cancelled"],
     datasets: [
       {
         data: chartData,
-        backgroundColor: [
-          "#00530C",
-          "#59A77B",
-          "#E3BD68",
-          "#E36767",
-          "#E3E3E3",
-        ],
+        backgroundColor: ["#00530C", "#59A77B", "#E3BD68", "#E36767"],
         borderWidth: 0,
       },
     ],
@@ -70,23 +53,44 @@ const ProjectSummaryChart = ({ id, project }) => {
         ctx.textBaseline = "middle";
         const text = total.toString(),
           textX = Math.round((width - ctx.measureText(text).width) / 2),
-          textY = height / 2;
+          textY = height / 1.5;
         ctx.fillText(text, textX, textY);
         ctx.save();
       },
 
       afterDatasetsDraw: function (chart) {
         const ctx = chart.ctx;
-        const innerRadius = chart.getDatasetMeta(0).data[0].innerRadius;
+        const meta = chart.getDatasetMeta(0);
+        const innerRadius = meta.data[0].innerRadius;
+        const outerRadius = meta.data[0].outerRadius;
         const centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
-        const centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
+        const centerY = (chart.chartArea.top + chart.chartArea.bottom) / 1.33;
 
         ctx.save();
         ctx.beginPath();
-        ctx.arc(centerX, centerY, innerRadius, 0, 2 * Math.PI);
+
+        ctx.moveTo(centerX - outerRadius, centerY);
+        ctx.lineTo(centerX - innerRadius, centerY);
+
+        ctx.moveTo(centerX + innerRadius, centerY);
+        ctx.lineTo(centerX + outerRadius, centerY);
+
         ctx.lineWidth = 3;
         ctx.strokeStyle = "#DBF4EE";
         ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, innerRadius, Math.PI, 2 * Math.PI);
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#DBF4EE";
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, outerRadius, Math.PI, 2 * Math.PI);
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#DBF4EE";
+        ctx.stroke();
+
         ctx.restore();
       },
     },
@@ -94,7 +98,7 @@ const ProjectSummaryChart = ({ id, project }) => {
       id: id,
       beforeInit: function (chart) {
         chart.generateLegend = function () {
-          let legendHtml = ` 
+          let legendHtml = `
           <div class="jobsSummary">
           <div class="jobsSummary1">
             <div class="completed">

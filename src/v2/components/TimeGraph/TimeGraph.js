@@ -61,7 +61,7 @@ const TimeGraph = ({ projectsData }) => {
       return (endDate - startDate) / (1000 * 3600 * 24);
     });
 
-    const remaining_days = projectsData.map((data) => {
+    const remaining_days = projectsData.map((data, index) => {
       const endDate = new Date(
         moment(_.defaultTo(_.get(data, "pactual_end_date"), new Date())).format(
           "YYYY-MM-DD"
@@ -73,7 +73,7 @@ const TimeGraph = ({ projectsData }) => {
       );
 
       const rd = (endDate - currentDate) / (1000 * 3600 * 24);
-      return rd < 0 ? 0 : rd;
+      return rd < 0 ? 0 : rd > total_days[index] ? total_days[index] : rd;
     });
 
     const remaining_time = remaining_days.map((days, index) => {
@@ -87,7 +87,7 @@ const TimeGraph = ({ projectsData }) => {
     });
 
     setProjectNames(projectName);
-    // setProjectNames([...projectName, ...projectName]);
+    // setProjectNames([...projectName]);
     setTimeout(() => {
       setLoading(false);
     }, 5000);
@@ -95,6 +95,7 @@ const TimeGraph = ({ projectsData }) => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     indexAxis: "y",
     scales: {
       x: {
@@ -301,33 +302,42 @@ const TimeGraph = ({ projectsData }) => {
       ) : (
         <div
           style={{
-            MaxHeight: "430px",
+            maxHeight: "440px",
           }}
         >
           <div
             style={{
-              maxHeight: "390px",
+              height: "400px",
               overflowY: "auto",
               overflowX: "hidden",
               paddingRight: "10px",
             }}
           >
-            <Bar
-              ref={(ref) => setChartInstance(ref)}
-              key={chartHeight}
-              data={data}
-              options={options}
-              height={chartHeight}
-              plugins={[
-                {
-                  id: "custom-legend3",
-                  beforeInit: function (chart) {
-                    chart.generateLegend = function () {
-                      const datasets = this.data.datasets;
-                      let legendHtml = '<ul class="custom-legend3">';
+            <div
+              style={{
+                height: `${
+                  projectNames.length > 8
+                    ? 400 + (projectNames.length - 8) * 50
+                    : 400
+                }px`,
+              }}
+            >
+              <Bar
+                ref={(ref) => setChartInstance(ref)}
+                key={chartHeight}
+                data={data}
+                options={options}
+                height={chartHeight}
+                plugins={[
+                  {
+                    id: "custom-legend3",
+                    beforeInit: function (chart) {
+                      chart.generateLegend = function () {
+                        const datasets = this.data.datasets;
+                        let legendHtml = '<ul class="custom-legend3">';
 
-                      datasets.forEach((dataset, index) => {
-                        legendHtml += `
+                        datasets.forEach((dataset, index) => {
+                          legendHtml += `
                       <li>
                         <div class="legendSymbol">
                       
@@ -335,15 +345,16 @@ const TimeGraph = ({ projectsData }) => {
                        <p class="legendText"> ${dataset.label}</p>
                       </li>
                     `;
-                      });
+                        });
 
-                      legendHtml += "</ul>";
-                      return legendHtml;
-                    };
+                        legendHtml += "</ul>";
+                        return legendHtml;
+                      };
+                    },
                   },
-                },
-              ]}
-            />
+                ]}
+              />
+            </div>
           </div>
           {projectNames.length > 8 && (
             <div

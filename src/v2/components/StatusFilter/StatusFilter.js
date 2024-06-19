@@ -1,6 +1,6 @@
 import { Grid, makeStyles, MenuItem, Select } from "@material-ui/core";
 import ArrowDown from "../../../assets/v2/ArrowDown.svg";
-import React from "react";
+import React, { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
   arrowContainer: {
@@ -14,10 +14,9 @@ const useStyles = makeStyles((theme) => ({
   },
   chooseCustSelect: {
     marginLeft: "2%",
-    maxHeight: 33,
+    height: 33,
     fontSize: 15,
     paddingLeft: "10px",
-    color: "#84A391",
     fontFamily: "Manrope",
     width: 130,
     backgroundColor: "white",
@@ -37,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const StatusFilter = ({ filters, setFilters }) => {
+  const [selectedValue, setSelectedValue] = useState("0");
   const classes = useStyles();
   const MenuProps = {
     PaperProps: {
@@ -44,6 +44,8 @@ const StatusFilter = ({ filters, setFilters }) => {
         maxHeight: 300,
         maxWidth: 200,
         minWidth: 130,
+        marginTop: 50,
+        marginLeft: -10,
       },
     },
   };
@@ -53,6 +55,7 @@ const StatusFilter = ({ filters, setFilters }) => {
       <Select
         variant="standard"
         className={classes.chooseCustSelect}
+        style={{ color: `${selectedValue !== "0" ? "#113C23" : "#84A391"}` }}
         IconComponent={() => {
           return (
             <Grid
@@ -66,6 +69,7 @@ const StatusFilter = ({ filters, setFilters }) => {
           );
         }}
         onChange={(e) => {
+          setSelectedValue(e.target.value);
           setFilters({ ...filters, status: e.target.value });
         }}
         defaultValue={"0"}
@@ -75,13 +79,13 @@ const StatusFilter = ({ filters, setFilters }) => {
           <MenuItem key={-1} value={"0"} className={classes.menulabels}>
             Status
           </MenuItem>,
-          <MenuItem key={-1} value={"Ongoing"} className={classes.menulabels}>
+          <MenuItem key={0} value={"Ongoing"} className={classes.menulabels}>
             Ongoing
           </MenuItem>,
-          <MenuItem key={-1} value={"Completed"} className={classes.menulabels}>
+          <MenuItem key={1} value={"Completed"} className={classes.menulabels}>
             Completed
           </MenuItem>,
-          <MenuItem key={-1} value={"Cancelled"} className={classes.menulabels}>
+          <MenuItem key={2} value={"Cancelled"} className={classes.menulabels}>
             Cancelled
           </MenuItem>,
         ]}

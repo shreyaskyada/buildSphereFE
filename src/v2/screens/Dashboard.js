@@ -15,7 +15,7 @@ import ArrowDown from "../../assets/v2/ArrowDown.svg";
 import filterIcon from "../../assets/v2/Filter.svg";
 import CollapsibleTableContainer from "../components/CollapsibleTableContainer";
 import axios from "../../axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Skull from "../../assets/v2/Skull.svg";
 import moment from "moment";
 import Graphs from "../components/Graphs";
@@ -28,8 +28,10 @@ import TimeGraph from "../components/TimeGraph/TimeGraph";
 import ProjectSummaryCard from "../components/ProjectSummaryCard/ProjectSummaryCard";
 import CustomerFilter from "../components/CustomerFilter/CustomerFilter";
 import ProjectFilter from "../components/ProjectFilter/ProjectFilter";
-import JobFilter from "../components/JobFilter/JobFilter";
+import ContractFilter from "../components/ContractFilter/ContractFilter";
 import StatusFilter from "../components/StatusFilter/StatusFilter";
+import DateFilter from "../components/DateFilter/DateFilter";
+import { HIDE_LOADER, SHOW_LOADER } from "../../store/actions/v2/loader";
 
 const useStyles = makeStyles((theme) => ({
   mainRoot: {
@@ -41,10 +43,17 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
   },
 
-  topBar: { display: "flex", alignItems: "center" },
+  topBar: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    [theme.breakpoints.down(1490)]: {
+      marginTop: "10px",
+    },
+  },
 
   welcomeTxt: {
-    paddingLeft: "3%",
+    paddingLeft: "2%",
     fontSize: 25,
     fontWeight: "bold",
     color: "#113C23",
@@ -56,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#113C23",
     marginLeft: "10px",
     fontFamily: "Manrope",
+    fontWeight: "bold",
   },
   paper: {
     width: "100%",
@@ -106,7 +116,33 @@ const useStyles = makeStyles((theme) => ({
   filterBar: {
     display: "flex",
     alignItems: "center",
-    marginLeft: "100px",
+    marginRight: "2.4%",
+    [theme.breakpoints.down(1490)]: {
+      gap: "10px",
+      marginLeft: "5%",
+    },
+  },
+
+  filterContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    alignItems: "center",
+    [theme.breakpoints.down(1490)]: {
+      gap: "10px",
+    },
+  },
+  dateFilter: {
+    display: "flex",
+    alignItems: "center",
+    height: "50px",
+  },
+  datePicker: { height: "50px" },
+
+  dateFilterError: {
+    color: "red",
+    fontSize: "12px",
+    marginLeft: "15px",
+    marginTop: "5px",
   },
   sortBy: {
     fontSize: 14,
@@ -189,6 +225,7 @@ const Dashboard = (props) => {
   const [data, setData] = useState([]);
   const [projectsData, setProjectsData] = useState([]);
   const [projects, setProjects] = useState([]);
+  const [allProjects, setAllProjects] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [filters, setFilters] = useState({});
   const [filters2, setFilters2] = useState({});
@@ -196,6 +233,11 @@ const Dashboard = (props) => {
   const [sortDirection, setSortDirection] = useState("asc");
   const [graphData, setGraphData] = useState([]);
   const [forecastProjectData, setForecastProjectData] = useState([]);
+  const [forecastProject, setForecastProject] = useState([]);
+  const [forecastStartDate, setForecastStartDate] = useState({});
+  const [forecastEndDate, setForecastEndDate] = useState({});
+  const [error, setError] = useState("");
+  const dispatch = useDispatch();
 
   const token = useSelector((state) => state.auth.token);
   const profile = useSelector((state) =>
@@ -252,6 +294,24 @@ const Dashboard = (props) => {
       });
       setForecastProjectData(tempData);
     }
+
+    if (filters2?.startDate && filters2?.endDate) {
+      const startD = new Date(
+        moment(_.defaultTo(filters2.startDate)).format("YYYY-MM-DD")
+      );
+
+      const endD = new Date(
+        moment(_.defaultTo(filters2.endDate)).format("YYYY-MM-DD")
+      );
+
+      tempData = tempData.filter((project) => {
+        const forecastEndD = forecastEndDate[project.project_Id];
+        return forecastEndD >= startD && forecastEndD <= endD;
+      });
+
+      setForecastProjectData(tempData);
+    }
+    setForecastProjectData(tempData);
   };
 
   const filterProjectsData = (data) => {
@@ -271,37 +331,149 @@ const Dashboard = (props) => {
       });
       setProjectsData(tempData);
     }
+
+    if (filters2?.startDate && filters2?.endDate) {
+      const startD = new Date(
+        moment(_.defaultTo(filters2.startDate)).format("YYYY-MM-DD")
+      );
+
+      const endD = new Date(
+        moment(_.defaultTo(filters2.endDate)).format("YYYY-MM-DD")
+      );
+
+      tempData = tempData.filter((project) => {
+        const forecastEndD = forecastEndDate[project.id];
+        return forecastEndD >= startD && forecastEndD <= endD;
+      });
+
+      setProjectsData(tempData);
+    }
+    setProjectsData(tempData);
   };
 
-  const getProjectsData2 = useCallback(async () => {
+  const setForecastDate = (data) => {
+    let startDate = {};
+    let endDate = {};
+
+    data.map((project) => {
+      startDate[project.project_Id] = new Date(
+        moment(
+          _.defaultTo(_.get(project, "pactual_start_date"), new Date())
+        ).format("YYYY-MM-DD")
+      );
+
+      endDate[project.project_Id] = new Date(
+        moment(
+          _.defaultTo(_.get(project, "pactual_end_date"), new Date())
+        ).format("YYYY-MM-DD")
+      );
+    });
+
+    setForecastStartDate(startDate);
+    setForecastEndDate(endDate);
+  };
+
+  const applyFilter = useCallback(async () => {
     try {
-      const url = `/groups/${groupId}/projects?p=group:${groupId}&filters=customer:${
-        filters2.customer || ""
-      }`;
+      dispatch({ type: SHOW_LOADER, data: 1 });
+
+      if (filters2.customer && filters2.customer !== "0") {
+        const url = `/groups/${groupId}/projects?p=group:${groupId}&filters=customer:${
+          filters2.customer || ""
+        }`;
+        const result = await axios.get(url, {
+          headers: {
+            Authorization: token,
+          },
+        });
+
+        setProjectsData(_.get(result, ["data", "message"]) || []);
+        setProjects(_.get(result, ["data", "message"]) || []);
+        filterProjectsData(result.data.message);
+      } else {
+        dispatch({ type: HIDE_LOADER });
+        setProjects(allProjects);
+        filterProjectsData(allProjects);
+      }
+
+      filterForecastProjectData(forecastProject);
+      dispatch({ type: HIDE_LOADER });
+    } catch (err) {
+      console.log(err);
+      dispatch({ type: HIDE_LOADER });
+    }
+  }, [groupId, token, filters2]);
+
+  const getData = useCallback(async () => {
+    try {
+      dispatch({ type: SHOW_LOADER, data: 1 });
+
+      const url = `/groups/${groupId}/projects?p=group:${groupId}`;
+
       const result = await axios.get(url, {
         headers: {
           Authorization: token,
         },
       });
 
-      setProjectsData(_.get(result, ["data", "message"]) || []);
-      setProjects(_.get(result, ["data", "message"]) || []);
-
       const result2 = await axios.get(`/projects?p=group:${groupId}`, {
         headers: { Authorization: token },
       });
 
-      setForecastProjectData(_.get(result2, ["data", "message"]) || []);
+      setProjectsData(_.get(result, ["data", "message"]) || []);
+      setProjects(_.get(result, ["data", "message"]) || []);
+      setAllProjects(_.get(result, ["data", "message"]) || []);
 
-      filterForecastProjectData(result2.data.message);
-      filterProjectsData(result.data.message);
+      setForecastProjectData(_.get(result2, ["data", "message"]) || []);
+      setForecastProject(_.get(result2, ["data", "message"]) || []);
+      setForecastDate(result2.data.message);
+
+      dispatch({ type: HIDE_LOADER });
     } catch (err) {
       console.log(err);
+      dispatch({ type: HIDE_LOADER });
     }
-  }, [groupId, token, filters2]);
+  }, [groupId, token]);
 
   useEffect(() => {
-    getProjectsData2();
+    getData();
+  }, [getData]);
+
+  useEffect(() => {
+    if (
+      filters2.startDate &&
+      !moment(filters2.startDate, "MM/DD/YYYY", true).isValid()
+    ) {
+      setError("");
+      return;
+    }
+    if (
+      filters2.endDate &&
+      !moment(filters2.endDate, "MM/DD/YYYY", true).isValid()
+    ) {
+      setError("");
+      return;
+    }
+    if (filters2.startDate && !filters2.endDate) {
+      setError("Please select an end date as well");
+      return;
+    }
+
+    if (!filters2.startDate && filters2.endDate) {
+      setError("Please select a start date as well");
+      return;
+    }
+
+    if (
+      filters2.startDate &&
+      filters2.endDate &&
+      filters2.startDate >= filters2.endDate
+    ) {
+      setError("The start date should be before the end date.");
+      return;
+    }
+    setError("");
+    applyFilter();
   }, [filters2]);
 
   const getCustomers = useCallback(async () => {
@@ -529,9 +701,7 @@ const Dashboard = (props) => {
   return (
     <Grid container className={classes.mainRoot}>
       <Grid className={classes.topBar} item xs={12}>
-        <Typography className={classes.welcomeTxt}>
-          Welcome, {_.get(profile, "first_name") || ""}
-        </Typography>
+        <Typography className={classes.welcomeTxt}>Dashboard</Typography>
         <Box className={classes.filterBar}>
           <img
             src={filterIcon}
@@ -539,18 +709,31 @@ const Dashboard = (props) => {
             style={{ height: "17px", fill: "green" }}
           />
           <Typography className={classes.filterText}>Filter</Typography>
-          <CustomerFilter
-            customers={customers}
-            filters={filters2}
-            setFilters={setFilters2}
-          />
-          <ProjectFilter
-            projectsData={projects}
-            filters={filters2}
-            setFilters={setFilters2}
-          />
-          <JobFilter />
-          <StatusFilter filters={filters2} setFilters={setFilters2} />
+          <Grid className={classes.filterContainer}>
+            <CustomerFilter
+              customers={customers}
+              filters={filters2}
+              setFilters={setFilters2}
+            />
+            <ProjectFilter
+              projectsData={projects}
+              filters={filters2}
+              setFilters={setFilters2}
+            />
+            <ContractFilter />
+            <StatusFilter filters={filters2} setFilters={setFilters2} />
+            <Grid className={classes.dateFilter}>
+              <Typography className={classes.filterText}>Date</Typography>
+              <Grid className={classes.datePicker}>
+                <DateFilter filters={filters2} setFilters={setFilters2} />
+                {error !== "" && (
+                  <Typography className={classes.dateFilterError}>
+                    {error}
+                  </Typography>
+                )}
+              </Grid>
+            </Grid>
+          </Grid>
         </Box>
       </Grid>
       <CostGraph projectsData={projectsData} />
@@ -558,7 +741,15 @@ const Dashboard = (props) => {
       <TimeGraph projectsData={forecastProjectData} />
       <PerformersTable />
       {projectsData?.map((project, index) => {
-        return <ProjectSummaryCard id={"id" + index} project={project} />;
+        return (
+          <ProjectSummaryCard
+            id={"id" + index}
+            project={project}
+            history={props.history}
+            startDate={forecastStartDate[project.id]}
+            endDate={forecastEndDate[project.id]}
+          />
+        );
       })}
 
       {/* <Graphs header="Summary" data={graphData} onChange={changeGraph} /> */}

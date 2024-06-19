@@ -1,6 +1,6 @@
 import { Grid, makeStyles, MenuItem, Select } from "@material-ui/core";
 import ArrowDown from "../../../assets/v2/ArrowDown.svg";
-import React from "react";
+import React, { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
   arrowContainer: {
@@ -14,10 +14,9 @@ const useStyles = makeStyles((theme) => ({
   },
   chooseCustSelect: {
     marginLeft: "2%",
-    maxHeight: 33,
+    height: 33,
     fontSize: 15,
     paddingLeft: "10px",
-    color: "#84A391",
     fontFamily: "Manrope",
     width: 130,
     backgroundColor: "white",
@@ -37,7 +36,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const JobFilter = () => {
+const ContractFilter = () => {
+  const [selectedValue, setSelectedValue] = useState("0");
   const classes = useStyles();
   const MenuProps = {
     PaperProps: {
@@ -45,6 +45,8 @@ const JobFilter = () => {
         maxHeight: 300,
         maxWidth: 200,
         minWidth: 130,
+        marginTop: 50,
+        marginLeft: -10,
       },
     },
   };
@@ -54,6 +56,7 @@ const JobFilter = () => {
       <Select
         variant="standard"
         className={classes.chooseCustSelect}
+        style={{ color: `${selectedValue !== "0" ? "#113C23" : "#84A391"}` }}
         IconComponent={() => {
           return (
             <Grid
@@ -66,21 +69,24 @@ const JobFilter = () => {
             </Grid>
           );
         }}
+        onChange={(e) => {
+          setSelectedValue(e.target.value);
+        }}
         defaultValue={"0"}
         MenuProps={MenuProps}
       >
         {[
           <MenuItem key={-1} value={"0"} className={classes.menulabels}>
-            Job
+            Contract
           </MenuItem>,
           <MenuItem key={-1} value={"1"} className={classes.menulabels}>
-            Job 1
+            Contract 1
           </MenuItem>,
           <MenuItem key={-1} value={"2"} className={classes.menulabels}>
-            Job 2
+            Contract 2
           </MenuItem>,
           <MenuItem key={-1} value={"3"} className={classes.menulabels}>
-            Job 3
+            Contract 3
           </MenuItem>,
         ]}
       </Select>
@@ -88,4 +94,4 @@ const JobFilter = () => {
   );
 };
 
-export default JobFilter;
+export default ContractFilter;
