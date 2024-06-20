@@ -59,15 +59,15 @@ const CostGraph = ({ projectsData }) => {
 
   useEffect(() => {
     let plannedData = projectsData.map((data, index) => {
-      return data.planned_value;
+      return data.planned_value || 0;
     });
 
     const completedData = projectsData.map((data) => {
-      return data.actual_value;
+      return data.actual_value || 0;
     });
 
     let deltaData = projectsData.map((data) => {
-      return data.planned_value - data.actual_value;
+      return (data.planned_value || 0) - (data.actual_value || 0);
     });
 
     const remaining_revenue = deltaData.map((delta) => {

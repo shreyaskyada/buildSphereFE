@@ -69,11 +69,11 @@ const RevenueGraph = ({ projectsData }) => {
 
   useEffect(() => {
     const plannedData = projectsData.map((data, index) => {
-      return data.planned_value;
+      return data.planned_value || 0;
     });
 
     const completedData = projectsData.map((data) => {
-      return data.actual_value;
+      return data.actual_value || 0;
     });
 
     const forecastMonth = projectsData.map((data) => {
