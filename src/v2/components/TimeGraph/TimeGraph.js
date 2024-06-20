@@ -2,6 +2,7 @@ import { Paper, makeStyles } from "@material-ui/core";
 import _ from "lodash";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
+import skull from "../../../assets/v2/Skull.svg";
 import { Bar } from "react-chartjs-2";
 import "./styles.css";
 
@@ -298,7 +299,20 @@ const TimeGraph = ({ projectsData }) => {
       </div>
 
       {projectsData.length === 0 && !loading ? (
-        <p className="timeChartNoData">No Data</p>
+        <>
+          <div className="timeChartNoData">
+            <img
+              src={skull}
+              alt="default"
+              style={{
+                height: 40,
+                width: 40,
+                borderRadius: 40,
+              }}
+            />
+            <p style={{ marginTop: "0px" }}>No Data</p>
+          </div>
+        </>
       ) : (
         <div
           style={{

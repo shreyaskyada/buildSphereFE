@@ -753,7 +753,7 @@ const Dashboard = (props) => {
       })}
 
       {/* <Graphs header="Summary" data={graphData} onChange={changeGraph} /> */}
-      <Paper className={classes.paper} elevation={0}>
+      {/* <Paper className={classes.paper} elevation={0}>
         <Grid container>
           <Grid item xs={6}>
             <Typography className={classes.mainHeader}>
@@ -912,7 +912,7 @@ const Dashboard = (props) => {
             )}
           </Grid>
         </Grid>
-      </Paper>
+      </Paper> */}
       <ActivityLog history={props.history} />
     </Grid>
   );

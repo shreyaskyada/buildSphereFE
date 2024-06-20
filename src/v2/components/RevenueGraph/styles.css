@@ -4,13 +4,15 @@
 }
 
 .revenueChartNoData {
-    height: 300px;
+    height: 330px;
     width: 100%;
     display: flex;
+    gap: 0px;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: 20px;
-    color: #113C23;
+    font-size: 16px;
+    color: #696969;
 }
 
 .custom-legend2 {

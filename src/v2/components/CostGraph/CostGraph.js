@@ -2,6 +2,7 @@ import { Paper, makeStyles } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import skull from "../../../assets/v2/Skull.svg";
 import { Chart } from "chart.js";
 import "./styles.css";
 
@@ -340,7 +341,20 @@ const CostGraph = ({ projectsData }) => {
         </div>
 
         {projectsData.length === 0 && !loading ? (
-          <p className="costChartNoData">No Data</p>
+          <>
+            <div className="costChartNoData">
+              <img
+                src={skull}
+                alt="default"
+                style={{
+                  height: 40,
+                  width: 40,
+                  borderRadius: 40,
+                }}
+              />
+              <p style={{ marginTop: "0px" }}>No data</p>
+            </div>
+          </>
         ) : (
           <div style={{ display: "flex", width: "100%" }}>
             {projectNames.length > 6 && (

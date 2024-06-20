@@ -1,6 +1,6 @@
 import { Grid, makeStyles, MenuItem, Select } from "@material-ui/core";
 import ArrowDown from "../../../assets/v2/ArrowDown.svg";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
   arrowContainer: {
@@ -38,7 +38,13 @@ const useStyles = makeStyles((theme) => ({
 
 const ProjectFilter = ({ projectsData, filters, setFilters }) => {
   const [selectedValue, setSelectedValue] = useState("0");
+  const [project, setProject] = useState("0");
   const classes = useStyles();
+
+  useEffect(() => {
+    if (filters?.project === "0") setSelectedValue("0");
+  }, [filters]);
+
   const MenuProps = {
     PaperProps: {
       style: {
@@ -71,8 +77,10 @@ const ProjectFilter = ({ projectsData, filters, setFilters }) => {
         }}
         onChange={(e) => {
           setSelectedValue(e.target.value);
+          setProject(e.target.value);
           setFilters({ ...filters, project: e.target.value });
         }}
+        value={filters?.project || project}
         defaultValue={"0"}
         MenuProps={MenuProps}
       >
