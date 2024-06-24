@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     fontSize: "18px",
-    fontWeight: "600",
+    fontWeight: "750",
     color: "#113C23",
   },
 }));
@@ -109,7 +109,9 @@ const TimeGraph = ({ projectsData }) => {
           },
           color: "#123C23",
           font: {
-            size: 12,
+            size: "12px",
+            family: "Manrope",
+            weight: 600,
           },
         },
         grid: {
@@ -128,8 +130,9 @@ const TimeGraph = ({ projectsData }) => {
         ticks: {
           color: "#123C23",
           font: {
-            size: 10,
-            family: "Arial, sans-serif",
+            size: "10px",
+            family: "Manrope",
+            weight: 600,
           },
         },
         grid: {
@@ -172,7 +175,7 @@ const TimeGraph = ({ projectsData }) => {
     maintainAspectRatio: false,
     layout: {
       padding: {
-        left: 99,
+        left: 95,
       },
     },
     indexAxis: "y",
@@ -190,7 +193,9 @@ const TimeGraph = ({ projectsData }) => {
           },
           color: "#123c23",
           font: {
-            size: 12,
+            size: "12px",
+            family: "Manrope",
+            weight: 600,
           },
         },
         grid: {
@@ -356,7 +361,7 @@ const TimeGraph = ({ projectsData }) => {
                         <div class="legendSymbol">
                       
                         </div>
-                       <p class="legendText"> ${dataset.label}</p>
+                       <p class="legendText3"> ${dataset.label}</p>
                       </li>
                     `;
                         });

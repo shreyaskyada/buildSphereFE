@@ -21,6 +21,7 @@
 
 .projectProgress {
     font-size: 15px;
+    font-weight: 500;
     color: #113C23;
     margin-top: -5px;
 }
@@ -62,6 +63,7 @@
 
 .projectSchedule {
     font-size: 15px;
+    font-weight: 500;
     color: #0CA14A;
     margin-top: 5px;
 }
@@ -69,6 +71,7 @@
 .projectIssue {
     color: #24231F;
     font-size: 15px;
+    font-weight: 500;
     margin-top: 20px;
 }
 
@@ -86,6 +89,7 @@
 .jobStatus {
     margin-top: 30px;
     font-size: 15px;
+    font-weight: 500;
     color: #24231F;
     margin-right: 40px;
 }
@@ -98,6 +102,7 @@
 .jobsSummary2 {
     display: flex;
     font-size: 15px;
+    font-weight: 500;
     color: #84A391;
     gap: 30px
 }

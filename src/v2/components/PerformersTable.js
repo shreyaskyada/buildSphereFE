@@ -99,8 +99,8 @@ const rows = [
 ];
 
 const cellStyles = {
-  paddingX: "10px",
-  paddingY: "7px",
+  paddingX: "5px",
+  paddingY: "10px",
   fontSize: "12px",
   color: "#123C23",
   borderColor: "#DCF4EE",
@@ -115,7 +115,6 @@ const useStyles = makeStyles((theme) => ({
 
   paper: {
     width: "42.8%",
-    height: "31vw",
     borderRadius: 10,
     padding: "2%",
     paddingTop: 0,
@@ -124,8 +123,12 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 0,
     marginTop: 0,
     overflow: "auto",
+    [theme.breakpoints.down(1360)]: {
+      maxheight: "500px",
+    },
     [theme.breakpoints.down(1250)]: {
       width: "100%",
+
       marginRight: "2%",
       height: "35vw",
       margin: "2%",
@@ -151,7 +154,7 @@ const PerformersTable = () => {
               return (
                 <TableCell
                   sx={{
-                    padding: "10px",
+                    paddingX: "5px",
                     fontSize: "10px",
                     paddingY: "10px",
                     color: "#417E5A",
@@ -173,7 +176,7 @@ const PerformersTable = () => {
               sx={{ border: "1px solid #DCF4EE" }}
             >
               <TableCell sx={cellStyles}>{row["project name"]}</TableCell>
-              <TableCell sx={{ ...cellStyles, paddingLeft: "20px" }}>
+              <TableCell sx={{ ...cellStyles, paddingLeft: "15px" }}>
                 {row["project significance"]}
               </TableCell>
               <TableCell sx={cellStyles}>

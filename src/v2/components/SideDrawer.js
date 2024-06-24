@@ -38,13 +38,8 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-  drawerClose: {
-    width: closedDrawerWidth,
-    overflowX: "hidden",
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
+  drawer: {
+    width: "104px",
   },
   drawerGrid: {
     height: h,
@@ -113,7 +108,7 @@ const useStyles = makeStyles((theme) => ({
 
 const SideDrawer = (props) => {
   const classes = useStyles();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [showSubRoutes, setShowSubRoutes] = useState(false);
   const [selectedLabel, setSelectedLabel] = useState(0);
   const [selectedSubLabel, setSelectedSubLabel] = useState(0);
@@ -163,110 +158,90 @@ const SideDrawer = (props) => {
   return (
     <Drawer
       variant="permanent"
-      className={clsx({
-        [classes.drawerOpen]: open,
-        [classes.drawerClose]: !open,
-      })}
+      className={classes.drawer}
       classes={{
-        paper: clsx({
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        }),
+        paper: classes.drawer,
       }}
     >
-      <Grid container item className={classes.drawerGrid}>
+      <Grid
+        container
+        item
+        className={classes.drawerGrid}
+        style={{ margin: 0, padding: 0 }}
+      >
+        <Grid container item xs={12}></Grid>
         <Grid
           container
           item
           xs={12}
-          justify="flex-end"
-          style={{ paddingRight: "5%", paddingTop: "5%" }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "25px",
+          }}
         >
-          {open && (
-            <IconButton
-              className={classes.chevron}
-              onClick={() => {
-                setOpen(!open);
-              }}
-            >
-              <LeftChevron />
-            </IconButton>
-          )}
-          {!open && (
-            <IconButton
-              className={classes.chevron}
-              onClick={() => {
-                setOpen(!open);
-              }}
-            >
-              <RightChevron />
-            </IconButton>
-          )}
+          <img src={Logo} alt={"Logo"} style={{ height: "46px" }} />
         </Grid>
-        <Grid container item xs={12} style={{ paddingTop: 0.05 * h }}>
-          {open ? (
-            <img src={LogoFull} alt="logo" width={"90%"} />
-          ) : (
-            <img src={Logo} alt={"Logo"} />
-          )}
-        </Grid>
-        <Grid container item xs={12} style={{ paddingTop: 0.1 * h }}>
+        <Grid
+          container
+          item
+          xs={12}
+          style={{
+            paddingLeft: "10px",
+            marginTop: "80px",
+          }}
+        >
           <Button
             variant="contained"
             startIcon={
-              <Grid style={{ width: 40 }} container justify="center">
-                <Home fill={selectedLabel === 0 ? "white" : "#696969"} />
+              <Grid container>
+                <Home
+                  fill={selectedLabel === 0 ? "white" : "#696969"}
+                  style={{
+                    width: "30px",
+                    height: "24px",
+                    paddingLeft: "10px",
+                  }}
+                />
               </Grid>
             }
             className={clsx(classes.btn, {
               [classes.selectedButton]: selectedLabel === 0,
             })}
             onClick={navigateToRoute.bind(this, ROUTE_HOME)}
-          >
-            {open ? (
-              <Typography
-                className={clsx(classes.label, {
-                  [classes.labelSelected]: selectedLabel === 0,
-                })}
-              >
-                Home
-              </Typography>
-            ) : (
-              ""
-            )}
-          </Button>
+          ></Button>
         </Grid>
-        <Grid container item xs={12}>
+        <Grid container item xs={12} style={{ paddingLeft: "10px" }}>
           <Button
             variant="contained"
             startIcon={
-              <Grid style={{ width: 40 }} container justify="center">
-                <Projects fill={selectedLabel === 1 ? "white" : "#696969"} />
+              <Grid container>
+                <Projects
+                  fill={selectedLabel === 1 ? "white" : "#696969"}
+                  style={{
+                    width: "30px",
+                    height: "24px",
+                    paddingLeft: "10px",
+                  }}
+                />
               </Grid>
             }
             className={clsx(classes.btn, {
               [classes.selectedButton]: selectedLabel === 1,
             })}
             onClick={navigateToRoute.bind(this, ROUTE_PROJECTS)}
-          >
-            {open ? (
-              <Typography
-                className={clsx(classes.label, {
-                  [classes.labelSelected]: selectedLabel === 1,
-                })}
-              >
-                Projects
-              </Typography>
-            ) : (
-              ""
-            )}
-          </Button>
+          ></Button>
         </Grid>
-        <Grid container item xs={12}>
+        <Grid container item xs={12} style={{ paddingLeft: "10px" }}>
           <Button
             variant="contained"
             startIcon={
-              <Grid container style={{ width: 40 }} justify="center">
+              <Grid
+                container
+                style={{
+                  paddingLeft: "8px",
+                }}
+              >
                 {profile.file && (
                   <img
                     src={profile.file}
@@ -277,12 +252,7 @@ const SideDrawer = (props) => {
                   />
                 )}
                 {!profile.file && (
-                  <Grid
-                    container
-                    justify="center"
-                    alignItems="center"
-                    className={classes.imageContainer}
-                  >
+                  <Grid container className={classes.imageContainer}>
                     <Typography className={classes.imageText}>
                       {_.get(profile, "first_name", "") &&
                         _.upperCase(
@@ -301,19 +271,7 @@ const SideDrawer = (props) => {
               [classes.selectedButton]: selectedLabel === 3,
             })}
             onClick={navigateToRoute.bind(this, ROUTE_PROFILE)}
-          >
-            {open ? (
-              <Typography
-                className={clsx(classes.label, {
-                  [classes.labelSelected]: selectedLabel === 3,
-                })}
-              >
-                Account
-              </Typography>
-            ) : (
-              ""
-            )}
-          </Button>
+          ></Button>
           {showSubRoutes && (
             <Grid
               container
@@ -412,12 +370,18 @@ const SideDrawer = (props) => {
           container
           item
           xs={11}
-          style={{ paddingTop: showSubRoutes ? 0.2 * h : 0.35 * h }}
+          style={{
+            paddingTop: showSubRoutes ? 0.2 * h : 0.35 * h,
+            paddingLeft: "20px",
+          }}
         >
           <Button
             variant="contained"
             startIcon={
-              <Logout stroke={selectedLabel === 4 ? "white" : "#696969"} />
+              <Logout
+                stroke={selectedLabel === 4 ? "white" : "#696969"}
+                style={{ width: "21px", height: "20px", paddingLeft: "10px" }}
+              />
             }
             className={clsx(classes.btn, {
               [classes.selectedButton]: selectedLabel === 4,
@@ -427,19 +391,7 @@ const SideDrawer = (props) => {
               localStorage.clear();
               dispatch({ type: LOGOUT_ACTION });
             }}
-          >
-            {open ? (
-              <Typography
-                className={clsx(classes.label, {
-                  [classes.labelSelected]: selectedLabel === 4,
-                })}
-              >
-                &nbsp;Logout
-              </Typography>
-            ) : (
-              ""
-            )}
-          </Button>
+          ></Button>
         </Grid>
       </Grid>
     </Drawer>

@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     width: "32%",
     fontSize: "18px",
-    fontWeight: "600",
+    fontWeight: "750",
     color: "#113C23",
     paddingLeft: "6%",
   },
@@ -111,8 +111,9 @@ const CostGraph = ({ projectsData }) => {
           maxRotation: 0,
           color: "#123C23",
           font: {
-            size: 9,
-            family: "Arial, sans-serif",
+            size: "10px",
+            family: "Manrope",
+            weight: 600,
           },
         },
         grid: {
@@ -140,7 +141,8 @@ const CostGraph = ({ projectsData }) => {
           color: "#123C23",
           font: {
             size: 12,
-            family: "Arial, sans-serif",
+            family: "Manrope",
+            weight: 550,
           },
         },
         grid: {
@@ -157,8 +159,8 @@ const CostGraph = ({ projectsData }) => {
         color: "#113C23",
         font: {
           size: 12,
+          family: "Manrope",
           weight: "bold",
-          family: "Manrope, sans-serif",
         },
         anchor: "end",
         offset: -20,
@@ -244,7 +246,8 @@ const CostGraph = ({ projectsData }) => {
           color: "#123C23",
           font: {
             size: 12,
-            family: "Arial, sans-serif",
+            family: "Manrope",
+            weight: 550,
           },
         },
         grid: {
@@ -381,7 +384,7 @@ const CostGraph = ({ projectsData }) => {
               <div
                 style={{
                   minWidth: "100%",
-                  width: `${projectNames.length * 80}px`,
+                  width: `${projectNames.length * 90}px`,
                   height: "400px",
                   paddingBottom: `${projectNames.length <= 6 ? "0px" : "10px"}`,
                 }}
@@ -407,7 +410,7 @@ const CostGraph = ({ projectsData }) => {
                         <span class="legendSymbolSpan1"></span>
                         <span class="legendSymbolSpan2"></span>
                         </div>
-                       <p class="legendText"> ${dataset.label}</p>
+                       <p class="legendText1"> ${dataset.label}</p>
                       </li>
                     `;
                           });

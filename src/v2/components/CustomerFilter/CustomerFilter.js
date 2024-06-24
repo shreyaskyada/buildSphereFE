@@ -14,11 +14,12 @@ const useStyles = makeStyles((theme) => ({
   },
   chooseCustSelect: {
     marginLeft: "2%",
-    height: 33,
-    fontSize: 15,
+    height: "32px",
+    fontSize: "12px",
+    fontWeight: 500,
     paddingLeft: "10px",
     fontFamily: "Manrope",
-    width: 130,
+    width: "120px",
     backgroundColor: "white",
     "& .MuiSelect-select": {
       backgroundColor: "white",
@@ -32,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Manrope",
     backgroundColor: theme.v2.backgrounds.whiteBackground,
     fontSize: 14,
+    fontWeight: 500,
     color: theme.v2.fonts.colors.blackShade1,
   },
 }));

@@ -6,6 +6,7 @@ import Calendar from "../../../assets/v2/Calendar.svg";
 const useStyles = makeStyles((theme) => ({
   label: {
     fontSize: 10,
+    fontWeight: 500,
     marginLeft: "15px",
     color: "#84A391",
     fontFamily: "Manrope",
@@ -14,13 +15,15 @@ const useStyles = makeStyles((theme) => ({
 
   textField: {
     paddingLeft: "15px",
+
     "& .MuiInput-root": {
-      height: 32,
-      width: 155,
+      height: "32px",
+      width: "132px",
+      fontWeight: 500,
       backgroundColor: "white",
       paddingLeft: "10px",
       fontFamily: "Manrope",
-      fontSize: 15,
+      fontSize: "12px",
     },
     "& .MuiInputBase-input::placeholder": {
       color: "#84A391",
@@ -53,7 +56,7 @@ const DateFilter = ({ filters, setFilters }) => {
   };
 
   return (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: "flex", flexWrap: "wrap" }}>
       <Grid item xs={6}>
         <Typography className={classes.label}>Start</Typography>
         <KeyboardDatePicker
@@ -82,7 +85,13 @@ const DateFilter = ({ filters, setFilters }) => {
             autoComplete: "off",
           }}
           className={classes.textField}
-          keyboardIcon={<img src={Calendar} alt="calendar" />}
+          keyboardIcon={
+            <img
+              src={Calendar}
+              alt="calendar"
+              style={{ height: "16px", width: "15px" }}
+            />
+          }
         />
       </Grid>
       <Grid item xs={6}>
@@ -113,7 +122,13 @@ const DateFilter = ({ filters, setFilters }) => {
             autoComplete: "off",
           }}
           className={classes.textField}
-          keyboardIcon={<img src={Calendar} alt="calendar" />}
+          keyboardIcon={
+            <img
+              src={Calendar}
+              alt="calendar"
+              style={{ height: "16px", width: "15px" }}
+            />
+          }
         />
       </Grid>
     </div>

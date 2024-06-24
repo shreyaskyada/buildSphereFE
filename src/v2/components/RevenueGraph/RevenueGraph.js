@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     width: "35%",
     fontSize: "18px",
-    fontWeight: "600",
+    fontWeight: "750",
     color: "#113C23",
   },
 }));
@@ -148,7 +148,8 @@ const RevenueGraph = ({ projectsData }) => {
           color: "#417E5A",
           font: {
             size: 9,
-            family: "Arial, sans-serif",
+            family: "Manrope",
+            weight: 550,
           },
         },
         grid: {
@@ -169,8 +170,9 @@ const RevenueGraph = ({ projectsData }) => {
           },
           color: "#123C23",
           font: {
-            size: 12,
-            family: "Arial, sans-serif",
+            size: "12px",
+            family: "Manrope",
+            weight: 550,
           },
         },
         grid: {
@@ -358,7 +360,7 @@ const RevenueGraph = ({ projectsData }) => {
                       <span class="legendSymbolSpan1"></span>
                       <span class="legendSymbolSpan2"></span>
                       </div>
-                     <p class="legendText"> ${dataset.label} <br/> ${
+                     <p class="legendText2"> ${dataset.label} <br/> ${
                         index === 0
                           ? `<span class='legendSubText'>(Cumulative Values)</span>`
                           : ""

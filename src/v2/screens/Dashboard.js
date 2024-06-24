@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
   mainHeader: {
     fontSize: 30,
-    fontWeight: "bold",
+    // fontWeight: "bold",
   },
 
   topBar: {
@@ -54,8 +54,8 @@ const useStyles = makeStyles((theme) => ({
 
   welcomeTxt: {
     paddingLeft: "2%",
-    fontSize: 25,
-    fontWeight: "bold",
+    fontSize: "25px",
+    fontWeight: 800,
     color: "#113C23",
     fontFamily: "Manrope",
   },
@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#113C23",
     marginLeft: "10px",
     fontFamily: "Manrope",
-    fontWeight: "bold",
+    fontWeight: "bolder",
   },
   paper: {
     width: "100%",
@@ -117,8 +117,12 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     marginRight: "2.4%",
-    [theme.breakpoints.down(1490)]: {
-      gap: "10px",
+    [theme.breakpoints.down(1276)]: {
+      gap: "15px",
+      marginLeft: "13%",
+    },
+    [theme.breakpoints.down(910)]: {
+      gap: "15px",
       marginLeft: "5%",
     },
   },
@@ -127,7 +131,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexWrap: "wrap",
     alignItems: "center",
-    [theme.breakpoints.down(1490)]: {
+    [theme.breakpoints.down(1276)]: {
       gap: "10px",
     },
   },
@@ -135,6 +139,10 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     height: "50px",
+    marginLeft: "50px",
+    [theme.breakpoints.down(1490)]: {
+      marginLeft: "0px",
+    },
   },
   datePicker: { height: "50px" },
 
