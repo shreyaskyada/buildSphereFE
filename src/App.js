@@ -31,6 +31,9 @@ const ProjectDetails = lazy(() => import("./v2/screens/ProjectDetails"));
 // import Projects from "./v2/screens/Projects";
 const Projects = lazy(() => import("./v2/screens/Projects"));
 
+// import Projects from "./v2/screens/Projects";
+const Projects2 = lazy(() => import("./v2/screens/Projects2/Projects2.js"));
+
 // import SideDrawer from "./v2/components/SideDrawer";
 const SideDrawer = lazy(() => import("./v2/components/SideDrawer"));
 // import Login from "./v2/screens/Login";
@@ -212,7 +215,7 @@ function App(props) {
             <Route path={ROUTE_SIGNUP} component={Signup} />
             <Route path={ROUTE_HOME} exact component={Dashboard} />
             <Route path={`${ROUTE_PROJECTS}/:id`} component={ProjectDetails} />
-            <Route path={ROUTE_PROJECTS} exact component={Projects} />
+            <Route path={ROUTE_PROJECTS} exact component={Projects2} />
             <Route path={ROUTE_PAYMENTS} component={Payments} />
             <Route
               path={ROUTE_ACCOUNTS_SUBSCRIPTION}
@@ -245,7 +248,7 @@ function App(props) {
               }}
             />
           </Switch>
-          {/* <Footer /> */}
+          <Footer />
         </div>
       </div>
     </MuiPickersUtilsProvider>

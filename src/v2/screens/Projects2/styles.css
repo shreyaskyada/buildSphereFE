@@ -1,0 +1,141 @@
+.projectsContainer {
+    padding-left: 2%;
+    padding-right: 2%;
+    width: 89vw;
+    min-height: 98vh;
+}
+
+.projectsHeader {
+    display: flex;
+    align-items: center;
+
+}
+
+.projectText {
+    color: #113C23;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.projectsFilter ul {
+    list-style: none;
+    display: flex;
+    gap: 10px
+}
+
+.filterName {
+    color: #84A391;
+    padding: 6px 15px;
+    border-radius: 24px;
+    font-size: 12px;
+    border: 1px solid #84A391
+}
+
+.projectsStatus {
+    margin-left: 20px;
+}
+
+.projectsStatusRow2,
+.projectsStatusRow1 {
+    display: flex;
+    gap: 15px;
+    font-size: 10px;
+    color: #84A391;
+}
+
+.projectsStatusRow2 {
+    gap: 32px;
+    margin-top: 2px;
+}
+
+.projectsStatusRow2 p {
+    margin: 0;
+}
+
+.projectsStatusRow1 p {
+    margin: 0;
+}
+
+.statusCompleted,
+.statusInProgress,
+.statusPaused,
+.statusCancelled {
+    display: flex;
+    align-items: center;
+    gap: 5px
+}
+
+.statusCompleted div,
+.statusInProgress div,
+.statusPaused div,
+.statusCancelled div {
+    height: 11px;
+    width: 11px;
+    border-radius: 50%;
+}
+
+.projectFilter {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    margin-left: 560px;
+}
+
+.projectsTable {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    margin-top: -10px;
+    margin-bottom: 50px;
+}
+
+.tableProjectStatus {
+    height: 16px;
+    width: 16px;
+    background-color: "#59A77B";
+}
+
+.circle-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.circle {
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circle-border {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 10px solid transparent;
+}
+
+.number {
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+}
+
+.projectsNoData {
+    height: 60vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
