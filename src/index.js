@@ -162,7 +162,6 @@ const theme = createMuiTheme({
 Interceptor.setup(store);
 
 (async () => {
-  console.log(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY)
   const stripePromise = await loadStripe(
     process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY
   );

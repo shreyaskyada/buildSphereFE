@@ -1,7 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="14.985" height="14.604" viewBox="0 0 14.985 14.604">
-  <g id="Logout" transform="translate(0.75 0.75)">
-    <path id="Stroke_1" data-name="Stroke 1" d="M8.673,3.271V2.61A2.61,2.61,0,0,0,6.063,0H2.609A2.61,2.61,0,0,0,0,2.61v7.884A2.61,2.61,0,0,0,2.609,13.1H6.07a2.6,2.6,0,0,0,2.6-2.6V9.834" fill="none" stroke="current" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
-    <path id="Stroke_3" data-name="Stroke 3" d="M8.529.5H0" transform="translate(4.956 6.052)" fill="none" stroke="current" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
-    <path id="Stroke_5" data-name="Stroke 5" d="M0,0,2.074,2.065,0,4.13" transform="translate(11.411 4.487)" fill="none" stroke="current" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="20.904" height="20.308" viewBox="0 0 20.904 20.308">
+  <g id="noun-logout-6432106" transform="translate(-2.251 -2.53)">
+    <path id="Path_14001" data-name="Path 14001" d="M19.941,19.117v1.072a1.885,1.885,0,0,1-1.876,1.876h-4.2a3.457,3.457,0,0,0,.182-1.1v-.5h4.021a.265.265,0,0,0,.268-.268V19.117a.8.8,0,1,1,1.608,0ZM14.044,4.91h4.021a.265.265,0,0,1,.268.268V6.251a.8.8,0,1,0,1.608,0V5.178A1.885,1.885,0,0,0,18.065,3.3h-4.2a3.457,3.457,0,0,1,.182,1.1v.5Zm8.878,7.205L19.705,8.9a.8.8,0,0,0-1.137,1.137l1.844,1.844H14.848a.8.8,0,0,0,0,1.608h5.565l-1.844,1.844a.809.809,0,0,0,0,1.137.8.8,0,0,0,1.137,0l3.217-3.217a.809.809,0,0,0,0-1.137ZM11.715,2.929a1.862,1.862,0,0,0-1.61-.342L3.672,4.2A1.874,1.874,0,0,0,2.251,6.016V19.352a1.873,1.873,0,0,0,1.421,1.821l6.434,1.608a1.912,1.912,0,0,0,.458.057,1.878,1.878,0,0,0,1.872-1.877V4.407a1.865,1.865,0,0,0-.721-1.479Z" fill="#fff"/>
   </g>
 </svg>
