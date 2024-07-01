@@ -191,7 +191,11 @@ const Projects = (props) => {
                   type: "default",
                   classes: tClasses,
                 },
-                { value: progress, type: "projectProgress", field1: progress24 },
+                {
+                  value: progress,
+                  type: "projectProgress",
+                  field1: progress24,
+                },
                 {
                   value: calculateTimeBudgetObject(
                     _.get(record, "pendDate"),
@@ -207,11 +211,9 @@ const Projects = (props) => {
                   type: "revenue",
                   field1: _.defaultTo(_.get(record, "actual_value"), 0),
                 },
-
-
               ];
             } else {
-              return null
+              return null;
             }
           }
           return [
@@ -229,10 +231,8 @@ const Projects = (props) => {
             },
             { value: progress, type: "projectProgress", field1: progress24 },
             {
-              value: calculateTimeBudgetObject(
-                _.get(record, "pendDate"),
-                true
-              ).str,
+              value: calculateTimeBudgetObject(_.get(record, "pendDate"), true)
+                .str,
               type: "default",
               classes: tClasses,
             },
@@ -243,17 +243,12 @@ const Projects = (props) => {
               type: "revenue",
               field1: _.defaultTo(_.get(record, "actual_value"), 0),
             },
-
-
           ];
         });
 
-
-        setData(
-          dataSet.filter(item => !!item)
-        );
+        setData(dataSet.filter((item) => !!item));
       }
-    } catch (err) { }
+    } catch (err) {}
   }, [token, groupId, filters, sortBy, sortDirection, projectId]);
 
   useEffect(() => {
@@ -273,24 +268,32 @@ const Projects = (props) => {
         data={editProjectData}
         refresh={getProjects}
       />
-      {!projectId && <AddProjectModal
-        open={openAddProjectModal}
-        onClose={setOpenAddProjectModal.bind(this, false)}
-        refresh={getProjects}
-      />}
+      {!projectId && (
+        <AddProjectModal
+          open={openAddProjectModal}
+          onClose={setOpenAddProjectModal.bind(this, false)}
+          refresh={getProjects}
+        />
+      )}
       <Grid container style={{ padding: "2%" }}>
         <Grid container style={{ flexDirection: "row" }}>
-          <Typography className={clsx({
-            [classes.header1]: Boolean(projectId),
-            [classes.header]: !Boolean(projectId)
-          })}>{projectId ? "Project Details" : "Projects"}</Typography>
-          {!projectId && <Button
-            variant="outlined"
-            className={classes.btn}
-            onClick={setOpenAddProjectModal.bind(this, true)}
+          <Typography
+            className={clsx({
+              [classes.header1]: Boolean(projectId),
+              [classes.header]: !Boolean(projectId),
+            })}
           >
-            <Typography className={classes.btnText}>Add Project</Typography>
-          </Button>}
+            {projectId ? "Project Details" : "Projects"}
+          </Typography>
+          {!projectId && (
+            <Button
+              variant="outlined"
+              className={classes.btn}
+              onClick={setOpenAddProjectModal.bind(this, true)}
+            >
+              <Typography className={classes.btnText}>Add Project</Typography>
+            </Button>
+          )}
         </Grid>
       </Grid>
       <Grid container style={{ padding: "1%", paddingTop: "0%" }}>

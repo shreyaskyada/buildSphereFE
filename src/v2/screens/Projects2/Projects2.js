@@ -7,12 +7,14 @@ import TableRow from "@mui/material/TableRow";
 import "./styles.css";
 import filterIcon from "../../../assets/v2/Filter.svg";
 import { Checkbox, TableContainer } from "@mui/material";
+import { Button } from "../../components/Button";
 import ProgressCircle from "../../components/ProgressCircle/ProgressCircle";
 import axios from "../../../axios";
 import _ from "lodash";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import skull from "../../../assets/v2/Skull.svg";
+import { AddContractModal } from "./AddContractModal";
 
 const Projects2 = () => {
   const [activeStatus, setActiveStatus] = useState("All");
@@ -22,6 +24,10 @@ const Projects2 = () => {
   const [projects, setProjects] = useState([]);
   const [progress, setProgress] = useState([]);
   const [remainingTime, setRemainingTime] = useState([]);
+  const [isOpenModels, setIsOpenModels] = useState({
+    isCreateContract: false,
+    isCreateProject: false,
+  });
 
   const token = useSelector((state) => state.auth.token);
   const profile = useSelector((state) => JSON.parse(state.auth.profile));
@@ -329,6 +335,23 @@ const Projects2 = () => {
             <p style={{ marginTop: "0px", color: "#113C23" }}>No data</p>
           </div>
         )}
+      </div>
+
+      {isOpenModels.isCreateContract && (
+        <AddContractModal isOpen={isOpenModels.isCreateContract} />
+      )}
+      <div>
+        <Button
+          onClick={() =>
+            setIsOpenModels({
+              ...isOpenModels,
+              isCreateContract: true,
+            })
+          }
+        >
+          New Contract
+        </Button>
+        <Button>New Project</Button>
       </div>
     </div>
   );
