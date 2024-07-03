@@ -1,0 +1,41 @@
+.successMsgTopBar {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.closeIconContainer {
+    margin-right: 39px;
+    margin-top: -20px;
+    height: 45px;
+    width: 45px;
+    background-color: #F4E2E2;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.successMsg {
+    font-size: 25px;
+    color: #0C2136;
+    font-weight: bold;
+}
+
+.successMsgBody {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.dismissBtn {
+    border: none;
+    margin-top: 10px;
+    height: 56px;
+    width: 149px;
+    border-radius: 30px;
+    background-color: #0CA14A;
+    color: #FFFFFF;
+    font-size: 15px;
+    font-family: "Manrope";
+    cursor: pointer;
+}

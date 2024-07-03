@@ -7,16 +7,19 @@ import TableRow from "@mui/material/TableRow";
 import "./styles.css";
 import filterIcon from "../../../assets/v2/Filter.svg";
 import { Checkbox, TableContainer } from "@mui/material";
-import { Button } from "../../components/Button";
 import ProgressCircle from "../../components/ProgressCircle/ProgressCircle";
 import axios from "../../../axios";
 import _ from "lodash";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import skull from "../../../assets/v2/Skull.svg";
-import { AddContractModal } from "./AddContractModal";
+import { ReactComponent as Plus } from "../../../assets/v2/Plus.svg";
+import CreateContractModal from "../../components/CreateContractModal/CreateContractModal";
+import CreateProjectModal from "../../components/CreateProjectModal/CreateProjectModal";
+import { ROUTE_PROJECTS } from "../../../helpers/endpoints";
+import SuccessMsgModal from "../../components/SuccessMsgModal/SuccessMsgModal";
 
-const Projects2 = () => {
+const Projects2 = (props) => {
   const [activeStatus, setActiveStatus] = useState("All");
   const [filters, setFilters] = useState("");
   const [sortBy, setSortBy] = useState("");
@@ -24,10 +27,9 @@ const Projects2 = () => {
   const [projects, setProjects] = useState([]);
   const [progress, setProgress] = useState([]);
   const [remainingTime, setRemainingTime] = useState([]);
-  const [isOpenModels, setIsOpenModels] = useState({
-    isCreateContract: false,
-    isCreateProject: false,
-  });
+  const [showCreateContractModal, setShowCreateContractModal] = useState(false);
+  const [showCreateProjectModal, setShowCreateProjectModal] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
 
   const token = useSelector((state) => state.auth.token);
   const profile = useSelector((state) => JSON.parse(state.auth.profile));
@@ -207,9 +209,26 @@ const Projects2 = () => {
 
             <TableBody>
               {projects.map((project, index) => (
-                <TableRow key={project.project_Id}>
+                <TableRow
+                  key={project.project_Id}
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": {
+                      background: "#F1F8F5",
+                    },
+                  }}
+                  onClick={() => {
+                    props.history.push(
+                      `${ROUTE_PROJECTS}/${project.project_Id}`
+                    );
+                  }}
+                >
                   <TableCell sx={{ ...cellStyles, paddingRight: 0, width: 0 }}>
-                    <Checkbox />
+                    <Checkbox
+                      onClick={(event) => {
+                        event.stopPropagation();
+                      }}
+                    />
                   </TableCell>
                   <TableCell
                     sx={{
@@ -336,23 +355,33 @@ const Projects2 = () => {
           </div>
         )}
       </div>
-
-      {isOpenModels.isCreateContract && (
-        <AddContractModal isOpen={isOpenModels.isCreateContract} />
-      )}
-      <div>
-        <Button
-          onClick={() =>
-            setIsOpenModels({
-              ...isOpenModels,
-              isCreateContract: true,
-            })
-          }
+      <div className="tableBtn">
+        <button
+          className="contractBtn"
+          onClick={() => {
+            setShowCreateContractModal(true);
+          }}
         >
-          New Contract
-        </Button>
-        <Button>New Project</Button>
+          <Plus fill="#0CA14A" /> <p>New Contract</p>
+        </button>
+        <button
+          className="projectBtn"
+          onClick={() => {
+            setShowCreateProjectModal(true);
+          }}
+        >
+          <Plus fill="#FAFBFB" /> <p>New Project</p>
+        </button>
       </div>
+      <CreateContractModal
+        showCreateContractModal={showCreateContractModal}
+        setShowCreateContractModal={setShowCreateContractModal}
+      />
+      <CreateProjectModal
+        showCreateProjectModal={showCreateProjectModal}
+        setShowCreateProjectModal={setShowCreateProjectModal}
+      />
+      <SuccessMsgModal successMsg={successMsg} setSuccessMsg={setSuccessMsg} />
     </div>
   );
 };

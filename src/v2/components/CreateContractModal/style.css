@@ -1,0 +1,91 @@
+.createContractTopBar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.newContractText {
+    font-size: 25px;
+    color: #113C23;
+    margin-top: 10px;
+}
+
+.closeIconContainer {
+    margin-right: 39px;
+    margin-top: -20px;
+    height: 45px;
+    width: 45px;
+    background-color: #F4E2E2;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.CustomerText,
+.uploadUnitsText {
+    font-size: 12px;
+    color: #113C23;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.unitsContainer {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+
+}
+
+.uploadUnits {
+    height: 112px;
+    width: 352px;
+    padding-top: 30px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #123C23;
+    background-color: #F1F8F5;
+    border: 1px dashed #84A391;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.downloadUnitsBtn {
+    width: 289px;
+    height: 56px;
+    background-color: #F1F8F5;
+    border: 1px solid #0CA14A;
+    border-radius: 28px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #04A349;
+    font-family: Manrope;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-left: 35px;
+    margin-top: 30px;
+    cursor: pointer;
+}
+
+.createContractBtn {
+    width: 185px;
+    height: 56px;
+    background-color: #0CA14A;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: 25px;
+    font-family: Manrope;
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.createContractBtn:hover {
+    background-color: #04B349;
+}

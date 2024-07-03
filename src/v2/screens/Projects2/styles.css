@@ -139,3 +139,49 @@
     justify-content: center;
     align-items: center;
 }
+
+.tableBtn {
+    position: absolute;
+    bottom: 115px;
+    right: 67px;
+    display: flex;
+    gap: 10px
+}
+
+.contractBtn,
+.projectBtn {
+    width: 168px;
+    height: 56px;
+    background-color: #F1F8F5;
+    border: 2px solid #0CA14A;
+    border-radius: 28px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    cursor: pointer;
+}
+
+.projectBtn {
+    background-color: #0CA14A;
+    border: none;
+}
+
+.projectBtn:hover {
+    background-color: #04B349;
+}
+
+.contractBtn:hover {
+    background-color: #e3f2eb;
+}
+
+.contractBtn p {
+    font-size: 15px;
+    color: #0CA14A;
+}
+
+.projectBtn p {
+    font-size: 15px;
+    color: #FAFBFB;
+}

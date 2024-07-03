@@ -21,7 +21,7 @@ import moment from "moment";
 import Graphs from "../components/Graphs";
 import { getNormalizeIsolatedAndCumulativeGraphData } from "../../helpers/utils";
 
-import PerformersTable from "../components/PerformersTable";
+import PerformersTable from "../components/PerformanceTable/PerformersTable";
 import CostGraph from "../components/CostGraph/CostGraph";
 import RevenueGraph from "../components/RevenueGraph/RevenueGraph";
 import TimeGraph from "../components/TimeGraph/TimeGraph";
@@ -747,7 +747,7 @@ const Dashboard = (props) => {
       <CostGraph projectsData={projectsData} />
       <RevenueGraph projectsData={forecastProjectData} />
       <TimeGraph projectsData={forecastProjectData} />
-      <PerformersTable />
+      <PerformersTable projectsData={forecastProjectData} />
       {projectsData?.map((project, index) => {
         return (
           <ProjectSummaryCard
