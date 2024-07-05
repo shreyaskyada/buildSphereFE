@@ -82,14 +82,14 @@ const CustomerFilter = ({ customers, filters, setFilters }) => {
           <MenuItem key={-1} value={"0"} className={classes.menulabels}>
             Customer
           </MenuItem>,
-          ...customers.map((cust, index) => {
+          ...customers.map((customer, index) => {
             return (
               <MenuItem
                 key={index}
-                value={cust.customer_id}
+                value={customer.customer_id}
                 className={classes.menulabels}
               >
-                {cust.customer.name}
+                {customer.customer.name}
               </MenuItem>
             );
           }),

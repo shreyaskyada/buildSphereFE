@@ -22,12 +22,18 @@
     cursor: pointer;
 }
 
-.CustomerText,
-.uploadUnitsText {
+.customerText,
+.uploadUnitsText,
+.contractText {
     font-size: 12px;
     color: #113C23;
     font-weight: bold;
     margin-bottom: 5px;
+}
+
+.createContract1stRow {
+    display: flex;
+    gap: 30px
 }
 
 .unitsContainer {

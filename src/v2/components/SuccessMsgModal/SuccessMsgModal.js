@@ -54,7 +54,7 @@ const SuccessMsgModal = ({ successMsg, setSuccessMsg }) => {
             alt="right icon"
             style={{ height: "45px", width: "45px" }}
           />
-          <p className="successMsg">New Project Created Successfully!</p>
+          <p className="successMsg">{successMsg}</p>
           <button className="dismissBtn" onClick={closeModal}>
             Dismiss
           </button>

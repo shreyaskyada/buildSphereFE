@@ -18,18 +18,21 @@ import CreateContractModal from "../../components/CreateContractModal/CreateCont
 import CreateProjectModal from "../../components/CreateProjectModal/CreateProjectModal";
 import { ROUTE_PROJECTS } from "../../../helpers/endpoints";
 import SuccessMsgModal from "../../components/SuccessMsgModal/SuccessMsgModal";
+import { ReactComponent as DownArrow } from "../../../assets/v2/DownArrow.svg";
+import { ReactComponent as UpArrow } from "../../../assets/v2/UpArrow.svg";
 
 const Projects2 = (props) => {
   const [activeStatus, setActiveStatus] = useState("All");
   const [filters, setFilters] = useState("");
-  const [sortBy, setSortBy] = useState("");
-  const [sortDirection, setSortDirection] = useState("asc");
   const [projects, setProjects] = useState([]);
-  const [progress, setProgress] = useState([]);
-  const [remainingTime, setRemainingTime] = useState([]);
+  const [defaultProjects, setDefaultProjects] = useState([]);
+  const [sortedProjects, setSortedProjects] = useState({});
   const [showCreateContractModal, setShowCreateContractModal] = useState(false);
   const [showCreateProjectModal, setShowCreateProjectModal] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
+  const [customers, setCustomers] = useState([]);
+  const [contracts, setContracts] = useState([]);
+  const [sortingInfo, setSortingInfo] = useState({});
 
   const token = useSelector((state) => state.auth.token);
   const profile = useSelector((state) => JSON.parse(state.auth.profile));
@@ -40,65 +43,6 @@ const Projects2 = (props) => {
     Completed: "#00530C",
     Cancelled: "#E36767",
   };
-
-  const calculateProgress = (projects) => {
-    const tempProgress = projects.map((project) => {
-      const plannedValued = project.planned_value || 0;
-      const completedValued = project.actual_value || 0;
-
-      return plannedValued < 0
-        ? 0
-        : ((completedValued * 100) / plannedValued).toFixed(2);
-    });
-
-    setProgress(tempProgress);
-  };
-
-  const calculateRemainingTime = (projects) => {
-    const remaining_days = projects.map((project, index) => {
-      const endDate = new Date(
-        moment(
-          _.defaultTo(_.get(project, "pactual_end_date"), new Date())
-        ).format("YYYY-MM-DD")
-      );
-
-      const currentDate = new Date(
-        moment(_.defaultTo(new Date())).format("YYYY-MM-DD")
-      );
-
-      const rd = (endDate - currentDate) / (1000 * 3600 * 24);
-      return rd < 0 ? 0 : rd;
-    });
-
-    const remaining_time = remaining_days.map((remaining_days) => {
-      const months = Math.floor(remaining_days / 30);
-      const days = remaining_days % 30;
-
-      return { months: months, days: days };
-    });
-
-    setRemainingTime(remaining_time);
-  };
-
-  const getProjects = useCallback(async () => {
-    try {
-      const result = await axios.get(
-        `/projects?p=group:${groupId}&f=${filters}&s=${sortBy}:${sortDirection}`,
-        {
-          headers: { Authorization: token },
-        }
-      );
-
-      setProjects(_.get(result, ["data", "message"], []));
-
-      calculateProgress(result.data.message);
-      calculateRemainingTime(result.data.message);
-    } catch (err) {}
-  }, [token, groupId, filters, sortBy, sortDirection]);
-
-  useEffect(() => {
-    getProjects();
-  }, [getProjects]);
 
   const projectsFilterLabel = [
     "All",
@@ -128,53 +72,264 @@ const Projects2 = (props) => {
     fontFamily: "Manrope",
   };
 
+  const calculateProgress = (projects_) => {
+    projects_.map((project, index) => {
+      const plannedValued = project.planned_value || 0;
+      const completedValued = project.actual_value || 0;
+
+      const progress =
+        plannedValued < 0 ? 0 : (completedValued * 100) / plannedValued;
+      projects_[index].progress = progress;
+      return null;
+    });
+    setProjects([...projects_]);
+    setDefaultProjects([...projects_]);
+  };
+
+  const calculateRemainingTime = (projects_) => {
+    const remaining_days = projects_.map((project, index) => {
+      const endDate = new Date(
+        moment(
+          _.defaultTo(_.get(project, "pactual_end_date"), new Date())
+        ).format("YYYY-MM-DD")
+      );
+
+      const currentDate = new Date(
+        moment(_.defaultTo(new Date())).format("YYYY-MM-DD")
+      );
+
+      let rd = (endDate - currentDate) / (1000 * 3600 * 24);
+      rd = rd < 0 ? 0 : rd;
+      projects_[index].total_days = rd;
+      projects_[index].total_jobs = Number(projects_[index].total_jobs || 0);
+      projects_[index].actual_value = projects_[index].actual_value || 0;
+      return rd;
+    });
+
+    remaining_days.map((remaining_days, index) => {
+      const months = Math.floor(remaining_days / 30);
+      const days = remaining_days % 30;
+      projects_[index].months = months;
+      projects_[index].days = days;
+      return null;
+    });
+
+    setProjects([...projects_]);
+    setDefaultProjects([...projects_]);
+  };
+
+  const sort = (key) => {
+    const projects_ = [...defaultProjects];
+    const sorted_Projects = projects_.sort((a, b) => {
+      if (a[key] < b[key]) {
+        return -1;
+      }
+      if (a[key] > b[key]) {
+        return 1;
+      }
+      return 0;
+    });
+
+    return sorted_Projects;
+  };
+
+  const manageSorting = () => {
+    const sortByCustomer = sort("customer_name");
+    setSortedProjects((prev) => {
+      return {
+        ...prev,
+        Customer: {
+          asc: [...sortByCustomer],
+          dec: [...sortByCustomer.reverse()],
+        },
+      };
+    });
+
+    const sortByProject = sort("project_name");
+
+    setSortedProjects((prev) => {
+      return {
+        ...prev,
+        Project: {
+          asc: [...sortByProject],
+          dec: [...sortByProject.reverse()],
+        },
+      };
+    });
+
+    const sortByJobs = sort("total_jobs");
+
+    setSortedProjects((prev) => {
+      return {
+        ...prev,
+        Job: {
+          asc: [...sortByJobs],
+          dec: [...sortByJobs.reverse()],
+        },
+      };
+    });
+
+    const sortByRevenue = sort("actual_value");
+
+    setSortedProjects((prev) => {
+      return {
+        ...prev,
+        Revenue: {
+          asc: [...sortByRevenue],
+          dec: [...sortByRevenue.reverse()],
+        },
+      };
+    });
+
+    const sortByProgress = sort("progress");
+
+    setSortedProjects((prev) => {
+      return {
+        ...prev,
+        Progress: {
+          asc: [...sortByProgress],
+          dec: [...sortByProgress.reverse()],
+        },
+      };
+    });
+
+    const sortByTime = sort("total_days");
+
+    setSortedProjects((prev) => {
+      return {
+        ...prev,
+        "Time Remaining": {
+          asc: [...sortByTime],
+          dec: [...sortByTime.reverse()],
+        },
+      };
+    });
+  };
+
+  const getProjects = useCallback(async () => {
+    try {
+      const result = await axios.get(
+        `/projects?p=group:${groupId}&f=${filters}&s=:asc`,
+        {
+          headers: { Authorization: token },
+        }
+      );
+      calculateProgress(result.data.message);
+      calculateRemainingTime(result.data.message);
+    } catch (err) {}
+  }, [token, groupId, filters]);
+
+  const getCustomers = useCallback(async () => {
+    try {
+      const result = await axios.get(
+        `/groups/${groupId}/customers?p=group:${groupId}&sortBy`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      if (result.status === 200) {
+        setCustomers(_.get(result, ["data", "message"]) || []);
+      }
+    } catch (err) {}
+  }, [groupId, token]);
+
+  const getContracts = useCallback(async () => {
+    try {
+      const result = await axios.get(`/contracts?p=group:${groupId}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      setContracts(_.get(result, ["data", "message"]) || []);
+    } catch (err) {}
+  }, [groupId, token]);
+
+  useEffect(() => {
+    manageSorting();
+  }, [defaultProjects]);
+
+  useEffect(() => {
+    getProjects();
+    getCustomers();
+    getContracts();
+  }, [getProjects, getCustomers, getContracts]);
+
+  const handleSorting = (e) => {
+    const key = e.currentTarget.id;
+    if (sortingInfo?.[key]) {
+      if (sortingInfo[key] === null) {
+        setSortingInfo({ [key]: "dec" });
+        const temp = sortedProjects[key]?.dec;
+        if (temp) setProjects([...temp]);
+      }
+      if (sortingInfo[key] === "dec") {
+        setSortingInfo({ [key]: "asc" });
+        const temp = sortedProjects[key]?.asc;
+        if (temp) setProjects([...temp]);
+      }
+      if (sortingInfo[key] === "asc") {
+        setSortingInfo({ [key]: null });
+        setProjects([...defaultProjects]);
+      }
+    } else {
+      setSortingInfo({ [key]: "dec" });
+      const temp = sortedProjects[key]?.dec;
+      if (temp) setProjects([...temp]);
+    }
+  };
+
   return (
     <div className="projectsContainer">
-      <div className="projectsHeader">
-        <p className="projectText">Projects</p>
-        <div className="projectsFilter">
-          <ul>
-            {projectsFilterLabel.map((filter, index) => {
-              return (
-                <li
-                  key={index}
-                  id={filter}
-                  className="filterName"
-                  style={{
-                    cursor: "pointer",
-                    backgroundColor: activeStatus === filter ? "#113C23" : null,
-                    color: activeStatus === filter ? "white" : null,
-                  }}
-                  onClick={(e) => {
-                    setActiveStatus(e.currentTarget.id);
-                    setFilters(filter.toLowerCase());
-                  }}
-                >
-                  {filter}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <div className="projectsStatus">
-          <div className="projectsStatusRow1">
-            <div className="statusCompleted">
-              <div style={{ backgroundColor: "#00530C" }}></div>
-              <p>Completed</p>
-            </div>
-            <div className="statusInProgress">
-              <div style={{ backgroundColor: "#59A77B" }}></div>
-              <p>In Progress</p>
-            </div>
+      <div className="projectsHeaderContainer">
+        <div className="projectsHeader">
+          <p className="projectText">Projects</p>
+          <div className="projectsFilter">
+            <ul>
+              {projectsFilterLabel.map((filter, index) => {
+                return (
+                  <li
+                    key={index}
+                    id={filter}
+                    className="filterName"
+                    style={{
+                      cursor: "pointer",
+                      backgroundColor:
+                        activeStatus === filter ? "#113C23" : null,
+                      color: activeStatus === filter ? "white" : null,
+                    }}
+                    onClick={(e) => {
+                      setActiveStatus(e.currentTarget.id);
+                      setFilters(filter.toLowerCase());
+                    }}
+                  >
+                    {filter}
+                  </li>
+                );
+              })}
+            </ul>
           </div>
-          <div className="projectsStatusRow2">
-            <div className="statusPaused">
-              <div style={{ backgroundColor: "#E3BD68" }}></div>
-              <p>Paused</p>
+          <div className="projectsStatus">
+            <div className="projectsStatusRow1">
+              <div className="statusCompleted">
+                <div style={{ backgroundColor: "#00530C" }}></div>
+                <p>Completed</p>
+              </div>
+              <div className="statusInProgress">
+                <div style={{ backgroundColor: "#59A77B" }}></div>
+                <p>In Progress</p>
+              </div>
             </div>
-            <div className="statusCancelled">
-              <div style={{ backgroundColor: "#E36767" }}></div>
-              <p>Cancelled</p>
+            <div className="projectsStatusRow2">
+              <div className="statusPaused">
+                <div style={{ backgroundColor: "#E3BD68" }}></div>
+                <p>Paused</p>
+              </div>
+              <div className="statusCancelled">
+                <div style={{ backgroundColor: "#E36767" }}></div>
+                <p>Cancelled</p>
+              </div>
             </div>
           </div>
         </div>
@@ -184,13 +339,14 @@ const Projects2 = (props) => {
         </div>
       </div>
       <div className="projectsTable">
-        <TableContainer sx={{ maxHeight: 640, borderRadius: "10px" }}>
+        <TableContainer sx={{ maxHeight: "100%", borderRadius: "10px" }}>
           <Table stickyHeader aria-label="simple table">
             <TableHead>
               <TableRow>
                 {tableHead.map((th) => {
                   return (
                     <TableCell
+                      id={th}
                       sx={{
                         fontSize: "10px",
                         paddingY: "10px",
@@ -198,9 +354,42 @@ const Projects2 = (props) => {
                         borderColor: "#DCF4EE",
                         fontFamily: "Manrope",
                         fontWeight: "650",
+                        cursor: th !== "" && th !== "Status" ? "pointer" : "",
                       }}
+                      onClick={th !== "" && th !== "Status" && handleSorting}
                     >
-                      {th}
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "5px",
+                        }}
+                      >
+                        {th}
+                        {th !== "" && th !== "Status" && (
+                          <div
+                            style={{
+                              height: "15px",
+                              width: "15px",
+                              borderRadius: "50%",
+                              backgroundColor:
+                                sortingInfo[th] && sortingInfo !== null
+                                  ? "#DCF4EE"
+                                  : "",
+
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            {sortingInfo[th] === "asc" ? (
+                              <UpArrow style={{ height: "11px" }} />
+                            ) : (
+                              <DownArrow style={{ height: "11px" }} />
+                            )}
+                          </div>
+                        )}
+                      </div>
                     </TableCell>
                   );
                 })}
@@ -286,7 +475,7 @@ const Projects2 = (props) => {
                         marginBottom: "5px",
                       }}
                     >
-                      {progress[index]}%
+                      {project.progress.toFixed(2)}%
                     </p>
                     <div
                       style={{
@@ -301,7 +490,7 @@ const Projects2 = (props) => {
                       <div
                         style={{
                           height: "9px",
-                          width: `${progress[index]}%`,
+                          width: `${project.progress}%`,
                           backgroundColor: "#59A77B",
                           borderRadius: "11px",
                         }}
@@ -320,9 +509,9 @@ const Projects2 = (props) => {
                       circleColor="#DCF4EE"
                       progressCircleColor="#59A77B"
                     />
-                    {remainingTime[index]?.months}
+                    {project?.months}
                     {"m:"}
-                    {remainingTime[index]?.days}
+                    {project?.days}
                     {"d"}
                   </TableCell>
                   <TableCell
@@ -373,15 +562,30 @@ const Projects2 = (props) => {
           <Plus fill="#FAFBFB" /> <p>New Project</p>
         </button>
       </div>
-      <CreateContractModal
-        showCreateContractModal={showCreateContractModal}
-        setShowCreateContractModal={setShowCreateContractModal}
-      />
-      <CreateProjectModal
-        showCreateProjectModal={showCreateProjectModal}
-        setShowCreateProjectModal={setShowCreateProjectModal}
-      />
-      <SuccessMsgModal successMsg={successMsg} setSuccessMsg={setSuccessMsg} />
+      {showCreateContractModal && (
+        <CreateContractModal
+          getContracts={getContracts}
+          showCreateContractModal={showCreateContractModal}
+          setShowCreateContractModal={setShowCreateContractModal}
+          customers={customers}
+          setSuccessMsg={setSuccessMsg}
+        />
+      )}
+      {showCreateProjectModal && (
+        <CreateProjectModal
+          showCreateProjectModal={showCreateProjectModal}
+          setShowCreateProjectModal={setShowCreateProjectModal}
+          customers={customers}
+          contracts={contracts}
+          setSuccessMsg={setSuccessMsg}
+        />
+      )}
+      {successMsg !== "" && (
+        <SuccessMsgModal
+          successMsg={successMsg}
+          setSuccessMsg={setSuccessMsg}
+        />
+      )}
     </div>
   );
 };

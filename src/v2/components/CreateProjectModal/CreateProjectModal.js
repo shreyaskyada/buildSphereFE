@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
   MenuItem,
@@ -8,6 +8,7 @@ import {
   makeStyles,
   Backdrop,
   TextField,
+  FormHelperText,
 } from "@material-ui/core";
 import ArrowDown from "../../../assets/v2/ArrowDown.svg";
 import Upload from "../../../assets/v2/Upload.svg";
@@ -16,6 +17,12 @@ import { ReactComponent as Cross } from "../../../assets/v2/CloseIcon.svg";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import Calendar from "../../../assets/v2/Calendar.svg";
 import "./style.css";
+import moment from "moment";
+import axios from "../../../axios";
+import { HIDE_LOADER, SHOW_LOADER } from "../../../store/actions/v2/loader";
+import { SHOW_ERROR_MESSAGE } from "../../../store/actions/v2/message";
+import _ from "lodash";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -105,7 +112,7 @@ const useStyles = makeStyles((theme) => ({
   textField2: {
     "& .MuiInput-root": {
       height: "40px",
-      width: "344px",
+      width: "348px",
       fontWeight: 500,
       backgroundColor: "white",
       paddingLeft: "10px",
@@ -133,13 +140,27 @@ const useStyles = makeStyles((theme) => ({
 const CreateProjectModal = ({
   showCreateProjectModal,
   setShowCreateProjectModal,
+  customers,
+  setSuccessMsg,
+  contracts,
 }) => {
   const classes = useStyles();
+  const [customer, setCustomer] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [projectName, setProjectName] = useState(null);
+  const [projectId, setProjectId] = useState(null);
+  const [contractNumber, setContractNumber] = useState(null);
+  const [unitsFile, setUnitsFile] = useState(null);
+  const [error, setError] = useState({});
   const [startPlaceholder, setStartPlaceholder] = useState("Start");
   const [endPlaceholder, setEndPlaceholder] = useState("End");
   const [selectedValue, setSelectedValue] = useState("0");
+  const [customerContracts, setCustomerContracts] = useState({});
+  const token = useSelector((state) => state.auth.token);
+  const profile = useSelector((state) => JSON.parse(state.auth.profile));
+  const groupId = _.get(profile, "group_id");
+  const dispatch = useDispatch();
 
   const PopoverProps = {
     PaperProps: {
@@ -157,8 +178,157 @@ const CreateProjectModal = ({
     },
   };
 
+  const manageCustomerContracts = (customerId) => {
+    if (!customerContracts?.[customerId]) {
+      const tempContracts = contracts.filter((contract) => {
+        return contract.customer_id === customerId;
+      });
+      setCustomerContracts((prev) => {
+        return {
+          ...prev,
+          [customerId]: tempContracts,
+        };
+      });
+    }
+  };
+
   const closeCreateProjectModal = () => {
     setShowCreateProjectModal(false);
+  };
+
+  const downloadUnitsTemplate = async () => {
+    window.open(
+      `${process.env.REACT_APP_API_BASE_URL}/files/project/units`.replace(
+        "//f",
+        "/f"
+      ),
+      "newTab"
+    );
+  };
+
+  const setUploadedFile = (file) => {
+    if (!file) {
+      return;
+    }
+    if (file.type) {
+      if (
+        file.type !==
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      ) {
+        setError({ unitsFile: `Only .xlsx files are allowed` });
+        setUnitsFile(null);
+        return;
+      }
+      setUnitsFile(file);
+    } else {
+      let fileTemp = new File([file], file.name, {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      setUnitsFile(fileTemp);
+    }
+    setError({ unitsFile: null });
+  };
+
+  const validateData = () => {
+    if (!customer) {
+      setError({ customer: "Please select a customer" });
+      return false;
+    }
+
+    if (!startDate) {
+      setError({ startDate: "Please select a start date" });
+      return false;
+    }
+
+    if (!moment(startDate, "MM/DD/YYYY", true).isValid()) {
+      setError({ startDate: "Invalid date format" });
+      return false;
+    }
+
+    if (!endDate) {
+      setError({ endDate: "Please select an end date" });
+      return false;
+    }
+
+    if (!moment(endDate, "MM/DD/YYYY", true).isValid()) {
+      setError({ endDate: "Invalid date format" });
+      return false;
+    }
+
+    if (startDate >= endDate) {
+      setError({ startDate: "The start date should be before the end date." });
+      return false;
+    }
+
+    if (!projectName) {
+      setError({ projectName: "Please enter a Project Name" });
+      return false;
+    }
+
+    if (!projectId) {
+      setError({ projectId: "Please enter a Project Id" });
+      return false;
+    }
+
+    if (!contractNumber) {
+      setError({ contract: "Please select a contract number" });
+      return false;
+    }
+    if (!unitsFile) {
+      setError({ unitsFile: "Please upload the units data" });
+      return false;
+    }
+    setError({});
+    return true;
+  };
+  const handleDrop = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const file = event.dataTransfer.files[0];
+    setUploadedFile(file);
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
+  const handleCreateProject = async () => {
+    const isValid = validateData();
+    // if (isValid) {
+    //   const formData = new FormData();
+    //   formData.append("customer_id", customer);
+    //   formData.append("project_id", projectId);
+    //   formData.append("project_name", projectName);
+    //   formData.append("contract_no", contractNumber);
+    //   formData.append("start_date", moment(startDate).format("YYYY-MM-DD"));
+    //   formData.append("end_date", moment(endDate).format("YYYY-MM-DD"));
+    //   formData.append("file", unitsFile);
+    //   try {
+    //     dispatch({ type: SHOW_LOADER, data: 1 });
+    //     const url = customer.id
+    //       ? `/projects?p=customer:${customer.id}`
+    //       : `/projects?p=group:${groupId}`;
+    //     const result = await axios.post(url, formData, {
+    //       headers: {
+    //         Authorization: token,
+    //       },
+    //     });
+    //     dispatch({ type: HIDE_LOADER });
+    //     setShowCreateProjectModal(false);
+
+    //     if (result.status === 200) {
+    //       setSuccessMsg("New Project Created Successfully!");
+    //     }
+    //   } catch (err) {
+    //     dispatch({
+    //       type: SHOW_ERROR_MESSAGE,
+    //       data:
+    //         _.get(err, ["response", "data", "message"]) ||
+    //         "Something went wrong",
+    //     });
+    //   }
+    // }
   };
 
   return (
@@ -185,6 +355,7 @@ const CreateProjectModal = ({
             <Select
               variant="standard"
               className={classes.select}
+              value={customer}
               // style={{ color: `${selectedValue !== "0" ? "#113C23" : "#84A391"}` }}
               IconComponent={() => {
                 return (
@@ -198,25 +369,34 @@ const CreateProjectModal = ({
                   </Grid>
                 );
               }}
-              // onChange={(e) => {
-              //   setSelectedValue(e.target.value);
-              //   setFilters({ ...filters, customer: e.target.value, project: "0" });
-              // }}
-              // defaultValue={"0"}
+              onChange={(e) => {
+                if (error.customer) {
+                  setError({});
+                }
+                setCustomer(e.target.value);
+                setSelectedValue("0");
+                setContractNumber(null);
+                manageCustomerContracts(e.target.value);
+              }}
               MenuProps={MenuProps}
             >
               {[
-                <MenuItem key={0} value={"0"} className={classes.menulabels}>
-                  Customer 1
-                </MenuItem>,
-                <MenuItem key={1} value={"1"} className={classes.menulabels}>
-                  Customer 2
-                </MenuItem>,
-                <MenuItem key={2} value={"2"} className={classes.menulabels}>
-                  Customer 3
-                </MenuItem>,
+                ...customers.map((customer, index) => {
+                  return (
+                    <MenuItem
+                      key={index}
+                      value={customer.customer_id}
+                      className={classes.menulabels}
+                    >
+                      {customer.customer.name}
+                    </MenuItem>
+                  );
+                }),
               ]}
             </Select>
+            <FormHelperText style={{ color: "red" }}>
+              {error.customer}
+            </FormHelperText>
           </div>
           <div>
             <p className="dateText">Date</p>
@@ -234,6 +414,9 @@ const CreateProjectModal = ({
                   onFocus={() => setStartPlaceholder("mm/dd/yyyy")}
                   onBlur={() => setStartPlaceholder("Start")}
                   onChange={(date) => {
+                    if (error.startDate) {
+                      setError({});
+                    }
                     setStartDate(date ? date.format("MM/DD/YYYY") : null);
                   }}
                   KeyboardButtonProps={{
@@ -266,6 +449,13 @@ const CreateProjectModal = ({
                   onFocus={() => setEndPlaceholder("mm/dd/yyyy")}
                   onBlur={() => setEndPlaceholder("End")}
                   onChange={(date) => {
+                    if (
+                      error.endDate ||
+                      error.startDate ===
+                        "The start date should be before the end date."
+                    ) {
+                      setError({});
+                    }
                     setEndDate(date ? date.format("MM/DD/YYYY") : null);
                   }}
                   KeyboardButtonProps={{
@@ -283,9 +473,14 @@ const CreateProjectModal = ({
                       style={{ height: "16px", width: "15px" }}
                     />
                   }
+                  helperText={error.endDate}
+                  error={Boolean(error.endDate)}
                 />
               </Grid>
             </div>
+            <FormHelperText style={{ color: "red", marginLeft: "17px" }}>
+              {error.startDate}
+            </FormHelperText>
           </div>
         </div>
         <div className="projectModal2ndRow">
@@ -296,11 +491,15 @@ const CreateProjectModal = ({
               className={classes.textField2}
               placeholder="Project Name"
               fullWidth={true}
-              //   helperText={error.projectName}
-              //   error={Boolean(error.projectName)}
-              //   onChange={(e) => {
-              //     setProjectName(e.target.value);
-              //   }}
+              value={projectName}
+              helperText={error.projectName}
+              error={Boolean(error.projectName)}
+              onChange={(e) => {
+                if (error.projectName) {
+                  setError({});
+                }
+                setProjectName(e.target.value);
+              }}
             />
           </div>
           <div>
@@ -308,20 +507,30 @@ const CreateProjectModal = ({
             <TextField
               variant={"standard"}
               className={classes.textField2}
+              style={{ marginLeft: "-5px" }}
               placeholder="Project ID"
               fullWidth={true}
-              //   helperText={error.projectName}
-              //   error={Boolean(error.projectName)}
-              //   onChange={(e) => {
-              //     setProjectName(e.target.value);
-              //   }}
+              value={projectId}
+              onChange={(e) => {
+                if (error.projectId) {
+                  setError({});
+                }
+                setProjectId(e.target.value);
+              }}
+              helperText={error.projectId}
+              error={Boolean(error.projectId)}
             />
           </div>
         </div>
         <div className="projectModal3rdRow">
-          <div>
+          <div onDrop={handleDrop} onDragOver={handleDragOver}>
             <p className="uploadUnitsText">Upload Units</p>
-            <div className="uploadUnits">
+            <div
+              className="uploadUnits"
+              onClick={() => {
+                document.getElementById("unitsTemplate").click();
+              }}
+            >
               <img src={Upload} alt="Upload" />
               <p>
                 Drag & Drop or
@@ -329,16 +538,39 @@ const CreateProjectModal = ({
                 units
               </p>
             </div>
+            {error.unitsFile && (
+              <FormHelperText style={{ color: "red" }}>
+                {error.unitsFile}
+              </FormHelperText>
+            )}
+
+            {unitsFile && (
+              <FormHelperText style={{ color: "green" }}>
+                {unitsFile.name}
+              </FormHelperText>
+            )}
+
+            <input
+              type="file"
+              style={{ display: "none" }}
+              id="unitsTemplate"
+              onChange={(e) => {
+                setUploadedFile(e.target.files[0]);
+              }}
+            />
           </div>
           <div>
             <div className="contractNumberContainer">
-              <p className="customerText">Contract Number</p>
+              <p className="contractText">Contract Number</p>
               <Select
                 variant="standard"
+                disabled={!customer}
                 className={classes.select}
+                value={selectedValue}
                 style={{
                   color: `${selectedValue !== "0" ? "#113C23" : "#84A391"}`,
                   border: "2px solid #DBF4EE",
+                  opacity: `${!customer ? "0.5" : "1"}`,
                 }}
                 IconComponent={() => {
                   return (
@@ -357,7 +589,11 @@ const CreateProjectModal = ({
                   );
                 }}
                 onChange={(e) => {
+                  if (error.contract) {
+                    setError({});
+                  }
                   setSelectedValue(e.target.value);
+                  setContractNumber(e.target.value);
                 }}
                 defaultValue={"0"}
                 MenuProps={MenuProps}
@@ -376,23 +612,39 @@ const CreateProjectModal = ({
                   >
                     Contract Number
                   </MenuItem>,
-                  <MenuItem key={1} value={"1"} className={classes.menulabels}>
-                    Contract 1
-                  </MenuItem>,
-                  <MenuItem key={2} value={"2"} className={classes.menulabels}>
-                    Contract 2
-                  </MenuItem>,
+
+                  customer &&
+                    customerContracts[customer].map((contract, index) => {
+                      return (
+                        <MenuItem
+                          key={index}
+                          value={contract.contract_id}
+                          className={classes.menulabels}
+                        >
+                          {contract.contract_name}
+                          {/* here change contract_name to contract_number*/}
+                        </MenuItem>
+                      );
+                    }),
                 ]}
               </Select>
+              <FormHelperText style={{ color: "red" }}>
+                {error.contract}
+              </FormHelperText>
             </div>
-            <button className="downloadUnitsBtn">
+            <button
+              className="downloadUnitsBtn"
+              onClick={downloadUnitsTemplate.bind(this)}
+            >
               <p>Download Units Template</p>
               <img src={Download} alt="Download" />
             </button>
           </div>
         </div>
         <div>
-          <button className="createProjectBtn">Create Project</button>
+          <button className="createProjectBtn" onClick={handleCreateProject}>
+            Create Project
+          </button>
         </div>
       </Paper>
     </Modal>

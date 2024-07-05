@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import _ from "lodash";
 import moment from "moment";
 import "./style.css";
+import { BorderBottom } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -35,8 +36,9 @@ const useStyles = makeStyles((theme) => ({
 
   title: {
     fontSize: "18px",
-    fontWeight: "600",
+    fontWeight: "750",
     color: "#113C23",
+    marginTop: "30px",
   },
 }));
 
@@ -47,34 +49,76 @@ const PerformersTable = ({ projectsData }) => {
 
   const styles = {
     border: "none",
-    borderBottom: "1px solid #DCF4EE",
+
     "& .MuiDataGrid-withBorderColor": {
       borderColor: "#DCF4EE",
     },
+    ".MuiDataGrid-iconButtonContainer": {
+      visibility: "visible !important",
+    },
     "& .MuiDataGrid-sortIcon": {
+      opacity: "inherit !important",
       color: "#417E5A",
-      width: "16px",
-      height: "16px",
+      width: "13px",
+      height: "13px",
+      position: "absolute",
+      padding: "2px",
+      backgroundColor: "#DCF4EE",
+      borderRadius: "50%",
+      left: "0px",
+    },
+
+    "& .MuiDataGrid-columnHeaderTitleContainer": {
+      display: "flex",
+      flexDirection: "row-reverse",
+      justifyContent: "flex-end",
+      gap: "11px",
+      marginLeft: "-20px",
     },
     "& .MuiDataGrid-columnHeaderTitle": {
+      marginLeft: "10px",
       textOverflow: "clip",
       whiteSpace: "break-spaces",
       lineHeight: 1.2,
-      fontSize: "10px",
+      fontSize: "8px",
       color: "#417E5A",
       fontFamily: "Manrope",
       fontWeight: "550",
+      pointerEvents: "none",
+      position: "absolute",
+      left: "10px",
     },
+
     "& .MuiDataGrid-cellContent": {
       fontSize: "12px",
       color: "#123C23",
       fontFamily: "Manrope",
       fontWeight: "550",
       textAlign: "center",
+      pointerEvents: "none",
     },
-    "& .MuiDataGrid-row": {
+    "& .MuiDataGrid-cell:focus, & .MuiDataGrid-cell:focus-within": {
+      outline: "none",
+      border: "none",
+    },
+    "& .MuiDataGrid-columnHeader:focus, & .MuiDataGrid-columnHeader:focus-within":
+      {
+        outline: "none",
+      },
+    "& .MuiDataGrid-row:last-child": {
+      // borderBottom: "1px solid #DCF4EE",
+    },
+    "& .MuiDataGrid-cell:first-child": {
       borderLeft: "1px solid #DCF4EE",
+    },
+    "& .MuiDataGrid-cell:last-child": {
       borderRight: "1px solid #DCF4EE",
+    },
+    "& .MuiDataGrid-columnSeparator": {
+      visibility: "hidden !important",
+    },
+    "& .MuiTouchRipple-root": {
+      visibility: "hidden !important",
     },
   };
 
@@ -207,14 +251,23 @@ const PerformersTable = ({ projectsData }) => {
     <Paper className={classes.paper}>
       <h2 className={classes.title}>Bottom Performers</h2>
       {projectsData.length > 0 && (
-        <Box sx={{ height: 445, width: "100%", border: "none" }}>
+        <Box
+          sx={{
+            height: 445,
+            width: "100%",
+            border: "none",
+            marginTop: "-10px",
+          }}
+        >
           <DataGrid
             rows={rows}
             columns={columns}
+            rowHeight={35}
             disableRowSelectionOnClick
             hideFooter={true}
             disableColumnMenu={true}
             sx={styles}
+            sortingOrder={["desc", "asc", null]}
           />
         </Box>
       )}
