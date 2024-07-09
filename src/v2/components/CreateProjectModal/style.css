@@ -58,7 +58,7 @@
 
 }
 
-.uploadUnits {
+.projectUploadUnits {
     height: 112px;
     width: 347px;
     padding-top: 30px;
@@ -80,7 +80,7 @@
     margin-left: 6px;
 }
 
-.downloadUnitsBtn {
+.projectDownloadUnitsBtn {
     width: 289px;
     height: 56px;
     background-color: #F1F8F5;

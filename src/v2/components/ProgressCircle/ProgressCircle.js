@@ -1,7 +1,7 @@
 import React from "react";
 
 const Circle = ({ color, pct }) => {
-  const r = 9;
+  const r = 11;
   const circ = 2 * Math.PI * r;
   const strokePct = ((100 - pct) * circ) / 100;
   return (

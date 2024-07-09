@@ -24,7 +24,8 @@
 .projectsFilter ul {
     list-style: none;
     display: flex;
-    gap: 10px
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .filterName {
@@ -78,6 +79,10 @@
     border-radius: 50%;
 }
 
+.statusInProgress p {
+    text-wrap: nowrap;
+}
+
 .projectFilter {
     display: flex;
     align-items: center;
@@ -90,7 +95,6 @@
     border-radius: 10px;
     margin-top: -10px;
     margin-bottom: 50px;
-    /* background-color: antiquewhite; */
     height: 84%;
 }
 
@@ -148,8 +152,8 @@
 
 .tableBtn {
     position: absolute;
-    bottom: 115px;
-    right: 97px;
+    bottom: 80px;
+    right: 60px;
     display: flex;
     gap: 10px
 }
@@ -196,5 +200,15 @@
     .tableBtn {
         bottom: 175px;
         right: 27px;
+    }
+}
+
+@media only screen and (max-width: 960px) {
+    /* .projectsFilter ul {
+        flex-wrap: wrap;
+    } */
+
+    .projectsStatus {
+        margin-right: 40px;
     }
 }

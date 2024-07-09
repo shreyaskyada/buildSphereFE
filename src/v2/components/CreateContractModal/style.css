@@ -95,3 +95,57 @@
 .createContractBtn:hover {
     background-color: #04B349;
 }
+
+@media only screen and (max-width: 1180px) {
+    .uploadUnits {
+        width: 300px !important;
+    }
+
+    .uploadUnits p {
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 1035px) {
+    .uploadUnits {
+        width: 250px !important;
+    }
+
+    .downloadUnitsBtn {
+        width: 240px !important
+    }
+}
+
+@media only screen and (max-width: 890px) {
+    .uploadUnits {
+        width: 220px !important;
+    }
+
+    .downloadUnitsBtn {
+        width: 200px !important
+    }
+
+    .uploadUnits p {
+        padding: 0 10px 0 10px;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .uploadUnits {
+        width: 27vw !important;
+    }
+
+    .downloadUnitsBtn {
+        width: 27vw !important;
+    }
+}
+
+@media only screen and (max-width: 660px) {
+    .uploadUnits {
+        width: 35vw !important;
+    }
+
+    .downloadUnitsBtn {
+        width: 35vw !important;
+    }
+}

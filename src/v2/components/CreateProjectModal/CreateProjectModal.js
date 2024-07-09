@@ -15,7 +15,7 @@ import Upload from "../../../assets/v2/Upload.svg";
 import Download from "../../../assets/v2/Download.svg";
 import { ReactComponent as Cross } from "../../../assets/v2/CloseIcon.svg";
 import { KeyboardDatePicker } from "@material-ui/pickers";
-import Calendar from "../../../assets/v2/Calendar.svg";
+import Calendar from "../../../assets/v2/CalenderNew.svg";
 import "./style.css";
 import moment from "moment";
 import axios from "../../../axios";
@@ -526,7 +526,7 @@ const CreateProjectModal = ({
           <div onDrop={handleDrop} onDragOver={handleDragOver}>
             <p className="uploadUnitsText">Upload Units</p>
             <div
-              className="uploadUnits"
+              className="projectUploadUnits"
               onClick={() => {
                 document.getElementById("unitsTemplate").click();
               }}
@@ -633,7 +633,7 @@ const CreateProjectModal = ({
               </FormHelperText>
             </div>
             <button
-              className="downloadUnitsBtn"
+              className="projectDownloadUnitsBtn"
               onClick={downloadUnitsTemplate.bind(this)}
             >
               <p>Download Units Template</p>

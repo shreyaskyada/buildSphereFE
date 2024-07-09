@@ -31,12 +31,23 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "rgba(0, 0, 0, 0.7)",
   },
   paper: {
-    height: "480px",
-    width: "832px",
+    height: "62vh",
+    width: "54vw",
     borderRadius: "24px",
     paddingLeft: "55px",
     paddingTop: "60px",
     outline: 0,
+    [theme.breakpoints.down(1400)]: {
+      width: "57vw",
+      height: "65vh",
+    },
+    [theme.breakpoints.down(1350)]: {
+      width: "65vw",
+      height: "70vh",
+    },
+    [theme.breakpoints.down(660)]: {
+      width: "80vw",
+    },
   },
   arrowContainer: {
     backgroundColor: "#E5FAE7",
@@ -63,6 +74,21 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "white",
       },
     },
+    [theme.breakpoints.down(1180)]: {
+      width: "300px",
+    },
+    [theme.breakpoints.down(1035)]: {
+      width: "250px",
+    },
+    [theme.breakpoints.down(890)]: {
+      width: "220px",
+    },
+    [theme.breakpoints.down(800)]: {
+      width: "27vw",
+    },
+    [theme.breakpoints.down(660)]: {
+      width: "35vw",
+    },
   },
 
   menulabels: {
@@ -82,6 +108,21 @@ const useStyles = makeStyles((theme) => ({
       fontFamily: "Manrope",
       fontSize: "14px",
       border: "2px solid #DBF4EE",
+      [theme.breakpoints.down(1180)]: {
+        width: "300px",
+      },
+      [theme.breakpoints.down(1035)]: {
+        width: "250px",
+      },
+      [theme.breakpoints.down(890)]: {
+        width: "220px",
+      },
+      [theme.breakpoints.down(800)]: {
+        width: "27vw",
+      },
+      [theme.breakpoints.down(660)]: {
+        width: "35vw",
+      },
     },
     "& .MuiInputBase-input::placeholder": {
       color: "#84A391",
@@ -120,7 +161,6 @@ const CreateContractModal = ({
     PaperProps: {
       style: {
         maxHeight: 300,
-        width: 347,
         marginTop: 50,
         marginLeft: -10,
       },

@@ -65,9 +65,9 @@ const Projects2 = (props) => {
 
   const cellStyles = {
     paddingY: "7px",
-    fontSize: "15px",
+    fontSize: "14px",
     color: "#123C23",
-    fontWeight: "550",
+    fontWeight: "600",
     borderColor: "#DCF4EE",
     fontFamily: "Manrope",
   };
@@ -76,10 +76,16 @@ const Projects2 = (props) => {
     projects_.map((project, index) => {
       const plannedValued = project.planned_value || 0;
       const completedValued = project.actual_value || 0;
+      const completedValued24 = project.actual_value_24 || 0;
 
       const progress =
-        plannedValued < 0 ? 0 : (completedValued * 100) / plannedValued;
+        plannedValued === 0 ? 0 : (completedValued * 100) / plannedValued;
+      const progress24 =
+        plannedValued === 0 ? 0 : (completedValued24 * 100) / plannedValued;
+
       projects_[index].progress = progress;
+      projects_[index].progress24 = progress24;
+
       return null;
     });
     setProjects([...projects_]);
@@ -94,15 +100,34 @@ const Projects2 = (props) => {
         ).format("YYYY-MM-DD")
       );
 
+      const startDate = new Date(
+        moment(
+          _.defaultTo(_.get(project, "pactual_start_date"), new Date())
+        ).format("YYYY-MM-DD")
+      );
+
       const currentDate = new Date(
         moment(_.defaultTo(new Date())).format("YYYY-MM-DD")
       );
 
+      let totalDays = (endDate - startDate) / (1000 * 3600 * 24);
+      let completedDays = (currentDate - startDate) / (1000 * 3600 * 24);
       let rd = (endDate - currentDate) / (1000 * 3600 * 24);
+
+      completedDays = completedDays < 0 ? 0 : completedDays;
+      completedDays = completedDays > totalDays ? totalDays : completedDays;
       rd = rd < 0 ? 0 : rd;
+
+      if (totalDays > 0)
+        projects_[index].completedDays = Math.floor(
+          (completedDays * 100) / totalDays
+        );
+      else projects_[index].completedDays = 0;
+
       projects_[index].total_days = rd;
       projects_[index].total_jobs = Number(projects_[index].total_jobs || 0);
       projects_[index].actual_value = projects_[index].actual_value || 0;
+
       return rd;
     });
 
@@ -348,7 +373,7 @@ const Projects2 = (props) => {
                     <TableCell
                       id={th}
                       sx={{
-                        fontSize: "10px",
+                        fontSize: "12px",
                         paddingY: "10px",
                         color: "#113C23",
                         borderColor: "#DCF4EE",
@@ -473,9 +498,11 @@ const Projects2 = (props) => {
                         fontSize: "10px",
                         marginTop: "-18px",
                         marginBottom: "5px",
+                        fontWeight: "700",
                       }}
                     >
                       {project.progress.toFixed(2)}%
+                      {`(+${project.progress24}%)`}
                     </p>
                     <div
                       style={{
@@ -505,7 +532,7 @@ const Projects2 = (props) => {
                     }}
                   >
                     <ProgressCircle
-                      percentage={25}
+                      percentage={project?.completedDays || 0}
                       circleColor="#DCF4EE"
                       progressCircleColor="#59A77B"
                     />
@@ -519,7 +546,7 @@ const Projects2 = (props) => {
                       ...cellStyles,
                       color: "#59A77B",
                       width: "150px",
-                      fontWeight: "600",
+                      fontWeight: "650",
                     }}
                   >
                     {"+ $"}

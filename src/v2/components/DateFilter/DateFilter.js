@@ -1,7 +1,7 @@
 import { Grid, Typography, makeStyles } from "@material-ui/core";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import React, { useState } from "react";
-import Calendar from "../../../assets/v2/Calendar.svg";
+import Calendar from "../../../assets/v2/CalenderNew.svg";
 
 const useStyles = makeStyles((theme) => ({
   label: {
