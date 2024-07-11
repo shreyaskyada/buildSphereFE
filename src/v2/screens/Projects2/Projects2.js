@@ -126,6 +126,9 @@ const Projects2 = (props) => {
 
       projects_[index].total_days = rd;
       projects_[index].total_jobs = Number(projects_[index].total_jobs || 0);
+      projects_[index].contract_name =
+        projects_[index].contract_name || "ABZ12345";
+
       projects_[index].actual_value = projects_[index].actual_value || 0;
 
       return rd;
@@ -145,14 +148,25 @@ const Projects2 = (props) => {
 
   const sort = (key) => {
     const projects_ = [...defaultProjects];
+
     const sorted_Projects = projects_.sort((a, b) => {
-      if (a[key] < b[key]) {
-        return -1;
+      if (typeof a[key] === "string") {
+        if (a[key].toLowerCase() < b[key].toLowerCase()) {
+          return -1;
+        }
+        if (a[key].toLowerCase() > b[key].toLowerCase()) {
+          return 1;
+        }
+        return 0;
+      } else {
+        if (a[key] < b[key]) {
+          return -1;
+        }
+        if (a[key] > b[key]) {
+          return 1;
+        }
+        return 0;
       }
-      if (a[key] > b[key]) {
-        return 1;
-      }
-      return 0;
     });
 
     return sorted_Projects;
@@ -166,6 +180,17 @@ const Projects2 = (props) => {
         Customer: {
           asc: [...sortByCustomer],
           dec: [...sortByCustomer.reverse()],
+        },
+      };
+    });
+
+    const sortByContract = sort("contract_name");
+    setSortedProjects((prev) => {
+      return {
+        ...prev,
+        Contract: {
+          asc: [...sortByContract],
+          dec: [...sortByContract.reverse()],
         },
       };
     });
@@ -239,6 +264,7 @@ const Projects2 = (props) => {
           headers: { Authorization: token },
         }
       );
+
       calculateProgress(result.data.message);
       calculateRemainingTime(result.data.message);
     } catch (err) {}
@@ -458,7 +484,7 @@ const Projects2 = (props) => {
                       width: "130px",
                     }}
                   >
-                    ABZ12345
+                    {project?.contract_name}
                   </TableCell>
                   <TableCell
                     sx={{
@@ -605,6 +631,7 @@ const Projects2 = (props) => {
           customers={customers}
           contracts={contracts}
           setSuccessMsg={setSuccessMsg}
+          getProjects={getProjects}
         />
       )}
       {successMsg !== "" && (

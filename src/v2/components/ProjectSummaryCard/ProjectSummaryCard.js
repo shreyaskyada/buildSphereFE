@@ -22,7 +22,7 @@ const CustomTooltip = withStyles(() => ({
 
 const ProjectSummaryCard = ({ id, project, history, startDate, endDate }) => {
   const projectProgress = Math.floor(
-    (project.actual_value * 100) / project.planned_value
+    (project.actual_value * 100) / (project.planned_value || 1)
   );
 
   const currentDate = new Date(

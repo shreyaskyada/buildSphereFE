@@ -41,7 +41,7 @@ const TimeGraph = ({ projectsData }) => {
   useEffect(() => {
     const remaining_revenue = projectsData.map((data) => {
       const rr = (data.planned_value || 0) - (data.actual_value || 0);
-      return rr < 0 ? 0 : (rr * 100) / data.planned_value;
+      return rr <= 0 ? 0 : (rr * 100) / data.planned_value;
     });
 
     setRemainingRevenue(remaining_revenue);

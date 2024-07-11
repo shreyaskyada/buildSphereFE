@@ -34,11 +34,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "rgba(0, 0, 0, 0.7)",
   },
   paper: {
-    height: "557px",
-    width: "832px",
+    width: "780px",
     borderRadius: "24px",
     paddingLeft: "55px",
     paddingTop: "60px",
+    paddingBottom: "70px",
     outline: 0,
   },
   arrowContainer: {
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     right: "10px",
   },
   select: {
-    border: "2px solid #4BCE82",
+    border: "2px solid #DBF4EE",
     height: "40px",
     fontSize: "14px",
     color: "#113C23",
@@ -60,6 +60,9 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Manrope",
     width: "348px",
     backgroundColor: "white",
+    "&.Mui-focused": {
+      border: "2px solid #4BCE82",
+    },
     "& .MuiSelect-select": {
       backgroundColor: "white",
       "&:focus": {
@@ -82,7 +85,6 @@ const useStyles = makeStyles((theme) => ({
 
   textField: {
     paddingLeft: "15px",
-
     "& .MuiInput-root": {
       height: "40px",
       width: "160px",
@@ -101,9 +103,8 @@ const useStyles = makeStyles((theme) => ({
       color: "#113C23",
     },
     "& .Mui-focused": {
-      border: `1px solid ${theme.v2.borders.lightGreen}`,
+      border: "2px solid #4BCE82",
     },
-
     "& .MuiFormHelperText-root": {
       border: 0,
     },
@@ -128,7 +129,7 @@ const useStyles = makeStyles((theme) => ({
       color: "#113C23",
     },
     "& .Mui-focused": {
-      border: `1px solid ${theme.v2.borders.lightGreen}`,
+      border: "2px solid #4BCE82",
     },
 
     "& .MuiFormHelperText-root": {
@@ -143,6 +144,7 @@ const CreateProjectModal = ({
   customers,
   setSuccessMsg,
   contracts,
+  getProjects,
 }) => {
   const classes = useStyles();
   const [customer, setCustomer] = useState(null);
@@ -151,11 +153,13 @@ const CreateProjectModal = ({
   const [projectName, setProjectName] = useState(null);
   const [projectId, setProjectId] = useState(null);
   const [contractNumber, setContractNumber] = useState(null);
+  const [contractName, setContractName] = useState(null);
   const [unitsFile, setUnitsFile] = useState(null);
   const [error, setError] = useState({});
   const [startPlaceholder, setStartPlaceholder] = useState("Start");
   const [endPlaceholder, setEndPlaceholder] = useState("End");
-  const [selectedValue, setSelectedValue] = useState("0");
+  const [selectedValueOfContract, setSelectedValueOfContract] = useState("0");
+  const [selectedValueOfCustomer, setSelectedValueOfCustomer] = useState("0");
   const [customerContracts, setCustomerContracts] = useState({});
   const token = useSelector((state) => state.auth.token);
   const profile = useSelector((state) => JSON.parse(state.auth.profile));
@@ -295,40 +299,42 @@ const CreateProjectModal = ({
 
   const handleCreateProject = async () => {
     const isValid = validateData();
-    // if (isValid) {
-    //   const formData = new FormData();
-    //   formData.append("customer_id", customer);
-    //   formData.append("project_id", projectId);
-    //   formData.append("project_name", projectName);
-    //   formData.append("contract_no", contractNumber);
-    //   formData.append("start_date", moment(startDate).format("YYYY-MM-DD"));
-    //   formData.append("end_date", moment(endDate).format("YYYY-MM-DD"));
-    //   formData.append("file", unitsFile);
-    //   try {
-    //     dispatch({ type: SHOW_LOADER, data: 1 });
-    //     const url = customer.id
-    //       ? `/projects?p=customer:${customer.id}`
-    //       : `/projects?p=group:${groupId}`;
-    //     const result = await axios.post(url, formData, {
-    //       headers: {
-    //         Authorization: token,
-    //       },
-    //     });
-    //     dispatch({ type: HIDE_LOADER });
-    //     setShowCreateProjectModal(false);
+    if (isValid) {
+      const formData = new FormData();
+      formData.append("customer_id", customer);
+      formData.append("contract_no", projectId);
+      formData.append("project_name", projectName);
+      formData.append("contract_id", contractNumber);
+      formData.append("contract_name", contractName);
+      formData.append("start_date", moment(startDate).format("YYYY-MM-DD"));
+      formData.append("end_date", moment(endDate).format("YYYY-MM-DD"));
+      formData.append("file", unitsFile);
+      try {
+        dispatch({ type: SHOW_LOADER, data: 1 });
+        const url = customer.id
+          ? `/projects?p=customer:${customer.id}`
+          : `/projects?p=group:${groupId}`;
+        const result = await axios.post(url, formData, {
+          headers: {
+            Authorization: token,
+          },
+        });
+        dispatch({ type: HIDE_LOADER });
+        setShowCreateProjectModal(false);
 
-    //     if (result.status === 200) {
-    //       setSuccessMsg("New Project Created Successfully!");
-    //     }
-    //   } catch (err) {
-    //     dispatch({
-    //       type: SHOW_ERROR_MESSAGE,
-    //       data:
-    //         _.get(err, ["response", "data", "message"]) ||
-    //         "Something went wrong",
-    //     });
-    //   }
-    // }
+        if (result.status === 200) {
+          setSuccessMsg("New Project Created Successfully!");
+          getProjects();
+        }
+      } catch (err) {
+        dispatch({
+          type: SHOW_ERROR_MESSAGE,
+          data:
+            _.get(err, ["response", "data", "message"]) ||
+            "Something went wrong",
+        });
+      }
+    }
   };
 
   return (
@@ -355,8 +361,12 @@ const CreateProjectModal = ({
             <Select
               variant="standard"
               className={classes.select}
-              value={customer}
-              // style={{ color: `${selectedValue !== "0" ? "#113C23" : "#84A391"}` }}
+              value={selectedValueOfCustomer}
+              style={{
+                color: `${
+                  selectedValueOfCustomer !== "0" ? "#113C23" : "#84A391"
+                }`,
+              }}
               IconComponent={() => {
                 return (
                   <Grid
@@ -373,14 +383,30 @@ const CreateProjectModal = ({
                 if (error.customer) {
                   setError({});
                 }
+                setSelectedValueOfCustomer(e.target.value);
                 setCustomer(e.target.value);
-                setSelectedValue("0");
+                setSelectedValueOfContract("0");
                 setContractNumber(null);
                 manageCustomerContracts(e.target.value);
               }}
+              defaultValue={"0"}
               MenuProps={MenuProps}
+              inputProps={{
+                classes: {
+                  select:
+                    selectedValueOfCustomer === "0" ? classes.placeholder : "",
+                },
+              }}
             >
               {[
+                <MenuItem
+                  key={0}
+                  value={"0"}
+                  disabled
+                  className={classes.menulabels}
+                >
+                  Customer
+                </MenuItem>,
                 ...customers.map((customer, index) => {
                   return (
                     <MenuItem
@@ -566,10 +592,11 @@ const CreateProjectModal = ({
                 variant="standard"
                 disabled={!customer}
                 className={classes.select}
-                value={selectedValue}
+                value={selectedValueOfContract}
                 style={{
-                  color: `${selectedValue !== "0" ? "#113C23" : "#84A391"}`,
-                  border: "2px solid #DBF4EE",
+                  color: `${
+                    selectedValueOfContract !== "0" ? "#113C23" : "#84A391"
+                  }`,
                   opacity: `${!customer ? "0.5" : "1"}`,
                 }}
                 IconComponent={() => {
@@ -592,14 +619,19 @@ const CreateProjectModal = ({
                   if (error.contract) {
                     setError({});
                   }
-                  setSelectedValue(e.target.value);
+
+                  setContractName(e.currentTarget.id);
+                  setSelectedValueOfContract(e.target.value);
                   setContractNumber(e.target.value);
                 }}
                 defaultValue={"0"}
                 MenuProps={MenuProps}
                 inputProps={{
                   classes: {
-                    select: selectedValue === "0" ? classes.placeholder : "",
+                    select:
+                      selectedValueOfContract === "0"
+                        ? classes.placeholder
+                        : "",
                   },
                 }}
               >
@@ -618,16 +650,17 @@ const CreateProjectModal = ({
                       return (
                         <MenuItem
                           key={index}
+                          id={contract.contract_name}
                           value={contract.contract_id}
                           className={classes.menulabels}
                         >
                           {contract.contract_name}
-                          {/* here change contract_name to contract_number*/}
                         </MenuItem>
                       );
                     }),
                 ]}
               </Select>
+
               <FormHelperText style={{ color: "red" }}>
                 {error.contract}
               </FormHelperText>

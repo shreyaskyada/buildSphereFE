@@ -197,9 +197,10 @@ const PerformersTable = ({ projectsData }) => {
     }, 0);
 
     const significance = projectsData.map((project) => {
-      return (((project.planned_value || 0) / sumOfPlannedValue) * 100).toFixed(
-        2
-      );
+      return (
+        ((project.planned_value || 0) / (sumOfPlannedValue || 1)) *
+        100
+      ).toFixed(2);
     });
 
     setProjectSignificance(significance);

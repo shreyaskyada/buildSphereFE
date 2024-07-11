@@ -31,19 +31,17 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "rgba(0, 0, 0, 0.7)",
   },
   paper: {
-    height: "62vh",
-    width: "54vw",
+    width: "52vw",
     borderRadius: "24px",
     paddingLeft: "55px",
     paddingTop: "60px",
+    paddingBottom: "60px",
     outline: 0,
     [theme.breakpoints.down(1400)]: {
       width: "57vw",
-      height: "65vh",
     },
     [theme.breakpoints.down(1350)]: {
       width: "65vw",
-      height: "70vh",
     },
     [theme.breakpoints.down(660)]: {
       width: "80vw",
@@ -59,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     right: "10px",
   },
   chooseCustSelect: {
-    border: "2px solid #4BCE82",
+    border: "2px solid #DBF4EE",
     height: "40px",
     fontSize: "14px",
     color: "#113C23",
@@ -73,6 +71,9 @@ const useStyles = makeStyles((theme) => ({
       "&:focus": {
         backgroundColor: "white",
       },
+    },
+    "&.Mui-focused": {
+      border: "2px solid #4BCE82",
     },
     [theme.breakpoints.down(1180)]: {
       width: "300px",
@@ -89,6 +90,10 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down(660)]: {
       width: "35vw",
     },
+  },
+
+  placeholder: {
+    opacity: 0.5,
   },
 
   menulabels: {
@@ -132,7 +137,7 @@ const useStyles = makeStyles((theme) => ({
       color: "#113C23",
     },
     "& .Mui-focused": {
-      border: `1px solid ${theme.v2.borders.lightGreen}`,
+      border: "2px solid #4BCE82",
     },
 
     "& .MuiFormHelperText-root": {
@@ -150,6 +155,7 @@ const CreateContractModal = ({
 }) => {
   const classes = useStyles();
   const [customer, setCustomer] = useState(null);
+  const [selectedValueOfCustomer, setSelectedValueOfCustomer] = useState("0");
   const [contractNumber, setContractNumber] = useState(null);
   const [unitsFile, setUnitsFile] = useState(null);
   const [error, setError] = useState({});
@@ -205,10 +211,7 @@ const CreateContractModal = ({
     if (isValid) {
       const formData = new FormData();
       formData.append("customer_id", customer);
-      formData.append(
-        "contract_name",
-        contractNumber
-      ); /* here change contract_name to contract_number*/
+      formData.append("contract_name", contractNumber);
       formData.append("file", unitsFile);
       try {
         dispatch({ type: SHOW_LOADER, data: 1 });
@@ -301,7 +304,12 @@ const CreateContractModal = ({
             <Select
               variant="standard"
               className={classes.chooseCustSelect}
-              // style={{ color: `${selectedValue !== "0" ? "#113C23" : "#84A391"}` }}
+              value={selectedValueOfCustomer}
+              style={{
+                color: `${
+                  selectedValueOfCustomer !== "0" ? "#113C23" : "#84A391"
+                }`,
+              }}
               IconComponent={() => {
                 return (
                   <Grid
@@ -318,11 +326,27 @@ const CreateContractModal = ({
                 if (error.customer) {
                   setError({});
                 }
+                setSelectedValueOfCustomer(e.target.value);
                 setCustomer(e.target.value);
               }}
+              defaultValue={"0"}
               MenuProps={MenuProps}
+              inputProps={{
+                classes: {
+                  select:
+                    selectedValueOfCustomer === "0" ? classes.placeholder : "",
+                },
+              }}
             >
               {[
+                <MenuItem
+                  key={0}
+                  value={"0"}
+                  disabled
+                  className={classes.menulabels}
+                >
+                  Customer
+                </MenuItem>,
                 ...customers.map((customer, index) => {
                   return (
                     <MenuItem

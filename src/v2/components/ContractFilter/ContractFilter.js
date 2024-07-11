@@ -1,6 +1,6 @@
 import { Grid, makeStyles, MenuItem, Select } from "@material-ui/core";
 import ArrowDown from "../../../assets/v2/ArrowDown.svg";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
   arrowContainer: {
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ContractFilter = () => {
+const ContractFilter = ({ contracts, filters, setFilters }) => {
   const [selectedValue, setSelectedValue] = useState("0");
   const classes = useStyles();
   const MenuProps = {
@@ -73,7 +73,9 @@ const ContractFilter = () => {
         }}
         onChange={(e) => {
           setSelectedValue(e.target.value);
+          setFilters({ ...filters, contract: e.target.value });
         }}
+        value={selectedValue}
         defaultValue={"0"}
         MenuProps={MenuProps}
       >
@@ -81,15 +83,17 @@ const ContractFilter = () => {
           <MenuItem key={-1} value={"0"} className={classes.menulabels}>
             Contract
           </MenuItem>,
-          <MenuItem key={-1} value={"1"} className={classes.menulabels}>
-            Contract 1
-          </MenuItem>,
-          <MenuItem key={-1} value={"2"} className={classes.menulabels}>
-            Contract 2
-          </MenuItem>,
-          <MenuItem key={-1} value={"3"} className={classes.menulabels}>
-            Contract 3
-          </MenuItem>,
+          ...contracts.map((contract, index) => {
+            return (
+              <MenuItem
+                key={index}
+                value={contract.contract_id}
+                className={classes.menulabels}
+              >
+                {contract.contract_name}
+              </MenuItem>
+            );
+          }),
         ]}
       </Select>
     </div>

@@ -244,6 +244,7 @@ const Dashboard = (props) => {
   const [forecastProject, setForecastProject] = useState([]);
   const [forecastStartDate, setForecastStartDate] = useState({});
   const [forecastEndDate, setForecastEndDate] = useState({});
+  const [contracts, setContracts] = useState([]);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
 
@@ -279,10 +280,19 @@ const Dashboard = (props) => {
 
   const filterForecastProjectData = (data) => {
     var tempData = data;
+
     if (filters2?.customer && filters2?.customer !== "0") {
       const id = filters2?.customer;
       tempData = tempData.filter((project) => {
         return id === project.customer;
+      });
+      setForecastProjectData(tempData);
+    }
+
+    if (filters2?.contract && filters2?.contract !== "0") {
+      const id = filters2?.contract;
+      tempData = tempData.filter((project) => {
+        return id === project.contract_id;
       });
       setForecastProjectData(tempData);
     }
@@ -324,6 +334,15 @@ const Dashboard = (props) => {
 
   const filterProjectsData = (data) => {
     var tempData = data;
+
+    // if (filters2?.contract && filters2?.contract !== "0") {
+    //   const id = filters2?.contract;
+    //   tempData = tempData.filter((project) => {
+    //     return id === project.contract_id;
+    //   });
+    //   setProjectsData(tempData);
+    // }
+
     if (filters2?.project && filters2?.project !== "0") {
       const id = filters2?.project;
       tempData = tempData.filter((project) => {
@@ -605,6 +624,17 @@ const Dashboard = (props) => {
     }
   };
 
+  const getContracts = useCallback(async () => {
+    try {
+      const result = await axios.get(`/contracts?p=group:${groupId}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      setContracts(_.get(result, ["data", "message"]) || []);
+    } catch (err) {}
+  }, [groupId, token]);
+
   useEffect(() => {
     getRevenueForecast();
   }, [getRevenueForecast]);
@@ -615,7 +645,8 @@ const Dashboard = (props) => {
 
   useEffect(() => {
     getCustomers();
-  }, [getCustomers]);
+    getContracts();
+  }, [getCustomers, getContracts]);
 
   const makeFilters = (data, value) => {
     switch (data) {
@@ -723,12 +754,17 @@ const Dashboard = (props) => {
               filters={filters2}
               setFilters={setFilters2}
             />
+            <ContractFilter
+              contracts={contracts}
+              filters={filters2}
+              setFilters={setFilters2}
+            />
             <ProjectFilter
               projectsData={projects}
               filters={filters2}
               setFilters={setFilters2}
             />
-            <ContractFilter />
+
             <StatusFilter filters={filters2} setFilters={setFilters2} />
             <Grid className={classes.dateFilter}>
               <Typography className={classes.filterText}>Date</Typography>
