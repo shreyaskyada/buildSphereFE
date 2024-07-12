@@ -73,7 +73,7 @@ const ContractFilter = ({ contracts, filters, setFilters }) => {
         }}
         onChange={(e) => {
           setSelectedValue(e.target.value);
-          setFilters({ ...filters, contract: e.target.value });
+          // setFilters({ ...filters, contract: e.target.value });
         }}
         value={selectedValue}
         defaultValue={"0"}

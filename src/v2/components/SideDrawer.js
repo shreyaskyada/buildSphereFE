@@ -6,6 +6,7 @@ import { ReactComponent as Logout } from "../../assets/v2/Logout.svg";
 import { ReactComponent as Home } from "../../assets/v2/Home.svg";
 import { ReactComponent as Projects } from "../../assets/v2/Projects.svg";
 import { ReactComponent as Profile } from "../../assets/v2/Profile.svg";
+import { ReactComponent as ActivityLog } from "../../assets/v2/ActivityLog.svg";
 import { LOGOUT_ACTION } from "../../GlobalConstants";
 import { useDispatch } from "react-redux";
 import { withRouter } from "react-router";
@@ -13,6 +14,7 @@ import {
   ROUTE_HOME,
   ROUTE_PROFILE,
   ROUTE_PROJECTS,
+  ROUTE_ACTIVITY_LOG,
 } from "../../helpers/endpoints";
 import _ from "lodash";
 import { NavLink } from "react-router-dom";
@@ -79,6 +81,11 @@ const sidebarItems = [
     label: "Projects",
     icon: <Projects />,
     pathname: ROUTE_PROJECTS,
+  },
+  {
+    label: "ActivityLog",
+    icon: <ActivityLog />,
+    pathname: ROUTE_ACTIVITY_LOG,
   },
   {
     label: "Profile",

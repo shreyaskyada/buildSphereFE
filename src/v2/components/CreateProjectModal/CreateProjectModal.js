@@ -201,13 +201,26 @@ const CreateProjectModal = ({
   };
 
   const downloadUnitsTemplate = async () => {
-    window.open(
-      `${process.env.REACT_APP_API_BASE_URL}/files/project/units`.replace(
-        "//f",
-        "/f"
-      ),
-      "newTab"
-    );
+    try {
+      const result = await axios.get(
+        `/contracts/${contractNumber}/units?p=group:${groupId}`,
+        {
+          headers: {
+            Authorization: token,
+          },
+          responseType: "blob",
+        }
+      );
+
+      if (result.status === 200) {
+        const url = URL.createObjectURL(new Blob([_.get(result, "data")]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "job_units.xlsx");
+        document.body.appendChild(link);
+        link.click();
+      }
+    } catch (err) {}
   };
 
   const setUploadedFile = (file) => {
@@ -668,6 +681,11 @@ const CreateProjectModal = ({
             <button
               className="projectDownloadUnitsBtn"
               onClick={downloadUnitsTemplate.bind(this)}
+              disabled={!contractNumber}
+              style={{
+                cursor: contractNumber ? "pointer" : "",
+                opacity: contractNumber ? "1" : "0.5",
+              }}
             >
               <p>Download Units Template</p>
               <img src={Download} alt="Download" />

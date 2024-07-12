@@ -787,7 +787,7 @@ const Dashboard = (props) => {
       {projectsData?.map((project, index) => {
         return (
           <ProjectSummaryCard
-            id={"id" + index}
+            id={project.id + Math.random()}
             project={project}
             history={props.history}
             startDate={forecastStartDate[project.id]}
@@ -957,7 +957,7 @@ const Dashboard = (props) => {
           </Grid>
         </Grid>
       </Paper> */}
-      <ActivityLog history={props.history} />
+      {/* <ActivityLog history={props.history} /> */}
     </Grid>
   );
 };
