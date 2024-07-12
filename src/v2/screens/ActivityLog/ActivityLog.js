@@ -9,6 +9,7 @@ import moment from "moment";
 const useStyles = makeStyles((theme) => ({
   mainRoot: {
     padding: "2%",
+    paddingBottom: 0,
     width: "112%",
   },
 
