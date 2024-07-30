@@ -1,7 +1,7 @@
 .projectSummaryCardContainer {
     width: 43.5%;
     height: 240px;
-    background-color: white;
+    background-color: #FFFFFF;
     margin-left: 2%;
     margin-top: 2%;
     border-radius: 10px;
@@ -24,6 +24,7 @@
     font-weight: 500;
     color: #113C23;
     margin-top: -5px;
+
 }
 
 .progressBar {
@@ -44,11 +45,6 @@
 
 .innerProgressBar2 {
     height: 12px;
-    background: repeating-linear-gradient(to right,
-            #0CA14A,
-            #0CA14A 3px,
-            transparent 4px,
-            transparent 7px);
 }
 
 .innerProgressBarSymbol {
@@ -64,7 +60,6 @@
 .projectSchedule {
     font-size: 15px;
     font-weight: 500;
-    color: #0CA14A;
     margin-top: 5px;
 }
 

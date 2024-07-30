@@ -1,0 +1,55 @@
+.activityContainer {
+    padding-left: 2%;
+    padding-right: 2%;
+    width: 89vw;
+    height: 98vh;
+    margin-bottom: -30px
+}
+
+.activityHeaderContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.activityHeader {
+    display: flex;
+    align-items: center;
+}
+
+.activityText {
+    color: #113C23;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.activityFilter ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filterName {
+    color: #84A391;
+    padding: 6px 15px;
+    border-radius: 24px;
+    font-size: 12px;
+    border: 1px solid #84A391
+}
+
+.activityTable {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    margin-top: -10px;
+    margin-bottom: 50px;
+    height: 84%;
+}
+
+.activitiesNoData {
+    height: 70vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

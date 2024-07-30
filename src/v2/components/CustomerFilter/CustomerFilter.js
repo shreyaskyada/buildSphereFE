@@ -73,7 +73,12 @@ const CustomerFilter = ({ customers, filters, setFilters }) => {
         }}
         onChange={(e) => {
           setSelectedValue(e.target.value);
-          setFilters({ ...filters, customer: e.target.value, project: "0" });
+          setFilters({
+            ...filters,
+            customer: e.target.value,
+            project: "0",
+            contract: "0",
+          });
         }}
         defaultValue={"0"}
         MenuProps={MenuProps}

@@ -335,13 +335,14 @@ const Dashboard = (props) => {
   const filterProjectsData = (data) => {
     var tempData = data;
 
-    // if (filters2?.contract && filters2?.contract !== "0") {
-    //   const id = filters2?.contract;
-    //   tempData = tempData.filter((project) => {
-    //     return id === project.contract_id;
-    //   });
-    //   setProjectsData(tempData);
-    // }
+    if (filters2?.contract && filters2?.contract !== "0") {
+      const id = filters2?.contract;
+      tempData = tempData.filter((project) => {
+        return id === project.contract_id;
+      });
+
+      setProjectsData(tempData);
+    }
 
     if (filters2?.project && filters2?.project !== "0") {
       const id = filters2?.project;
@@ -375,6 +376,7 @@ const Dashboard = (props) => {
 
       setProjectsData(tempData);
     }
+
     setProjectsData(tempData);
   };
 
@@ -420,6 +422,7 @@ const Dashboard = (props) => {
       } else {
         dispatch({ type: HIDE_LOADER });
         setProjects(allProjects);
+
         filterProjectsData(allProjects);
       }
 

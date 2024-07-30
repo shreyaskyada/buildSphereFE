@@ -1,12 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import "./styles.css";
 import filterIcon from "../../../assets/v2/Filter.svg";
-import { Checkbox, TableContainer } from "@mui/material";
 import ProgressCircle from "../../components/ProgressCircle/ProgressCircle";
 import axios from "../../../axios";
 import _ from "lodash";
@@ -18,21 +12,17 @@ import CreateContractModal from "../../components/CreateContractModal/CreateCont
 import CreateProjectModal from "../../components/CreateProjectModal/CreateProjectModal";
 import { ROUTE_PROJECTS } from "../../../helpers/endpoints";
 import SuccessMsgModal from "../../components/SuccessMsgModal/SuccessMsgModal";
-import { ReactComponent as DownArrow } from "../../../assets/v2/DownArrow.svg";
-import { ReactComponent as UpArrow } from "../../../assets/v2/UpArrow.svg";
+import TableNew from "../../components/Table/TableNew";
 
 const Projects2 = (props) => {
   const [activeStatus, setActiveStatus] = useState("All");
   const [filters, setFilters] = useState("");
   const [projects, setProjects] = useState([]);
-  const [defaultProjects, setDefaultProjects] = useState([]);
-  const [sortedProjects, setSortedProjects] = useState({});
   const [showCreateContractModal, setShowCreateContractModal] = useState(false);
   const [showCreateProjectModal, setShowCreateProjectModal] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const [customers, setCustomers] = useState([]);
   const [contracts, setContracts] = useState([]);
-  const [sortingInfo, setSortingInfo] = useState({});
 
   const token = useSelector((state) => state.auth.token);
   const profile = useSelector((state) => JSON.parse(state.auth.profile));
@@ -51,17 +41,6 @@ const Projects2 = (props) => {
     "Completed",
     "Cancelled",
   ];
-  const tableHead = [
-    "",
-    "Customer",
-    "Contract",
-    "Project",
-    "Job",
-    "Status",
-    "Progress",
-    "Time Remaining",
-    "Revenue",
-  ];
 
   const cellStyles = {
     paddingY: "7px",
@@ -71,6 +50,113 @@ const Projects2 = (props) => {
     borderColor: "#DCF4EE",
     fontFamily: "Manrope",
   };
+
+  const columns = [
+    { field: "checkbox", headerName: "", width: 50, sortable: false },
+    {
+      field: "customer_name",
+      headerName: "Customer",
+      sortable: true,
+      format: (value) => value,
+    },
+    {
+      field: "contract_name",
+      headerName: "Contract",
+      sortable: true,
+      format: (value) => value,
+    },
+    {
+      field: "project_name",
+      headerName: "Project",
+      sortable: true,
+      format: (value) => value,
+    },
+    {
+      field: "total_jobs",
+      headerName: "Jobs",
+      sortable: true,
+      format: (value) => value,
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      sortable: false,
+      format: (value) => (
+        <div
+          style={{
+            backgroundColor: statusColor[value],
+            height: "16px",
+            width: "16px",
+            border: "5px solid #E5EDE6",
+            borderRadius: "50%",
+          }}
+        ></div>
+      ),
+    },
+    {
+      field: "progress",
+      headerName: "Progress",
+      sortable: true,
+      format: (value, row) => (
+        <>
+          <p
+            style={{
+              color: "#59A77B",
+              fontSize: "10px",
+              marginTop: "-18px",
+              marginBottom: "5px",
+              fontWeight: "700",
+            }}
+          >
+            {value.toFixed(2)}%{`(+${row.progress24}%)`}
+          </p>
+          <div
+            style={{
+              height: "5px",
+              width: "200px",
+              backgroundColor: "#DCF4EE",
+              borderRadius: "11px",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <div
+              style={{
+                height: "9px",
+                width: `${value}%`,
+                backgroundColor: "#59A77B",
+                borderRadius: "11px",
+              }}
+            ></div>
+          </div>
+        </>
+      ),
+    },
+    {
+      field: "total_days",
+      headerName: "Time Remaining",
+      sortable: true,
+      format: (value, row) => (
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <ProgressCircle
+            percentage={row.completedDays || 0}
+            circleColor="#DCF4EE"
+            progressCircleColor="#59A77B"
+          />
+          {row.months}
+          {"m:"}
+          {row.days}
+          {"d"}
+        </div>
+      ),
+    },
+    {
+      field: "actual_value",
+      headerName: "Revenue",
+      sortable: true,
+      format: (value) => `+ $${Math.floor(value || 0)}`,
+    },
+  ];
 
   const calculateProgress = (projects_) => {
     projects_.map((project, index) => {
@@ -89,7 +175,6 @@ const Projects2 = (props) => {
       return null;
     });
     setProjects([...projects_]);
-    setDefaultProjects([...projects_]);
   };
 
   const calculateRemainingTime = (projects_) => {
@@ -143,117 +228,6 @@ const Projects2 = (props) => {
     });
 
     setProjects([...projects_]);
-    setDefaultProjects([...projects_]);
-  };
-
-  const sort = (key) => {
-    const projects_ = [...defaultProjects];
-
-    const sorted_Projects = projects_.sort((a, b) => {
-      if (typeof a[key] === "string") {
-        if (a[key].toLowerCase() < b[key].toLowerCase()) {
-          return -1;
-        }
-        if (a[key].toLowerCase() > b[key].toLowerCase()) {
-          return 1;
-        }
-        return 0;
-      } else {
-        if (a[key] < b[key]) {
-          return -1;
-        }
-        if (a[key] > b[key]) {
-          return 1;
-        }
-        return 0;
-      }
-    });
-
-    return sorted_Projects;
-  };
-
-  const manageSorting = () => {
-    const sortByCustomer = sort("customer_name");
-    setSortedProjects((prev) => {
-      return {
-        ...prev,
-        Customer: {
-          asc: [...sortByCustomer],
-          dec: [...sortByCustomer.reverse()],
-        },
-      };
-    });
-
-    const sortByContract = sort("contract_name");
-    setSortedProjects((prev) => {
-      return {
-        ...prev,
-        Contract: {
-          asc: [...sortByContract],
-          dec: [...sortByContract.reverse()],
-        },
-      };
-    });
-
-    const sortByProject = sort("project_name");
-
-    setSortedProjects((prev) => {
-      return {
-        ...prev,
-        Project: {
-          asc: [...sortByProject],
-          dec: [...sortByProject.reverse()],
-        },
-      };
-    });
-
-    const sortByJobs = sort("total_jobs");
-
-    setSortedProjects((prev) => {
-      return {
-        ...prev,
-        Job: {
-          asc: [...sortByJobs],
-          dec: [...sortByJobs.reverse()],
-        },
-      };
-    });
-
-    const sortByRevenue = sort("actual_value");
-
-    setSortedProjects((prev) => {
-      return {
-        ...prev,
-        Revenue: {
-          asc: [...sortByRevenue],
-          dec: [...sortByRevenue.reverse()],
-        },
-      };
-    });
-
-    const sortByProgress = sort("progress");
-
-    setSortedProjects((prev) => {
-      return {
-        ...prev,
-        Progress: {
-          asc: [...sortByProgress],
-          dec: [...sortByProgress.reverse()],
-        },
-      };
-    });
-
-    const sortByTime = sort("total_days");
-
-    setSortedProjects((prev) => {
-      return {
-        ...prev,
-        "Time Remaining": {
-          asc: [...sortByTime],
-          dec: [...sortByTime.reverse()],
-        },
-      };
-    });
   };
 
   const getProjects = useCallback(async () => {
@@ -298,37 +272,13 @@ const Projects2 = (props) => {
   }, [groupId, token]);
 
   useEffect(() => {
-    manageSorting();
-  }, [defaultProjects]);
-
-  useEffect(() => {
     getProjects();
     getCustomers();
     getContracts();
   }, [getProjects, getCustomers, getContracts]);
 
-  const handleSorting = (e) => {
-    const key = e.currentTarget.id;
-    if (sortingInfo?.[key]) {
-      if (sortingInfo[key] === null) {
-        setSortingInfo({ [key]: "dec" });
-        const temp = sortedProjects[key]?.dec;
-        if (temp) setProjects([...temp]);
-      }
-      if (sortingInfo[key] === "dec") {
-        setSortingInfo({ [key]: "asc" });
-        const temp = sortedProjects[key]?.asc;
-        if (temp) setProjects([...temp]);
-      }
-      if (sortingInfo[key] === "asc") {
-        setSortingInfo({ [key]: null });
-        setProjects([...defaultProjects]);
-      }
-    } else {
-      setSortingInfo({ [key]: "dec" });
-      const temp = sortedProjects[key]?.dec;
-      if (temp) setProjects([...temp]);
-    }
+  const handleRowClick = (project) => {
+    props.history.push(`${ROUTE_PROJECTS}/${project.project_Id}`);
   };
 
   return (
@@ -390,199 +340,12 @@ const Projects2 = (props) => {
         </div>
       </div>
       <div className="projectsTable">
-        <TableContainer sx={{ maxHeight: "100%", borderRadius: "10px" }}>
-          <Table stickyHeader aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                {tableHead.map((th) => {
-                  return (
-                    <TableCell
-                      id={th}
-                      sx={{
-                        fontSize: "12px",
-                        paddingY: "10px",
-                        color: "#113C23",
-                        borderColor: "#DCF4EE",
-                        fontFamily: "Manrope",
-                        fontWeight: "650",
-                        cursor: th !== "" && th !== "Status" ? "pointer" : "",
-                      }}
-                      onClick={th !== "" && th !== "Status" && handleSorting}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "5px",
-                        }}
-                      >
-                        {th}
-                        {th !== "" && th !== "Status" && (
-                          <div
-                            style={{
-                              height: "15px",
-                              width: "15px",
-                              borderRadius: "50%",
-                              backgroundColor:
-                                sortingInfo[th] && sortingInfo !== null
-                                  ? "#DCF4EE"
-                                  : "",
-
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                            }}
-                          >
-                            {sortingInfo[th] === "asc" ? (
-                              <UpArrow style={{ height: "11px" }} />
-                            ) : (
-                              <DownArrow style={{ height: "11px" }} />
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            </TableHead>
-
-            <TableBody>
-              {projects.map((project, index) => (
-                <TableRow
-                  key={project.project_Id}
-                  sx={{
-                    cursor: "pointer",
-                    "&:hover": {
-                      background: "#F1F8F5",
-                    },
-                  }}
-                  onClick={() => {
-                    props.history.push(
-                      `${ROUTE_PROJECTS}/${project.project_Id}`
-                    );
-                  }}
-                >
-                  <TableCell sx={{ ...cellStyles, paddingRight: 0, width: 0 }}>
-                    <Checkbox
-                      onClick={(event) => {
-                        event.stopPropagation();
-                      }}
-                    />
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      ...cellStyles,
-                      width: "130px",
-                    }}
-                  >
-                    {project.customer_name}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      ...cellStyles,
-                      width: "130px",
-                    }}
-                  >
-                    {project?.contract_name}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      ...cellStyles,
-                      width: "170px",
-                    }}
-                  >
-                    {project.project_name}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      ...cellStyles,
-                      width: "60px",
-                    }}
-                  >
-                    {project.total_jobs}
-                  </TableCell>
-                  <TableCell sx={cellStyles}>
-                    <div
-                      style={{
-                        backgroundColor: statusColor[project.status],
-                        height: "16px",
-                        width: "16px",
-                        border: "5px solid #E5EDE6",
-                        borderRadius: "50%",
-                      }}
-                    ></div>
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      ...cellStyles,
-                    }}
-                  >
-                    <p
-                      style={{
-                        color: "#59A77B",
-                        fontSize: "10px",
-                        marginTop: "-18px",
-                        marginBottom: "5px",
-                        fontWeight: "700",
-                      }}
-                    >
-                      {project.progress.toFixed(2)}%
-                      {`(+${project.progress24}%)`}
-                    </p>
-                    <div
-                      style={{
-                        height: "5px",
-                        width: "200px",
-                        backgroundColor: "#DCF4EE",
-                        borderRadius: "11px",
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      <div
-                        style={{
-                          height: "9px",
-                          width: `${project.progress}%`,
-                          backgroundColor: "#59A77B",
-                          borderRadius: "11px",
-                        }}
-                      ></div>
-                    </div>
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      ...cellStyles,
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    <ProgressCircle
-                      percentage={project?.completedDays || 0}
-                      circleColor="#DCF4EE"
-                      progressCircleColor="#59A77B"
-                    />
-                    {project?.months}
-                    {"m:"}
-                    {project?.days}
-                    {"d"}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      ...cellStyles,
-                      color: "#59A77B",
-                      width: "150px",
-                      fontWeight: "650",
-                    }}
-                  >
-                    {"+ $"}
-                    {Math.floor(project.actual_value || 0)}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <TableNew
+          columns={columns}
+          data={projects}
+          cellStyles={cellStyles}
+          handleRowClick={handleRowClick}
+        />
         {projects.length === 0 && (
           <div className="projectsNoData">
             <img

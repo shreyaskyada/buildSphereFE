@@ -40,6 +40,8 @@ const useStyles = makeStyles((theme) => ({
 
 const ContractFilter = ({ contracts, filters, setFilters }) => {
   const [selectedValue, setSelectedValue] = useState("0");
+  const [contractsByCustomer, setContractsByCustomer] = useState({});
+  const [filterContracts, setFilterContracts] = useState([...contracts]);
   const classes = useStyles();
   const MenuProps = {
     PaperProps: {
@@ -52,6 +54,31 @@ const ContractFilter = ({ contracts, filters, setFilters }) => {
       },
     },
   };
+
+  useEffect(() => {
+    if (filters?.customer && filters.customer !== "0") {
+      if (!contractsByCustomer?.[filters?.customer]) {
+        const tempContracts = contracts.filter((contract) => {
+          return contract.customer_id === filters?.customer;
+        });
+        setContractsByCustomer((prev) => {
+          return {
+            ...prev,
+            [filters?.customer]: tempContracts,
+          };
+        });
+        setFilterContracts([...tempContracts]);
+      } else {
+        setFilterContracts([...contractsByCustomer[filters?.customer]]);
+      }
+    } else {
+      setFilterContracts([...contracts]);
+    }
+  }, [filters, contracts]);
+
+  useEffect(() => {
+    if (filters?.contract === "0") setSelectedValue("0");
+  }, [filters]);
 
   return (
     <div style={{ marginLeft: "10px" }}>
@@ -73,7 +100,7 @@ const ContractFilter = ({ contracts, filters, setFilters }) => {
         }}
         onChange={(e) => {
           setSelectedValue(e.target.value);
-          // setFilters({ ...filters, contract: e.target.value });
+          setFilters({ ...filters, contract: e.target.value, project: "0" });
         }}
         value={selectedValue}
         defaultValue={"0"}
@@ -83,7 +110,7 @@ const ContractFilter = ({ contracts, filters, setFilters }) => {
           <MenuItem key={-1} value={"0"} className={classes.menulabels}>
             Contract
           </MenuItem>,
-          ...contracts.map((contract, index) => {
+          ...filterContracts.map((contract, index) => {
             return (
               <MenuItem
                 key={index}

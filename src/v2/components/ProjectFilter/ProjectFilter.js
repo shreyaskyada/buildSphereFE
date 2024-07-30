@@ -40,8 +40,31 @@ const useStyles = makeStyles((theme) => ({
 
 const ProjectFilter = ({ projectsData, filters, setFilters }) => {
   const [selectedValue, setSelectedValue] = useState("0");
+  const [projectsByContract, setProjectsByContract] = useState({});
+  const [filterProjects, setFilterProjects] = useState([]);
   const [project, setProject] = useState("0");
   const classes = useStyles();
+
+  useEffect(() => {
+    if (filters?.contract && filters.contract !== "0") {
+      if (!projectsByContract?.[filters?.contract]) {
+        const tempContracts = projectsData.filter((project) => {
+          return project.contract_id === filters?.contract;
+        });
+        setProjectsByContract((prev) => {
+          return {
+            ...prev,
+            [filters?.contract]: tempContracts,
+          };
+        });
+        setFilterProjects([...tempContracts]);
+      } else {
+        setFilterProjects([...projectsByContract[filters?.contract]]);
+      }
+    } else {
+      setFilterProjects([...projectsData]);
+    }
+  }, [filters, projectsData]);
 
   useEffect(() => {
     if (filters?.project === "0") setSelectedValue("0");
@@ -90,7 +113,7 @@ const ProjectFilter = ({ projectsData, filters, setFilters }) => {
           <MenuItem key={-1} value={"0"} className={classes.menulabels}>
             Project
           </MenuItem>,
-          ...projectsData.map((project, index) => {
+          ...filterProjects.map((project, index) => {
             return (
               <MenuItem
                 key={index}

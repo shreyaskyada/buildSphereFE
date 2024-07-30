@@ -163,6 +163,7 @@ const ProjectSummaryChart = ({ id, project }) => {
           <Doughnut
             ref={(ref) => setChartInstance(ref)}
             data={data}
+            key={id}
             options={options}
             plugins={plugins}
           />

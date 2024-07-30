@@ -6,20 +6,6 @@ import moment from "moment";
 import ProjectIssues from "./ProjectIssues";
 import { Grid, Tooltip, Typography, withStyles } from "@material-ui/core";
 
-const CustomTooltip = withStyles(() => ({
-  arrow: {
-    color: "#00530C",
-  },
-  tooltip: {
-    marginTop: "7px",
-    backgroundColor: "#00530C",
-    color: "white",
-    maxWidth: 200,
-    border: 0,
-    borderRadius: 10,
-  },
-}))(Tooltip);
-
 const ProjectSummaryCard = ({ id, project, history, startDate, endDate }) => {
   const projectProgress = Math.floor(
     (project.actual_value * 100) / (project.planned_value || 1)
@@ -46,6 +32,20 @@ const ProjectSummaryCard = ({ id, project, history, startDate, endDate }) => {
     timeProgress = 100;
   }
 
+  const CustomTooltip = withStyles(() => ({
+    arrow: {
+      color: projectProgress >= timeProgress ? "#00530C" : "#880808",
+    },
+    tooltip: {
+      marginTop: "7px",
+      backgroundColor: projectProgress >= timeProgress ? "#00530C" : "#930001",
+      color: "white",
+      maxWidth: 200,
+      border: 0,
+      borderRadius: 10,
+    },
+  }))(Tooltip);
+
   return (
     <>
       <div className="projectSummaryCardContainer">
@@ -54,7 +54,13 @@ const ProjectSummaryCard = ({ id, project, history, startDate, endDate }) => {
             <h3 className="projectName">{project.project_name}</h3>
             <p className="projectProgress">
               Project Progress
-              <span style={{ color: "#0CA14A", fontWeight: "bold" }}>
+              <span
+                style={{
+                  color:
+                    projectProgress >= timeProgress ? "#0CA14A" : "#F15942",
+                  fontWeight: "bold",
+                }}
+              >
                 {" "}
                 {projectProgress > 100 ? 100 : projectProgress}
                 {"%"}
@@ -68,26 +74,52 @@ const ProjectSummaryCard = ({ id, project, history, startDate, endDate }) => {
                     item
                     xs={12}
                     container
-                    style={{ maxWidth: "100%" }}
+                    style={{
+                      maxWidth: "100%",
+                    }}
                     alignItems="center"
                   >
-                    <Typography style={{ fontSize: "12px" }}>
+                    <Typography
+                      style={{
+                        fontSize: "12px",
+                      }}
+                    >
                       Project Progress: {projectProgress}%
                     </Typography>
                   </Grid>
                 </React.Fragment>
               }
             >
-              <div className="progressBar">
+              <div
+                className="progressBar"
+                style={{
+                  backgroundColor:
+                    projectProgress >= timeProgress ? "#C2E9A0" : "#FFCDC3",
+                }}
+              >
                 <div
                   className="innerProgressBar1"
                   style={{
                     width: `${projectProgress < 100 ? projectProgress : 100}%`,
+                    backgroundColor:
+                      projectProgress >= timeProgress ? "#00530C" : "#930001",
                   }}
                 ></div>
                 <div
                   className="innerProgressBar2"
                   style={{
+                    background:
+                      projectProgress >= timeProgress
+                        ? `repeating-linear-gradient(to right,
+                      #0CA14A,
+                      #0CA14A 3px,
+                      transparent 4px,
+                      transparent 7px)`
+                        : `repeating-linear-gradient(to right,
+                      #F15942,
+                      #F15942 3px,
+                      transparent 4px,
+                      transparent 7px)`,
                     width: `${
                       projectProgress < timeProgress
                         ? timeProgress - projectProgress
@@ -95,13 +127,25 @@ const ProjectSummaryCard = ({ id, project, history, startDate, endDate }) => {
                     }%`,
                   }}
                 ></div>
-                <div className="innerProgressBarSymbol"></div>
+                <div
+                  className="innerProgressBarSymbol"
+                  style={{
+                    backgroundColor:
+                      projectProgress >= timeProgress ? "#0CA14A" : "#E97451",
+                  }}
+                ></div>
               </div>
             </CustomTooltip>
 
-            <p className="projectSchedule">
-              {timeProgress}% of the time completed
-            </p>
+            {projectProgress >= timeProgress ? (
+              <p className="projectSchedule" style={{ color: "#0CA14A" }}>
+                {timeProgress}% of the time completed
+              </p>
+            ) : (
+              <p className="projectSchedule" style={{ color: "#F15942" }}>
+                {timeProgress - projectProgress}% behind schedule
+              </p>
+            )}
           </div>
 
           <div className="topRight">
