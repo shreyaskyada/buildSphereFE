@@ -127,7 +127,11 @@ const ProjectIssues = ({ history, project }) => {
   return (
     <>
       {showProjectIssue && (
-        <div>
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
           <UnitsNeedPricingModal
             open={openUnitsNeedPricingModal}
             units={units}
@@ -142,6 +146,7 @@ const ProjectIssues = ({ history, project }) => {
                 <ReadyToBill
                   id="readyToBill"
                   onClick={(e) => {
+                    e.stopPropagation();
                     handleClickedIssue(e);
                     handlePopoverOpen(e);
                   }}
@@ -155,6 +160,7 @@ const ProjectIssues = ({ history, project }) => {
                 <UnitsNeedPricing
                   id="unitsNeedPricing"
                   onClick={(e) => {
+                    e.stopPropagation();
                     handleClickedIssue(e);
                     handlePopoverOpen(e);
                   }}
@@ -168,6 +174,7 @@ const ProjectIssues = ({ history, project }) => {
                 <ActualVsPlanned
                   id="actualValueGreaterThenPlanned"
                   onClick={(e) => {
+                    e.stopPropagation();
                     handleClickedIssue(e);
                     handlePopoverOpen(e);
                   }}
@@ -185,6 +192,7 @@ const ProjectIssues = ({ history, project }) => {
                 <FailedInspection
                   id="failedInspection"
                   onClick={(e) => {
+                    e.stopPropagation();
                     handleClickedIssue(e);
                     handlePopoverOpen(e);
                   }}
@@ -198,6 +206,7 @@ const ProjectIssues = ({ history, project }) => {
                 <FailedSafetyReports
                   id="failedSafetyReports"
                   onClick={(e) => {
+                    e.stopPropagation();
                     handleClickedIssue(e);
                     handlePopoverOpen(e);
                   }}
@@ -266,7 +275,8 @@ const ProjectIssues = ({ history, project }) => {
                     <Grid item xs={3} justify="center" container>
                       <Typography
                         className={classes.view}
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           getCipUnits();
                           setOpenUnitsNeedPricingModal(true);
                         }}

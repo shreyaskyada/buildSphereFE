@@ -8,6 +8,7 @@ import _ from "lodash";
 import moment from "moment";
 import "./style.css";
 import { BorderBottom } from "@material-ui/icons";
+import { ROUTE_PROJECTS } from "../../../helpers/endpoints";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -42,13 +43,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PerformersTable = ({ projectsData }) => {
+const PerformersTable = ({ projectsData, history }) => {
   const classes = useStyles();
   const [projectSignificance, setProjectSignificance] = useState([]);
   const [schedulePerformance, setSchedulePerformance] = useState([]);
 
   const styles = {
     border: "none",
+
+    "& .MuiDataGrid-row:hover": {
+      cursor: "pointer",
+    },
 
     "& .MuiDataGrid-withBorderColor": {
       borderColor: "#DCF4EE",
@@ -181,7 +186,7 @@ const PerformersTable = ({ projectsData }) => {
 
   const rows = projectSignificance?.map((significance, index) => {
     return {
-      id: index,
+      id: projectsData[index]?.project_Id || index,
       projectName: projectsData[index]?.project_name,
       projectSignificance: `${significance}%`,
       schedulePerformance: schedulePerformance[index],
@@ -248,6 +253,10 @@ const PerformersTable = ({ projectsData }) => {
     calculateSchedulePerformance();
   }, [projectsData]);
 
+  const handleRowClick = (params) => {
+    history.push(`${ROUTE_PROJECTS}/${params.id}`);
+  };
+
   return (
     <Paper className={classes.paper}>
       <h2 className={classes.title}>Bottom Performers</h2>
@@ -269,6 +278,7 @@ const PerformersTable = ({ projectsData }) => {
             disableColumnMenu={true}
             sx={styles}
             sortingOrder={["desc", "asc", null]}
+            onRowClick={handleRowClick}
           />
         </Box>
       )}

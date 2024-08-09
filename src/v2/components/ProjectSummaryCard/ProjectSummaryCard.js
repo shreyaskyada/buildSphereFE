@@ -5,6 +5,7 @@ import _ from "lodash";
 import moment from "moment";
 import ProjectIssues from "./ProjectIssues";
 import { Grid, Tooltip, Typography, withStyles } from "@material-ui/core";
+import { ROUTE_PROJECTS } from "../../../helpers/endpoints";
 
 const ProjectSummaryCard = ({ id, project, history, startDate, endDate }) => {
   const projectProgress = Math.floor(
@@ -48,7 +49,12 @@ const ProjectSummaryCard = ({ id, project, history, startDate, endDate }) => {
 
   return (
     <>
-      <div className="projectSummaryCardContainer">
+      <div
+        className="projectSummaryCardContainer"
+        onClick={() => {
+          history.push(`${ROUTE_PROJECTS}/${project.id}`);
+        }}
+      >
         <div className="projectSummaryCardTop">
           <div className="topLeft">
             <h3 className="projectName">{project.project_name}</h3>

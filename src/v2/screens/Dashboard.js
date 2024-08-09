@@ -786,7 +786,10 @@ const Dashboard = (props) => {
       <CostGraph projectsData={projectsData} />
       <RevenueGraph projectsData={forecastProjectData} />
       <TimeGraph projectsData={forecastProjectData} />
-      <PerformersTable projectsData={forecastProjectData} />
+      <PerformersTable
+        projectsData={forecastProjectData}
+        history={props.history}
+      />
       {projectsData?.map((project, index) => {
         return (
           <ProjectSummaryCard
@@ -799,8 +802,8 @@ const Dashboard = (props) => {
         );
       })}
 
-      {/* <Graphs header="Summary" data={graphData} onChange={changeGraph} /> */}
-      {/* <Paper className={classes.paper} elevation={0}>
+      {/* <Graphs header="Summary" data={graphData} onChange={changeGraph} />
+      <Paper className={classes.paper} elevation={0}>
         <Grid container>
           <Grid item xs={6}>
             <Typography className={classes.mainHeader}>
