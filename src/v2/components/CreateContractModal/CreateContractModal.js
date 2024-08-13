@@ -109,6 +109,11 @@ const useStyles = makeStyles((theme) => ({
       border: 0,
     },
   },
+  autocompleteRoot: {
+    "& .MuiAutocomplete-popupIndicator": {
+      marginRight: '10px'
+    }
+  }
 }));
 
 const CreateContractModal = ({
@@ -279,6 +284,7 @@ const CreateContractModal = ({
             <p className="customerText">Customer</p>
             <Autocomplete
               value={customer}
+              className={classes.autocompleteRoot}
               onChange={(event, newValue) => {
                 if (typeof newValue === "string") {
                   setCustomer({
