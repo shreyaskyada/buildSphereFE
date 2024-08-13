@@ -381,6 +381,7 @@ const Projects2 = (props) => {
       {showCreateContractModal && (
         <CreateContractModal
           getContracts={getContracts}
+          getCustomers={getCustomers}
           showCreateContractModal={showCreateContractModal}
           setShowCreateContractModal={setShowCreateContractModal}
           customers={customers}

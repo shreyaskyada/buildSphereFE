@@ -9,7 +9,7 @@ import {
   TextField,
   FormHelperText,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ArrowDown from "../../../assets/v2/ArrowDown.svg";
 import Upload from "../../../assets/v2/Upload.svg";
 import Download from "../../../assets/v2/Download.svg";
@@ -20,6 +20,9 @@ import _ from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { SHOW_ERROR_MESSAGE } from "../../../store/actions/v2/message";
 import { HIDE_LOADER, SHOW_LOADER } from "../../../store/actions/v2/loader";
+import Autocomplete, {
+  createFilterOptions,
+} from "@material-ui/lab/Autocomplete";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,44 +55,6 @@ const useStyles = makeStyles((theme) => ({
     height: 18,
     width: 18,
     borderRadius: "50%",
-    pointerEvents: "none",
-    position: "absolute",
-    right: "10px",
-  },
-  chooseCustSelect: {
-    border: "2px solid #DBF4EE",
-    height: "40px",
-    fontSize: "14px",
-    color: "#113C23",
-    fontWeight: 500,
-    paddingLeft: "10px",
-    fontFamily: "Manrope",
-    width: "348px",
-    backgroundColor: "white",
-    "& .MuiSelect-select": {
-      backgroundColor: "white",
-      "&:focus": {
-        backgroundColor: "white",
-      },
-    },
-    "&.Mui-focused": {
-      border: "2px solid #4BCE82",
-    },
-    [theme.breakpoints.down(1180)]: {
-      width: "300px",
-    },
-    [theme.breakpoints.down(1035)]: {
-      width: "250px",
-    },
-    [theme.breakpoints.down(890)]: {
-      width: "220px",
-    },
-    [theme.breakpoints.down(800)]: {
-      width: "27vw",
-    },
-    [theme.breakpoints.down(660)]: {
-      width: "35vw",
-    },
   },
 
   placeholder: {
@@ -152,10 +117,11 @@ const CreateContractModal = ({
   customers,
   setSuccessMsg,
   getContracts,
+  getCustomers,
 }) => {
   const classes = useStyles();
+  const [newCustomers, setNewCustomers] = useState(null);
   const [customer, setCustomer] = useState(null);
-  const [selectedValueOfCustomer, setSelectedValueOfCustomer] = useState("0");
   const [contractNumber, setContractNumber] = useState(null);
   const [unitsFile, setUnitsFile] = useState(null);
   const [error, setError] = useState({});
@@ -163,16 +129,20 @@ const CreateContractModal = ({
   const profile = useSelector((state) => JSON.parse(state.auth.profile));
   const groupId = _.get(profile, "group_id");
   const dispatch = useDispatch();
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: 300,
-        marginTop: 50,
-        marginLeft: -10,
-      },
-    },
-  };
+  const filter = createFilterOptions();
 
+  useEffect(() => {
+    let temp = [...customers];
+
+    temp = customers.map((customer, index) => {
+      return {
+        id: customer.customer_id,
+        name: customer.customer.name,
+      };
+    });
+
+    setNewCustomers(temp);
+  }, [customers]);
   const closeCreateContractModal = () => {
     setShowCreateContractModal(false);
   };
@@ -210,7 +180,12 @@ const CreateContractModal = ({
 
     if (isValid) {
       const formData = new FormData();
-      formData.append("customer_id", customer);
+      if (customer.id) {
+        formData.append("customer_id", customer.id);
+      } else {
+        formData.append("new_customer", customer.name);
+      }
+
       formData.append("contract_name", contractNumber);
       formData.append("file", unitsFile);
       try {
@@ -227,6 +202,7 @@ const CreateContractModal = ({
         if (result.status === 200) {
           setSuccessMsg("New Contract Created Successfully!");
           getContracts();
+          getCustomers();
         }
       } catch (err) {
         dispatch({ type: HIDE_LOADER });
@@ -301,65 +277,73 @@ const CreateContractModal = ({
         <div className="createContract1stRow">
           <div>
             <p className="customerText">Customer</p>
-            <Select
-              variant="standard"
-              className={classes.chooseCustSelect}
-              value={selectedValueOfCustomer}
-              style={{
-                color: `${
-                  selectedValueOfCustomer !== "0" ? "#113C23" : "#84A391"
-                }`,
-              }}
-              IconComponent={() => {
-                return (
-                  <Grid
-                    className={classes.arrowContainer}
-                    container
-                    justify="center"
-                    alignItems="center"
-                  >
-                    <img src={ArrowDown} alt="Down" style={{ height: "4px" }} />
-                  </Grid>
-                );
-              }}
-              onChange={(e) => {
-                if (error.customer) {
-                  setError({});
+            <Autocomplete
+              value={customer}
+              onChange={(event, newValue) => {
+                if (typeof newValue === "string") {
+                  setCustomer({
+                    name: newValue,
+                  });
+                } else if (newValue && newValue.inputValue) {
+                  // Create a new value from the user input
+                  setCustomer({
+                    name: newValue.inputValue,
+                  });
+                } else {
+                  setCustomer(newValue);
                 }
-                setSelectedValueOfCustomer(e.target.value);
-                setCustomer(e.target.value);
               }}
-              defaultValue={"0"}
-              MenuProps={MenuProps}
-              inputProps={{
-                classes: {
-                  select:
-                    selectedValueOfCustomer === "0" ? classes.placeholder : "",
-                },
+              filterOptions={(options, params) => {
+                const filtered = filter(options, params);
+
+                // Suggest the creation of a new value
+                if (params.inputValue !== "") {
+                  filtered.push({
+                    inputValue: params.inputValue,
+                    name: `Add new customer "${params.inputValue}"`,
+                  });
+                }
+
+                return filtered;
               }}
-            >
-              {[
-                <MenuItem
-                  key={0}
-                  value={"0"}
-                  disabled
-                  className={classes.menulabels}
+              selectOnFocus
+              clearOnBlur
+              handleHomeEndKeys
+              id="customer"
+              options={newCustomers}
+              getOptionLabel={(option) => {
+                // Value selected with enter, right from the input
+                if (typeof option === "string") {
+                  return option;
+                }
+                // Add "xxx" option created dynamically
+                if (option.inputValue) {
+                  return option.inputValue;
+                }
+                // Regular option
+                return option.name;
+              }}
+              renderOption={(option) => option.name}
+              popupIcon={
+                <Grid
+                  className={classes.arrowContainer}
+                  container
+                  justify="center"
+                  alignItems="center"
                 >
-                  Customer
-                </MenuItem>,
-                ...customers.map((customer, index) => {
-                  return (
-                    <MenuItem
-                      key={index}
-                      value={customer.customer_id}
-                      className={classes.menulabels}
-                    >
-                      {customer.customer.name}
-                    </MenuItem>
-                  );
-                }),
-              ]}
-            </Select>
+                  <img src={ArrowDown} alt="Down" style={{ height: "4px" }} />
+                </Grid>
+              }
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  placeholder="Customer"
+                  variant={"standard"}
+                  className={classes.textField}
+                />
+              )}
+            />
+
             <FormHelperText style={{ color: "red" }}>
               {error.customer}
             </FormHelperText>
