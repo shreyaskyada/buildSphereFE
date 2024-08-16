@@ -83,7 +83,7 @@ const sidebarItems = [
     pathname: ROUTE_PROJECTS,
   },
   {
-    label: "ActivityLog",
+    label: "Activity Log",
     icon: <ActivityLog />,
     pathname: ROUTE_ACTIVITY_LOG,
   },

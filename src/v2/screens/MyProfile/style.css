@@ -1,0 +1,92 @@
+.profileContainer {
+    padding-left: 2%;
+    padding-right: 2%;
+    width: 89vw;
+    height: 98vh;
+    margin-bottom: -30px;
+}
+
+.profileHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profileHeaderLeftSide {
+    display: flex;
+    align-items: center;
+}
+
+.profileText {
+    color: #113C23;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.userFilter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.userFilterIcon {
+    display: flex;
+    align-items: center;
+    gap: 5px
+}
+
+.userFilterText {
+    font-size: 15px;
+    color: #113C23;
+    font-weight: 550;
+}
+
+.profileBodyContainer {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    margin-bottom: 50px;
+    padding-top: 20px;
+    height: 80%;
+    position: relative;
+}
+
+.profileBodyHeader {
+    display: flex;
+    padding-left: 30px;
+    border-bottom: 2px solid #DCF4EE;
+    width: fit-content;
+    padding-right: 40px;
+    margin-left: 20px;
+    height: 45px;
+}
+
+.profileBodyHeader div {
+    cursor: pointer;
+}
+
+.addUserBtn {
+    margin-left: 50px;
+    width: 155px;
+    height: 55px;
+    background-color: #0CA14A;
+    border: none;
+    border-radius: 28px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    cursor: pointer;
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+}
+
+.addUserBtn:hover {
+    background-color: #04B349;
+}
+
+.addUserBtn p {
+    font-size: 15px;
+    color: #FAFBFB;
+}

@@ -340,6 +340,7 @@ const CreateProjectModal = ({
           getProjects();
         }
       } catch (err) {
+        dispatch({ type: HIDE_LOADER });
         dispatch({
           type: SHOW_ERROR_MESSAGE,
           data:

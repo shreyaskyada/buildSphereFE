@@ -167,6 +167,7 @@ const ActivityLog2 = (props) => {
           data={activities}
           cellStyles={cellStyles}
           handleRowClick={handleRowClick}
+          cursorPointer={true}
         />
         {activities.length === 0 && (
           <div className="activitiesNoData">

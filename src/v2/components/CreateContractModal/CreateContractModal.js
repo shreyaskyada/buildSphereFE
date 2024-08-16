@@ -34,21 +34,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "rgba(0, 0, 0, 0.7)",
   },
   paper: {
-    width: "52vw",
     borderRadius: "24px",
     paddingLeft: "55px",
+    paddingRight: "55px",
     paddingTop: "60px",
     paddingBottom: "60px",
     outline: 0,
-    [theme.breakpoints.down(1400)]: {
-      width: "57vw",
-    },
-    [theme.breakpoints.down(1350)]: {
-      width: "65vw",
-    },
-    [theme.breakpoints.down(660)]: {
-      width: "80vw",
-    },
   },
   arrowContainer: {
     backgroundColor: "#E5FAE7",
@@ -111,9 +102,9 @@ const useStyles = makeStyles((theme) => ({
   },
   autocompleteRoot: {
     "& .MuiAutocomplete-popupIndicator": {
-      marginRight: '10px'
-    }
-  }
+      marginRight: "10px",
+    },
+  },
 }));
 
 const CreateContractModal = ({
@@ -211,8 +202,6 @@ const CreateContractModal = ({
         }
       } catch (err) {
         dispatch({ type: HIDE_LOADER });
-        setShowCreateContractModal(false);
-
         dispatch({
           type: SHOW_ERROR_MESSAGE,
           data:
@@ -273,7 +262,7 @@ const CreateContractModal = ({
         <div className="createContractTopBar">
           <h4 className="newContractText">New Contract</h4>
           <div
-            className="closeIconContainer"
+            className="ContractCloseIconContainer"
             onClick={closeCreateContractModal}
           >
             <Cross style={{ width: "14px", height: "14px" }} />

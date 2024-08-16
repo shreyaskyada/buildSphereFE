@@ -345,6 +345,7 @@ const Projects2 = (props) => {
           data={projects}
           cellStyles={cellStyles}
           handleRowClick={handleRowClick}
+          cursorPointer={true}
         />
         {projects.length === 0 && (
           <div className="projectsNoData">

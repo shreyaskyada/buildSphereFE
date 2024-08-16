@@ -11,7 +11,13 @@ import {
 import { ReactComponent as DownArrow } from "../../../assets/v2/DownArrow.svg";
 import { ReactComponent as UpArrow } from "../../../assets/v2/UpArrow.svg";
 
-const TableNew = ({ columns, data, cellStyles, handleRowClick }) => {
+const TableNew = ({
+  columns,
+  data,
+  cellStyles,
+  handleRowClick = () => {},
+  cursorPointer = false,
+}) => {
   const [defaultData, setDefaultData] = useState([]);
   const [data_, setData_] = useState([]);
   const [sortedData, setSortedData] = useState({});
@@ -51,7 +57,7 @@ const TableNew = ({ columns, data, cellStyles, handleRowClick }) => {
         dec: [...sortBy.reverse()],
       };
     });
-    console.log("call 123 456", sort_data);
+
     setSortedData({ ...sort_data });
   };
 
@@ -144,7 +150,10 @@ const TableNew = ({ columns, data, cellStyles, handleRowClick }) => {
           {data_.map((row, rowIndex) => (
             <TableRow
               key={rowIndex}
-              sx={{ cursor: "pointer", "&:hover": { background: "#F1F8F5" } }}
+              sx={{
+                cursor: cursorPointer ? "pointer" : "",
+                "&:hover": { background: "#F1F8F5" },
+              }}
               onClick={() => handleRowClick(row)}
             >
               {columns.map((col, colIndex) => (
@@ -156,7 +165,7 @@ const TableNew = ({ columns, data, cellStyles, handleRowClick }) => {
                     paddingRight: colIndex === 0 ? 0 : undefined,
                   }}
                 >
-                  {colIndex === 0 ? (
+                  {col.field === "checkbox" ? (
                     <Checkbox
                       onClick={(event) => {
                         event.stopPropagation();

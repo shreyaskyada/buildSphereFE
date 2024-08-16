@@ -28,6 +28,7 @@ import { useSelector } from "react-redux";
 import Footer from "./v2/components/Footer/Footer";
 import ActivityLog from "./v2/screens/ActivityLog/ActivityLog.js";
 import ActivityLog2 from "./v2/screens/ActivityLog2/ActivityLog2.js";
+import MyProfile from "./v2/screens/MyProfile/MyProfile.js";
 
 // import ProjectDetails from "./v2/screens/ProjectDetails";
 const ProjectDetails = lazy(() => import("./v2/screens/ProjectDetails"));
@@ -225,7 +226,7 @@ function App(props) {
               path={ROUTE_ACCOUNTS_SUBSCRIPTION}
               component={Subscription}
             />
-            <Route path={ROUTE_PROFILE} component={Profile} />
+            <Route path={ROUTE_PROFILE} component={MyProfile} />
             <Route path={ROUTE_MEMBERS} component={Members} />
             <Route path={ROUTE_PAY_NOW} component={PayNow} />
 

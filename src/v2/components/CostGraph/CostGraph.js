@@ -11,6 +11,7 @@ Chart.register(ChartDataLabels);
 const useStyles = makeStyles((theme) => ({
   paper: {
     width: "44.8%",
+    height: "550px",
     borderRadius: 10,
     padding: "2%",
     paddingLeft: 0,
@@ -102,7 +103,7 @@ const CostGraph = ({ projectsData }) => {
         top: 10,
       },
     },
-    responsive: true,
+    // responsive: true,
     maintainAspectRatio: false,
     scales: {
       x: {
@@ -209,7 +210,7 @@ const CostGraph = ({ projectsData }) => {
         bottom: 44,
       },
     },
-    responsive: true,
+    // responsive: true,
     maintainAspectRatio: false,
     scales: {
       x: {
@@ -365,7 +366,7 @@ const CostGraph = ({ projectsData }) => {
                 <Line
                   key={chartHeight}
                   options={options2}
-                  height={chartHeight}
+                  // height={chartHeight}
                 />
               </div>
             )}
@@ -385,7 +386,7 @@ const CostGraph = ({ projectsData }) => {
                 style={{
                   minWidth: "100%",
                   width: `${projectNames.length * 90}px`,
-                  height: "400px",
+                  height: "450px",
                   paddingBottom: `${projectNames.length <= 6 ? "0px" : "10px"}`,
                 }}
               >
@@ -394,7 +395,7 @@ const CostGraph = ({ projectsData }) => {
                   ref={(ref) => setChartInstance(ref)}
                   data={data}
                   options={options}
-                  height={chartHeight}
+                  // height={chartHeight}
                   plugins={[
                     {
                       id: "custom-legend",

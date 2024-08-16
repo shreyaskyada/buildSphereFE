@@ -9,6 +9,7 @@ import "./styles.css";
 const useStyles = makeStyles((theme) => ({
   paper: {
     width: "42.8%",
+    height: "550px",
     borderRadius: 10,
     paddingTop: 0,
     padding: "2%",
@@ -141,6 +142,7 @@ const RevenueGraph = ({ projectsData }) => {
         top: 20,
       },
     },
+    maintainAspectRatio: false,
     scales: {
       x: {
         offset: true,
@@ -338,13 +340,13 @@ const RevenueGraph = ({ projectsData }) => {
           </div>
         </>
       ) : (
-        <div>
+        <div style={{ height: "450px" }}>
           <Line
             ref={(ref) => setChartInstance(ref)}
             key={chartHeight}
             data={data}
             options={options}
-            height={chartHeight}
+            // height={chartHeight}
             plugins={[
               {
                 id: "custom-legend2",
