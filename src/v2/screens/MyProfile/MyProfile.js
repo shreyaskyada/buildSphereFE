@@ -10,6 +10,7 @@ import filterIcon from "../../../assets/v2/Filter.svg";
 import { ReactComponent as MyProfileIcon } from "../../../assets/v2/MyProfile.svg";
 import { ReactComponent as MembersDatabaseIcon } from "../../../assets/v2/MembersDatabase.svg";
 import { ReactComponent as DeletedUsers } from "../../../assets/v2/DeletedUser.svg";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   arrowContainer: {
@@ -53,6 +54,7 @@ const MyProfile = () => {
   const [successMsg, setSuccessMsg] = useState("");
   const [filterRole, setFilterRole] = useState("all");
   const classes = useStyles();
+  const profile = JSON.parse(useSelector((state) => state.auth.profile));
   const MenuProps = {
     PaperProps: {
       style: {
@@ -158,27 +160,30 @@ const MyProfile = () => {
               My Profile
             </p>
           </div>
-          <div
-            onClick={() => {
-              setActiveTab(2);
-            }}
-            style={{
-              padding: "0px 25px 0px 25px",
-              color: activeTab === 2 ? "#0CA14A" : "#84A391",
-              borderBottom: activeTab === 2 ? "3px solid #0CA14A" : "",
-              marginBottom: "-1.6px",
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-            }}
-          >
-            <MembersDatabaseIcon
-              fill={activeTab === 2 ? "#0CA14A" : "#84A391"}
-            />
-            <p style={{ fontWeight: activeTab === 2 ? "600" : "500" }}>
-              Members Database
-            </p>
-          </div>
+          {
+            profile.role === "SUPER_ADMIN" &&
+            <div
+              onClick={() => {
+                setActiveTab(2);
+              }}
+              style={{
+                padding: "0px 25px 0px 25px",
+                color: activeTab === 2 ? "#0CA14A" : "#84A391",
+                borderBottom: activeTab === 2 ? "3px solid #0CA14A" : "",
+                marginBottom: "-1.6px",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              <MembersDatabaseIcon
+                fill={activeTab === 2 ? "#0CA14A" : "#84A391"}
+              />
+              <p style={{ fontWeight: activeTab === 2 ? "600" : "500" }}>
+                Members Database
+              </p>
+            </div>
+          }
           <div
             onClick={() => {
               setActiveTab(3);

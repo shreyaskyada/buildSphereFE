@@ -172,7 +172,6 @@ Interceptor.setup(store);
         <ThemeProvider theme={theme}>
           <ErrorBoundary className="min-vh-100">
             <Suspense fallback={<LoaderError className="min-vh-100" />}>
-              <Loader />
               <SnackbarProvider
                 anchorOrigin={{ vertical: "top", horizontal: "right" }}
                 maxSnack={3}

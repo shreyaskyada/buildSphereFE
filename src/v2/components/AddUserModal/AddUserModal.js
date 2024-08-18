@@ -350,19 +350,20 @@ const AddUserModal = ({
                 },
               }}
             >
-              {[
-                <MenuItem
-                  key={0}
-                  value={"0"}
-                  disabled
-                  className={classes.menulabels}
-                >
-                  Select a user role
-                </MenuItem>,
-                <MenuItem value="ADMIN">Admin</MenuItem>,
-                <MenuItem value="FIELD_USER">Field User</MenuItem>,
-                <MenuItem value="INSPECTOR">Inspector</MenuItem>,
-              ]}
+              <MenuItem
+                key={0}
+                value={"0"}
+                disabled
+                className={classes.menulabels}
+              >
+                Select a user role
+              </MenuItem>
+
+              <MenuItem value="SUPER_ADMIN">Super Admin</MenuItem>
+
+              <MenuItem value="ADMIN">Admin</MenuItem>
+              <MenuItem value="FIELD_USER">Field User</MenuItem>
+              <MenuItem value="INSPECTOR">Inspector</MenuItem>
             </Select>
             <FormHelperText style={{ color: "red" }}>
               {error.role}
