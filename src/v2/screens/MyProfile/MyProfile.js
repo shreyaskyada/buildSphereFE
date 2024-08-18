@@ -7,6 +7,9 @@ import SuccessMsgModal from "../../components/SuccessMsgModal/SuccessMsgModal";
 import { Grid, makeStyles, MenuItem, Select } from "@material-ui/core";
 import ArrowDown from "../../../assets/v2/ArrowDown.svg";
 import filterIcon from "../../../assets/v2/Filter.svg";
+import { ReactComponent as MyProfileIcon } from "../../../assets/v2/MyProfile.svg";
+import { ReactComponent as MembersDatabaseIcon } from "../../../assets/v2/MembersDatabase.svg";
+import { ReactComponent as DeletedUsers } from "../../../assets/v2/DeletedUser.svg";
 
 const useStyles = makeStyles((theme) => ({
   arrowContainer: {
@@ -144,8 +147,13 @@ const MyProfile = () => {
               color: activeTab === 1 ? "#0CA14A" : "#84A391",
               borderBottom: activeTab === 1 ? "3px solid #0CA14A" : "",
               marginBottom: "-1.6px",
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
             }}
           >
+            <MyProfileIcon fill={activeTab === 1 ? "#0CA14A" : "#84A391"} />
+
             <p style={{ fontWeight: activeTab === 1 ? "600" : "500" }}>
               My Profile
             </p>
@@ -159,8 +167,14 @@ const MyProfile = () => {
               color: activeTab === 2 ? "#0CA14A" : "#84A391",
               borderBottom: activeTab === 2 ? "3px solid #0CA14A" : "",
               marginBottom: "-1.6px",
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
             }}
           >
+            <MembersDatabaseIcon
+              fill={activeTab === 2 ? "#0CA14A" : "#84A391"}
+            />
             <p style={{ fontWeight: activeTab === 2 ? "600" : "500" }}>
               Members Database
             </p>
@@ -174,8 +188,12 @@ const MyProfile = () => {
               color: activeTab === 3 ? "#0CA14A" : "#84A391",
               borderBottom: activeTab === 3 ? "3px solid #0CA14A" : "",
               marginBottom: "-1.6px",
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
             }}
           >
+            <DeletedUsers fill={activeTab === 3 ? "#0CA14A" : "#84A391"} />
             <p style={{ fontWeight: activeTab === 3 ? "600" : "500" }}>
               Deleted Users
             </p>

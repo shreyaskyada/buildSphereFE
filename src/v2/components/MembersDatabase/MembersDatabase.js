@@ -34,19 +34,7 @@ const MembersDatabase = ({ filterRole }) => {
 
   const getDate = (date) => {
     const time = moment(date);
-    const now = moment();
-    const diffInMin = now.diff(time, "minute");
-    if (diffInMin < 2) return `${diffInMin} min ago`;
-    if (diffInMin < 60) return `${diffInMin} mins ago`;
-    const diffInHour = now.diff(time, "hour");
-    if (diffInHour < 2) return `${diffInHour} hour ago`;
-    if (diffInHour < 24) return `${diffInHour} hours ago`;
-    const diffInDay = now.diff(time, "day");
-    if (diffInDay < 2) return `${diffInDay} day ago`;
-    if (diffInDay < 7) return `${diffInDay} days ago`;
-    const diffInWeek = now.diff(time, "week");
-    if (diffInWeek < 2) return `${diffInWeek} week ago`;
-    return time.format("MM-DD-YY");
+    return time.fromNow();
   };
 
   const columns = [
