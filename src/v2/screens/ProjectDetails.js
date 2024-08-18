@@ -6,7 +6,7 @@ import {
   Typography,
   Tooltip,
   withStyles,
-  Paper
+  Paper,
 } from "@material-ui/core";
 import React, { useCallback, useEffect, useState } from "react";
 import _ from "lodash";
@@ -177,6 +177,11 @@ const getColorFromTimeAndUnit = (time, unit) => {
   else return COLORS[0];
 };
 
+let formatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+});
+
 const ProjectDetails = (props) => {
   const classes = useStyles();
   const [data, setData] = useState({});
@@ -243,7 +248,7 @@ const ProjectDetails = (props) => {
         const tData = _.get(result, ["data", "message"]);
         setGraphData(getNormalizeIsolatedAndCumulativeGraphData(tData, "$"));
       }
-    } catch (err) { }
+    } catch (err) {}
   }, [groupId, token]);
 
   const getProjectProgress = async () => {
@@ -262,7 +267,7 @@ const ProjectDetails = (props) => {
           getNormalizeIsolatedAndCumulativeGraphData(tData, null, "%")
         );
       }
-    } catch (err) { }
+    } catch (err) {}
   };
 
   const getUnitsPerWeek = async () => {
@@ -490,7 +495,8 @@ const ProjectDetails = (props) => {
         onChange={changeGraph}
       />
       <Paper className={classes.paper}>
-        <Projects projectId={projectId} /></Paper>
+        <Projects projectId={projectId} />
+      </Paper>
       <JobSummary projectId={projectId} {...data} />
       <UnitDetails projectId={projectId} />
       <ActivityDetails {...props} projectId={projectId} />
@@ -595,7 +601,7 @@ const JobSummary = (props) => {
         setData(_.get(result, ["data", "message"]));
         dispatch({ type: ADD_JOBS, data: _.get(result, ["data", "message"]) });
       }
-    } catch (err) { }
+    } catch (err) {}
   }, [token, projectId, filters, sortBy, sortDirection, dispatch]);
 
   useEffect(() => {
@@ -630,11 +636,11 @@ const JobSummary = (props) => {
           data: data.map((row) => {
             const perChange = roundData(
               (_.defaultTo(row.actual_value, 0) * 100) /
-              _.defaultTo(row.planned_value, 1)
+                _.defaultTo(row.planned_value, 1)
             );
             const perChange24 = roundData(
               (_.defaultTo(row.actual_value24, 0) * 100) /
-              _.defaultTo(row.planned_value, 1)
+                _.defaultTo(row.planned_value, 1)
             );
             const timeBudget = calculateTimeBudgetObject(row.end_date, true);
             const tClasses = clsx(
@@ -674,11 +680,15 @@ const JobSummary = (props) => {
               },
               {
                 type: "default",
-                value: `$ ${roundData(_.defaultTo(row.planned_value, 0))}`,
+                value: `${formatter.format(
+                  _.defaultTo(row.planned_value, 0).toFixed(2)
+                )}`,
               },
               {
                 type: "default",
-                value: `$ ${roundData(_.defaultTo(row.actual_value, 0))}`,
+                value: `${formatter.format(
+                  _.defaultTo(row.actual_value, 0).toFixed(2)
+                )}`,
               },
             ];
           }),
@@ -729,6 +739,7 @@ const UnitDetails = (props) => {
   const jobsData = useSelector((state) => state.jobs);
   const [cipUnits, setCipUnits] = useState([]);
   const [tableRowClasses, setTableRowClasses] = useState([]);
+
   const filterData = (filterBy, filterData) => {
     setFilters((filters) => {
       return { ...filters, [filterBy]: filterData || "" };
@@ -819,7 +830,9 @@ const UnitDetails = (props) => {
                 type: "default",
               },
               {
-                value: `$ ${roundData(_.get(record, "unit_price", 0))}`,
+                value: `${formatter.format(
+                  _.get(record, "unit_price", 0).toFixed(2)
+                )}`,
                 type: "default",
               },
               {
@@ -831,16 +844,20 @@ const UnitDetails = (props) => {
                 type: "default",
               },
               {
-                value: `$ ${roundData(
-                  _.get(record, "planned_qty", 0) *
-                  _.get(record, "unit_price", 0)
+                value: `${formatter.format(
+                  (
+                    _.get(record, "planned_qty", 0) *
+                    _.get(record, "unit_price", 0)
+                  ).toFixed(2)
                 )}`,
                 type: "default",
               },
               {
-                value: `$ ${roundData(
-                  _.get(record, "actual_qty", 0) *
-                  _.get(record, "unit_price", 0)
+                value: `${formatter.format(
+                  (
+                    _.get(record, "actual_qty", 0) *
+                    _.get(record, "unit_price", 0)
+                  ).toFixed(2)
                 )}`,
                 type: "default",
               },
@@ -850,7 +867,7 @@ const UnitDetails = (props) => {
         setCipUnits(tCipUnits);
         setTableRowClasses(tableClasses);
       }
-    } catch (err) { }
+    } catch (err) {}
   }, [token, projectId, filters, sortBy, sortDirection]);
   useEffect(() => {
     getUnits();
@@ -933,11 +950,13 @@ const UnitDetails = (props) => {
           sortBy: sortByIndex,
           edit: editUnit,
         }}
-        button={{
-          header: "Unit Needs Pricing",
-          onClick: setOpenUnitsNeedPricing.bind(this, true),
-          classes: cipUnits.length > 0 ? classes.redBtn : classes.greyBtn,
-        }}
+        button={
+          cipUnits.length > 0 && {
+            header: "Unit Needs Pricing",
+            onClick: setOpenUnitsNeedPricing.bind(this, true),
+            classes: classes.redBtn,
+          }
+        }
         filters={queryFilters}
       />
     </>
@@ -1021,7 +1040,7 @@ const ActivityDetails = (props) => {
   const TableHeaders = [
     { label: "User", onClick: sortData.bind(this, "User", 0) },
     { label: "Sheet", onClick: sortData.bind(this, "Sheet", 1) },
-    { label: "LD", onClick: sortData.bind(this, "Ld", 2) },
+    { label: "AP", onClick: sortData.bind(this, "Ld", 2) },
     { label: "Unit", onClick: sortData.bind(this, "Unit", 3) },
     {
       label: "Qty",
@@ -1226,17 +1245,17 @@ const Reports = (props) => {
           ? `/reports/inspectionreport?p=project:${projectId}&f=${`failed:${failedReport}`}&s=${sortBy}:${sortDirection}`
           : `/reports/safetyaudit?p=project:${projectId}&filters=${`failed:${failedReport}`}&s=${sortBy}:${sortDirection}`;
 
-      console.log("ürl", url)
+      console.log("ürl", url);
       const result = await axios.get(url, {
         headers: {
           Authorization: token,
         },
       });
       if (result.status === 200) {
-        console.log(data.message)
+        console.log(data.message);
         setData(_.get(result, ["data", "message"]));
       }
-    } catch (err) { }
+    } catch (err) {}
   }, [token, projectId, failedReport, sortBy, sortDirection, reportType]);
 
   useEffect(() => {
@@ -1344,7 +1363,7 @@ const Reports = (props) => {
         if (result.status === 200) {
           setDownloadInspectionData(_.get(result, ["data", "message"]));
         }
-      } catch (err) { }
+      } catch (err) {}
     } else {
       setDownloadSafetyData(data[index]);
     }
@@ -1383,12 +1402,14 @@ const Reports = (props) => {
                 value:
                   reportType === REPORT_TYPES[0]
                     ? _.defaultTo(
-                      `${_.get(row, ["first_name"]) || ""} ${_.get(row, ["last_name"]) || ""
+                        `${_.get(row, ["first_name"]) || ""} ${
+                          _.get(row, ["last_name"]) || ""
+                        }`,
+                        ""
+                      )
+                    : `${_.get(row, ["user", "first_name"]) || ""} ${
+                        _.get(row, ["user", "last_name"]) || ""
                       }`,
-                      ""
-                    )
-                    : `${_.get(row, ["user", "first_name"]) || ""} ${_.get(row, ["user", "last_name"]) || ""
-                    }`,
               },
               {
                 type: "default",

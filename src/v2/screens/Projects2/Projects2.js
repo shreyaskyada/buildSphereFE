@@ -24,6 +24,11 @@ const Projects2 = (props) => {
   const [customers, setCustomers] = useState([]);
   const [contracts, setContracts] = useState([]);
 
+  let formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+
   const token = useSelector((state) => state.auth.token);
   const profile = useSelector((state) => JSON.parse(state.auth.profile));
   const groupId = _.get(profile, "group_id");
@@ -154,7 +159,7 @@ const Projects2 = (props) => {
       field: "actual_value",
       headerName: "Revenue",
       sortable: true,
-      format: (value) => `+ $${Math.floor(value || 0)}`,
+      format: (value) => `+ ${formatter.format((value || 0).toFixed(2))}`,
     },
   ];
 

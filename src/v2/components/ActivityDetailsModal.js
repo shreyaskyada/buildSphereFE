@@ -54,7 +54,6 @@ const useStyles = makeStyles((theme) => ({
   },
   label: {
     fontSize: 15,
-    color: theme.v2.fonts.colors.darkFont2,
   },
   textfield: {
     "& .MuiInput-root": {
@@ -117,10 +116,10 @@ const useStyles = makeStyles((theme) => ({
     padding: "1% 5%",
     border: 0,
     outline: 0,
-    backgroundColor: theme.v2.backgrounds.greyBackground3,
+    backgroundColor: "#E36767",
     marginRight: "5%",
     "&:hover": {
-      backgroundColor: theme.v2.backgrounds.lightGreyBackground,
+      backgroundColor: "#e37c7c",
     },
   },
   confirmBtn: {
@@ -242,7 +241,7 @@ const ActivityDetailsModal = (props) => {
       return false;
     }
     if (!ld) {
-      setError({ ld: "LD is mandatory" });
+      setError({ ld: "AP is mandatory" });
       return false;
     }
     if (!unit) {
@@ -577,7 +576,7 @@ const ActivityDetailsModal = (props) => {
                 />
               </Grid>
               <Grid item xs={12} style={{ paddingBottom: "5%" }}>
-                <Typography className={classes.label}>LD*</Typography>
+                <Typography className={classes.label}>AP*</Typography>
                 <TextField
                   fullWidth={true}
                   variant="standard"

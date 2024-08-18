@@ -6,7 +6,7 @@ import {
   Select,
   TextField,
   Typography,
-  Tooltip
+  Tooltip,
 } from "@material-ui/core";
 import React, { useState } from "react";
 import CollapseScreen from "../../assets/v2/CollapseScreen.svg";
@@ -18,8 +18,8 @@ import _ from "lodash";
 import TableContainer from "./Table";
 import clsx from "clsx";
 import ArrowDown from "../../assets/v2/ArrowDown.svg";
-import FullscreenIcon from '../../assets/v2/FullScreen.svg';
-import FullscreenExitIcon from '../../assets/v2/ExitFullScreen.svg';
+import FullscreenIcon from "../../assets/v2/FullScreen.svg";
+import FullscreenExitIcon from "../../assets/v2/ExitFullScreen.svg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.v2.backgrounds.whiteBackground,
       border: `1px solid ${theme.v2.borders.lightGrey}`,
       borderRadius: 5,
-      color: theme.v2.fonts.colors.greyShade1,
+      // color: theme.v2.fonts.colors.greyShade1,
       width: 200,
     },
   },
@@ -243,13 +243,15 @@ const CollapsibleTableContainer = (props) => {
               }}
             >
               {/* <img src={fullScreen ? FitToScreen : FullScreen} alt="max" /> */}
-              {!fullScreen ?
-                <Tooltip title='Enter full screen'>
-
-                  <img src={FullscreenIcon} alt='full screen' />
-                </Tooltip> : <Tooltip title='Exit full screen'>
-
-                  <img src={FullscreenExitIcon} alt='full screen' /></Tooltip>}
+              {!fullScreen ? (
+                <Tooltip title="Enter full screen">
+                  <img src={FullscreenIcon} alt="full screen" />
+                </Tooltip>
+              ) : (
+                <Tooltip title="Exit full screen">
+                  <img src={FullscreenExitIcon} alt="full screen" />
+                </Tooltip>
+              )}
             </Grid>
           </Grid>
           <Grid item xs={1} container justify="flex-end">

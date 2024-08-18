@@ -133,7 +133,8 @@ const ApprovalModal = (props) => {
         <Grid container alignItems="center">
           <Grid item xs={6}>
             <Typography className={classes.header}>
-              Change Planned End Dates
+              Change Planned{" "}
+              {props.forWhichDate === "start date" ? "Start" : "End"} Date
             </Typography>
           </Grid>
           <Grid item xs={6} container justify="flex-end">

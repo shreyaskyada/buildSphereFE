@@ -54,6 +54,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+let formatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+});
+
 const Projects = (props) => {
   const classes = useStyles();
   const [openAddProjectModal, setOpenAddProjectModal] = useState(false);
@@ -205,8 +210,8 @@ const Projects = (props) => {
                   classes: tClasses,
                 },
                 {
-                  value: `$ ${roundData(
-                    _.defaultTo(_.get(record, "actual_value"), 0)
+                  value: `${formatter.format(
+                    _.defaultTo(_.get(record, "actual_value"), 0).toFixed(2)
                   )}`,
                   type: "revenue",
                   field1: _.defaultTo(_.get(record, "actual_value"), 0),

@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
   deleteBtn: {
     borderColor: theme.v2.backgrounds.redBackground,
     borderWidth: 2,
-    borderStyle: 'solid',
+    borderStyle: "solid",
     marginLeft: "5%",
     minWidth: window.innerWidth * 0.03,
     height: window.innerHeight * 0.06,
@@ -91,7 +91,6 @@ const useStyles = makeStyles((theme) => ({
     color: theme.v2.backgrounds.redBackground,
     "&:hover": {
       backgroundColor: theme.v2.backgrounds.whiteBackground,
-
     },
   },
 }));
@@ -108,6 +107,7 @@ const EditProjectModal = (props) => {
   const [forecastEndDate, setForecastEndDate] = useState();
   const [openApprovalModal, setOpenApprovalModal] = useState(false);
   const [actualDateApproval, setActualDateApproval] = useState({});
+  const [approvalForWhichDate, setApprovalForWhichDate] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -125,14 +125,22 @@ const EditProjectModal = (props) => {
       )
     );
     setForecastStartDate(
-      moment(_.defaultTo(_.get(data, "pactual_start_date"), new Date())).format(
-        "YYYY-MM-DD"
-      )
+      moment(
+        _.defaultTo(
+          _.get(data, "pactual_start_date"),
+          _.get(data, "pstartDate"),
+          new Date()
+        )
+      ).format("YYYY-MM-DD")
     );
     setForecastEndDate(
-      moment(_.defaultTo(_.get(data, "pactual_end_date"), new Date())).format(
-        "YYYY-MM-DD"
-      )
+      moment(
+        _.defaultTo(
+          _.get(data, "pactual_end_date"),
+          _.get(data, "pendDate"),
+          new Date()
+        )
+      ).format("YYYY-MM-DD")
     );
     setActualDateApproval({});
   }, [data]);
@@ -177,17 +185,19 @@ const EditProjectModal = (props) => {
       try {
         const formData = new FormData();
         if (
-          moment(endDate).startOf('day').isAfter(
-            moment(_.get(props, ["data", "pendDate"])).startOf('day')) || moment(endDate).startOf('day').isAfter(
-              moment(_.get(props, ["data", "pendDate"])).startOf('day')
-            )
+          moment(endDate)
+            .startOf("day")
+            .isAfter(
+              moment(_.get(props, ["data", "pendDate"])).startOf("day")
+            ) ||
+          moment(endDate)
+            .startOf("day")
+            .isAfter(moment(_.get(props, ["data", "pendDate"])).startOf("day"))
         ) {
-
           if (!actualDateApproval || !actualDateApproval.file) {
             dispatch({
               type: SHOW_ERROR_MESSAGE,
-              data:
-                "Please attach approval details for changing  end date"
+              data: "Please attach approval details for changing  end date",
             });
             return;
           }
@@ -201,16 +211,22 @@ const EditProjectModal = (props) => {
           );
           formData.append("files", actualDateApproval.file);
         }
-        formData.append('project_name', projectName)
+        formData.append("project_name", projectName);
         formData.append("contract_no", contractNo);
 
         formData.append("start_date", moment(startDate).format("YYYY-MM-DD"));
         formData.append("end_date", moment(endDate).format("YYYY-MM-DD"));
 
-        formData.append("actual_start_date", moment(forecastStartDate).format("YYYY-MM-DD"));
-        formData.append("actual_end_date", moment(forecastEndDate).format("YYYY-MM-DD"));
+        formData.append(
+          "actual_start_date",
+          moment(forecastStartDate).format("YYYY-MM-DD")
+        );
+        formData.append(
+          "actual_end_date",
+          moment(forecastEndDate).format("YYYY-MM-DD")
+        );
 
-        console.log(formData)
+        console.log(formData);
 
         const result = await axios.patch(
           `/projects/${data.project_Id}?p=customer:${data.customer}`,
@@ -285,11 +301,11 @@ const EditProjectModal = (props) => {
       />
       <ApprovalModal
         open={openApprovalModal}
+        forWhichDate={approvalForWhichDate}
         onClose={() => {
           setOpenApprovalModal(false);
         }}
         setApproval={setActualDateApproval}
-
       />
       <Modal open={props.open} className={classes.root}>
         <Paper className={classes.paper}>
@@ -298,7 +314,6 @@ const EditProjectModal = (props) => {
               <Typography className={classes.mainHeader}>
                 Edit project
               </Typography>
-
             </Grid>
             <Grid item xs={4} container justify="flex-end">
               <img
@@ -345,7 +360,9 @@ const EditProjectModal = (props) => {
               />
             </Grid>
             <Grid item xs={6}>
-              <Typography className={classes.label}>Planned Start Date*</Typography>
+              <Typography className={classes.label}>
+                Planned Start Date*
+              </Typography>
               <KeyboardDatePicker
                 fullWidth={true}
                 autoOk={true}
@@ -357,6 +374,25 @@ const EditProjectModal = (props) => {
                 placeholder="MM/DD/YYYY"
                 onChange={(date) => {
                   setStartDate(date.format("MM/DD/YYYY"));
+                  if (
+                    moment(date)
+                      .startOf("day")
+                      .isAfter(
+                        moment(_.get(props, ["data", "pstartDate"])).startOf(
+                          "day"
+                        )
+                      ) ||
+                    moment(date)
+                      .startOf("day")
+                      .isBefore(
+                        moment(_.get(props, ["data", "pstartDate"])).startOf(
+                          "day"
+                        )
+                      )
+                  ) {
+                    setApprovalForWhichDate("start date");
+                    setOpenApprovalModal(true);
+                  }
                 }}
                 KeyboardButtonProps={{
                   "aria-label": "change date",
@@ -368,7 +404,9 @@ const EditProjectModal = (props) => {
               />
             </Grid>
             <Grid item xs={6}>
-              <Typography className={classes.label}>Planned End Date*</Typography>
+              <Typography className={classes.label}>
+                Planned End Date*
+              </Typography>
               <KeyboardDatePicker
                 fullWidth={true}
                 autoOk={true}
@@ -381,14 +419,22 @@ const EditProjectModal = (props) => {
                 onChange={(date) => {
                   setEndDate(date.format("MM/DD/YYYY"));
                   if (
-
-                    (moment(date).startOf('day').isAfter(
-                      moment(_.get(props, ["data", "pendDate"])).startOf('day')
-                    ) || moment(date).startOf('day').isBefore(
-                      moment(_.get(props, ["data", "pendDate"])).startOf('day')
-                    ))
+                    moment(date)
+                      .startOf("day")
+                      .isAfter(
+                        moment(_.get(props, ["data", "pendDate"])).startOf(
+                          "day"
+                        )
+                      ) ||
+                    moment(date)
+                      .startOf("day")
+                      .isBefore(
+                        moment(_.get(props, ["data", "pendDate"])).startOf(
+                          "day"
+                        )
+                      )
                   ) {
-
+                    setApprovalForWhichDate("end date");
                     setOpenApprovalModal(true);
                   }
                 }}
@@ -438,16 +484,18 @@ const EditProjectModal = (props) => {
                 format="MM/DD/YYYY"
                 id="date-picker-inline"
                 value={forecastEndDate}
-
                 placeholder="MM/DD/YYYY"
                 onChange={(date) => {
-                  if (moment(date).startOf('day').isAfter(moment(endDate).startOf('day'))) {
+                  if (
+                    moment(date)
+                      .startOf("day")
+                      .isAfter(moment(endDate).startOf("day"))
+                  ) {
                     dispatch({
                       type: SHOW_ERROR_MESSAGE,
-                      data:
-                        "Forecast end date cannot be after planned end date"
+                      data: "Forecast end date cannot be after planned end date",
                     });
-                    return
+                    return;
                   }
                   setForecastEndDate(date.format("MM/DD/YYYY"));
                 }}
@@ -465,11 +513,13 @@ const EditProjectModal = (props) => {
                 style={{ width: 180, height: 50, marginRight: 5 }}
                 className={classes.deleteBtn}
                 onClick={setOpenDeleteConfirmtaion.bind(this, true)}
-                startIcon={<img
-                  src={DeleteIcon}
-                  alt="Delete Project"
-                  style={{ cursor: "pointer" }}
-                />}
+                startIcon={
+                  <img
+                    src={DeleteIcon}
+                    alt="Delete Project"
+                    style={{ cursor: "pointer" }}
+                  />
+                }
               >
                 <Typography style={{ fontSize: 18, padding: "5% 0%" }}>
                   Delete Project
