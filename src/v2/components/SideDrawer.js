@@ -7,6 +7,7 @@ import { ReactComponent as Home } from "../../assets/v2/Home.svg";
 import { ReactComponent as Projects } from "../../assets/v2/Projects.svg";
 import { ReactComponent as Profile } from "../../assets/v2/Profile.svg";
 import { ReactComponent as ActivityLog } from "../../assets/v2/ActivityLog.svg";
+import { ReactComponent as Contracts } from "../../assets/v2/ContractIcon.svg";
 import { LOGOUT_ACTION } from "../../GlobalConstants";
 import { useDispatch } from "react-redux";
 import { withRouter } from "react-router";
@@ -15,6 +16,7 @@ import {
   ROUTE_PROFILE,
   ROUTE_PROJECTS,
   ROUTE_ACTIVITY_LOG,
+  ROUTE_CONTRACTS,
 } from "../../helpers/endpoints";
 import _ from "lodash";
 import { NavLink } from "react-router-dom";
@@ -54,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   iconContainer: {
     display: "flex",
     flexDirection: "column",
-    gap: "47px",
+    gap: "30px",
     marginTop: "74px",
     flex: 1,
   },
@@ -76,6 +78,11 @@ const sidebarItems = [
     label: "Dashboard",
     icon: <Home />,
     pathname: ROUTE_HOME,
+  },
+  {
+    label: "Contracts",
+    icon: <Contracts />,
+    pathname: ROUTE_CONTRACTS,
   },
   {
     label: "Projects",

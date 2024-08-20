@@ -1,0 +1,97 @@
+.editContractTopBar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.editContractText {
+    font-size: 25px;
+    color: #113C23;
+    margin-top: 0px;
+}
+
+.editContractCloseIconContainer {
+    margin-right: -20px;
+    margin-top: -20px;
+    height: 45px;
+    width: 45px;
+    background-color: #F4E2E2;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.editContractModal1stRow {
+    display: flex;
+    margin-top: -10px;
+    gap: 20px
+}
+
+.customerText,
+.contractText {
+    font-size: 12px;
+    color: #113C23;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.unitListText {
+    font-size: 20px;
+    color: #113C23;
+}
+
+.editContractModal2ndRow {
+    display: flex;
+    gap: 80px
+}
+
+.editContractDownloadUnitsBtn,
+.editContractUploadUnitsBtn {
+    width: 293px;
+    height: 56px;
+    background-color: #F1F8F5;
+    border: 1px solid #0CA14A;
+    border-radius: 28px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #04A349;
+    font-family: Manrope;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: -10px;
+}
+
+.editContractModal3rdRow {
+    margin-top: 35px;
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.saveContractBtn {
+    width: 185px;
+    height: 56px;
+    background-color: #0CA14A;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: Manrope;
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.saveContractBtn:hover {
+    background-color: #04B349;
+}
+
+.deleteContractBtn {
+    font-size: 12px;
+    font-weight: bold;
+    color: #E36767;
+    cursor: pointer;
+    text-decoration: underline;
+}

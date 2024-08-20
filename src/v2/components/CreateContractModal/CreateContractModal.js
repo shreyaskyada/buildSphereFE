@@ -1,9 +1,7 @@
 import {
   Grid,
-  MenuItem,
   Modal,
   Paper,
-  Select,
   makeStyles,
   Backdrop,
   TextField,
@@ -160,7 +158,7 @@ const CreateContractModal = ({
     }
 
     if (!contractNumber) {
-      setError({ contract: "Please select a contract number" });
+      setError({ contract: "Please enter a contract number" });
       return false;
     }
     if (!unitsFile) {

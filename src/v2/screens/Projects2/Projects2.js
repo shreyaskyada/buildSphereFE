@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 import skull from "../../../assets/v2/Skull.svg";
 import { ReactComponent as Plus } from "../../../assets/v2/Plus.svg";
-import CreateContractModal from "../../components/CreateContractModal/CreateContractModal";
 import CreateProjectModal from "../../components/CreateProjectModal/CreateProjectModal";
 import { ROUTE_PROJECTS } from "../../../helpers/endpoints";
 import SuccessMsgModal from "../../components/SuccessMsgModal/SuccessMsgModal";
@@ -18,7 +17,6 @@ const Projects2 = (props) => {
   const [activeStatus, setActiveStatus] = useState("All");
   const [filters, setFilters] = useState("");
   const [projects, setProjects] = useState([]);
-  const [showCreateContractModal, setShowCreateContractModal] = useState(false);
   const [showCreateProjectModal, setShowCreateProjectModal] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const [customers, setCustomers] = useState([]);
@@ -159,7 +157,13 @@ const Projects2 = (props) => {
       field: "actual_value",
       headerName: "Revenue",
       sortable: true,
-      format: (value) => `+ ${formatter.format((value || 0).toFixed(2))}`,
+      format: (value) => {
+        return (
+          <p style={{ color: "#59A77B", fontWeight: "bold" }}>
+            {`+ ${formatter.format((value || 0).toFixed(2))}`}
+          </p>
+        );
+      },
     },
   ];
 
@@ -339,10 +343,10 @@ const Projects2 = (props) => {
             </div>
           </div>
         </div>
-        <div className="projectFilter">
+        {/* <div className="projectFilter">
           <img src={filterIcon} alt="filterIcon" style={{ height: "17px" }} />
           <p className="filterText">Filters</p>
-        </div>
+        </div> */}
       </div>
       <div className="projectsTable">
         <TableNew
@@ -368,14 +372,6 @@ const Projects2 = (props) => {
       </div>
       <div className="tableBtn">
         <button
-          className="contractBtn"
-          onClick={() => {
-            setShowCreateContractModal(true);
-          }}
-        >
-          <Plus fill="#0CA14A" /> <p>New Contract</p>
-        </button>
-        <button
           className="projectBtn"
           onClick={() => {
             setShowCreateProjectModal(true);
@@ -384,16 +380,7 @@ const Projects2 = (props) => {
           <Plus fill="#FAFBFB" /> <p>New Project</p>
         </button>
       </div>
-      {showCreateContractModal && (
-        <CreateContractModal
-          getContracts={getContracts}
-          getCustomers={getCustomers}
-          showCreateContractModal={showCreateContractModal}
-          setShowCreateContractModal={setShowCreateContractModal}
-          customers={customers}
-          setSuccessMsg={setSuccessMsg}
-        />
-      )}
+
       {showCreateProjectModal && (
         <CreateProjectModal
           showCreateProjectModal={showCreateProjectModal}

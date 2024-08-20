@@ -167,6 +167,11 @@ const TableNew = ({
                 >
                   {col.field === "checkbox" ? (
                     <Checkbox
+                      sx={{
+                        "& .MuiSvgIcon-root": {
+                          color: "#5D6161",
+                        },
+                      }}
                       onClick={(event) => {
                         event.stopPropagation();
                       }}

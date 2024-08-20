@@ -8,12 +8,10 @@ import TableNew from "../../components/Table/TableNew";
 import "./style.css";
 
 const ActivityLog2 = (props) => {
-  const [activeStatus, setActiveStatus] = useState("All");
   const [activities, setActivities] = useState([]);
   const token = useSelector((state) => state.auth.token);
   const profile = useSelector((state) => JSON.parse(state.auth.profile));
   const groupId = _.get(profile, "group_id");
-  const activitiesFilterLabel = ["All", "Recent", "Failed"];
 
   const getDate = (date) => {
     const time = moment(date);
