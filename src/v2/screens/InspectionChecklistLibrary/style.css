@@ -1,0 +1,206 @@
+.checklistLibraryContainer {
+    padding-left: 2%;
+    padding-right: 2%;
+    width: 89vw;
+    height: 98vh;
+    margin-bottom: -30px;
+    color: #113C23;
+}
+
+.checklistLibraryHeaderContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.checklistLibraryHeader {
+    display: flex;
+    align-items: center;
+}
+
+.checklistLibraryText {
+
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.checklistLibraryBody {
+    margin-top: -10px;
+    margin-bottom: 50px;
+    height: 84%;
+}
+
+.checklistLibraryBody {
+    display: flex;
+}
+
+.checklistLibraryBodyLeftBar {
+    overflow: auto;
+}
+
+.checklistDetails {
+    background-color: #FFFFFF;
+    padding-top: 1px;
+    width: 300px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    border: 2px solid #FFFFFF;
+}
+
+.checklistDetails:hover {
+    cursor: pointer;
+    border: 2px solid #0CA14A;
+}
+
+.checklistDetailsHeader {
+    display: flex;
+    margin-top: -10px;
+    padding-left: 20px;
+}
+
+.checklistDetailsHeaderLeft {
+    width: 55%;
+}
+
+.customerText,
+.checklistsText {
+    margin-top: -20px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.horizontalLine {
+    height: 1px;
+    width: 100%;
+    background-color: #DCF4EE;
+}
+
+.checklistDetailsBodyRow {
+    display: flex;
+    padding-left: 20px;
+}
+
+.checklistCategory {
+    width: 55%;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.checklistName {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.checklistLibraryBodyRightContent {
+    background-color: #FFFFFF;
+    flex: 1;
+    border-radius: 10px;
+    margin-left: 5px;
+    padding-left: 40px;
+    padding-right: 30px;
+    padding-top: 17px;
+}
+
+.rightContentHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.arrowContainer {
+    background-color: #E5FAE7;
+    height: 18px;
+    width: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.rightContentBody {
+    height: 70%;
+    border: 2px solid #DCF4EE;
+    border-radius: 10px;
+    padding-left: 25px;
+    padding-top: 25px;
+    padding-right: 30px;
+    overflow: auto;
+}
+
+.checklistInfoHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.category {
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.category p {
+    margin-top: 0;
+}
+
+.removalScope,
+.image {
+    display: flex;
+    gap: 10px;
+}
+
+.removalScope div {
+    height: 15px;
+    width: 15px;
+    border-radius: 3px;
+}
+
+.removalScope p {
+    margin-top: -2px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.checklistInfoBody {
+    padding-left: 20px;
+}
+
+.checklistInfo {
+    margin-bottom: 30px;
+}
+
+.checklistInfoBodyRow {
+    display: flex;
+    margin-bottom: -8px;
+}
+
+.checklistQuestion {
+    flex: 1;
+}
+
+.checklistQuestion p {
+    margin-top: 0;
+    font-size: 13px;
+    font-weight: 550;
+}
+
+.image div {
+    height: 15px;
+    width: 15px;
+    border-radius: 3px;
+}
+
+.itemScore p {
+    margin-top: 0;
+    font-size: 12px;
+}
+
+.image {
+    padding-left: 20px;
+    padding-right: 60px;
+}
+
+.image p {
+    margin-top: -2px;
+    font-size: 12px;
+}

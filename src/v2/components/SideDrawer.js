@@ -17,6 +17,7 @@ import {
   ROUTE_PROJECTS,
   ROUTE_ACTIVITY_LOG,
   ROUTE_CONTRACTS,
+  ROUTE_INSPECTION_CHECKLIST_LIBRARY,
 } from "../../helpers/endpoints";
 import _ from "lodash";
 import { NavLink } from "react-router-dom";
@@ -56,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
   iconContainer: {
     display: "flex",
     flexDirection: "column",
-    gap: "30px",
+    gap: "20px",
     marginTop: "74px",
     flex: 1,
   },
@@ -88,6 +89,11 @@ const sidebarItems = [
     label: "Projects",
     icon: <Projects />,
     pathname: ROUTE_PROJECTS,
+  },
+  {
+    label: "Inspection Checklist",
+    icon: <Projects />,
+    pathname: ROUTE_INSPECTION_CHECKLIST_LIBRARY,
   },
   {
     label: "Activity Log",

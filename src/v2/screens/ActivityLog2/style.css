@@ -22,21 +22,6 @@
     font-weight: bold;
 }
 
-.activityFilter ul {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.filterName {
-    color: #84A391;
-    padding: 6px 15px;
-    border-radius: 24px;
-    font-size: 12px;
-    border: 1px solid #84A391
-}
-
 .activityTable {
     background-color: #FFFFFF;
     border-radius: 10px;

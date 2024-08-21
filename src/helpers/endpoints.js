@@ -11,6 +11,7 @@ export const API_CARDS = "cards";
 export const ROUTE_PROJECTS = "/projects";
 export const ROUTE_CONTRACTS = "/contracts";
 export const ROUTE_ACTIVITY_LOG = "/activitylog";
+export const ROUTE_INSPECTION_CHECKLIST_LIBRARY = "/inspection-checklist";
 export const ROUTE_ACCOUNTS_SUBSCRIPTION = "/subscription";
 export const ROUTE_HOME = "/dashboard";
 export const ROUTE_PAYMENTS = "/payment";

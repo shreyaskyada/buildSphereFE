@@ -267,7 +267,7 @@ const EditContractModal = ({
         </div>
         <div className="editContractModal1stRow">
           <div>
-            <p className="customerText">Customer</p>
+            <p className="customer_text">Customer</p>
             <Select
               variant="standard"
               className={classes.select}

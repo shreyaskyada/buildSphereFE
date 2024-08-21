@@ -268,7 +268,7 @@ const CreateContractModal = ({
         </div>
         <div className="createContract1stRow">
           <div>
-            <p className="customerText">Customer</p>
+            <p className="customer_text">Customer</p>
             <Autocomplete
               value={customer}
               className={classes.autocompleteRoot}

@@ -371,7 +371,7 @@ const CreateProjectModal = ({
         </div>
         <div className="projectModal1stRow">
           <div>
-            <p className="customerText">Customer</p>
+            <p className="customer_text">Customer</p>
             <Select
               variant="standard"
               className={classes.select}
