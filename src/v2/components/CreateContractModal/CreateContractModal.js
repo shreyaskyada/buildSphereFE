@@ -354,6 +354,7 @@ const CreateContractModal = ({
                 if (error.contract) {
                   setError({});
                 }
+                // TODO: Check if contract already exists
                 setContractNumber(e.target.value);
               }}
             />

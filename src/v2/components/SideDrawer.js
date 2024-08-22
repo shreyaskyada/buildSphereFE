@@ -90,11 +90,11 @@ const sidebarItems = [
     icon: <Projects />,
     pathname: ROUTE_PROJECTS,
   },
-  {
-    label: "Inspection Checklist",
-    icon: <Projects />,
-    pathname: ROUTE_INSPECTION_CHECKLIST_LIBRARY,
-  },
+  // {
+  //   label: "Inspection Checklist",
+  //   icon: <Projects />,
+  //   pathname: ROUTE_INSPECTION_CHECKLIST_LIBRARY,
+  // },
   {
     label: "Activity Log",
     icon: <ActivityLog />,

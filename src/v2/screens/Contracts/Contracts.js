@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import "./style.css";
 import TableNew from "../../components/Table/TableNew";
 import skull from "../../../assets/v2/Skull.svg";
@@ -15,10 +15,10 @@ import Filter from "./Filter/Filter";
 
 const Contracts = () => {
   const [showEditContractModal, setShowEditContractModal] = useState(false);
-  const [showDeleteContractModal, setShowDeleteContractModal] = useState(false);
   const [showCreateContractModal, setShowCreateContractModal] = useState(false);
   const [customers, setCustomers] = useState([]);
-  const [contracts2, setContracts2] = useState([]);
+  const [filters, setFilters] = useState(undefined);
+  const [contracts, setContracts] = useState([]);
   const [successMsg, setSuccessMsg] = useState("");
 
   const token = useSelector((state) => state.auth.token);
@@ -37,21 +37,23 @@ const Contracts = () => {
     fontWeight: "600",
     borderColor: "#DCF4EE",
     fontFamily: "Manrope",
+    textAlign: "center",
   };
 
   const columns = [
-    { field: "checkbox", headerName: "", width: 50, sortable: false },
-    { field: "customer_name", headerName: "Customer", sortable: true },
-    { field: "contract_name", headerName: "Contract Name", sortable: true },
+    { field: "customer_name", headerName: "Customer", sortable: true, align: 'center' },
+    { field: "contract_name", headerName: "Contract Name", sortable: true, align: 'center' },
     {
       field: "project_count",
       headerName: "Count Of Projects",
       sortable: true,
+      align: 'center'
     },
     {
       field: "actual_value",
       headerName: "Revenue",
       sortable: true,
+      align: 'center',
       format: (value) => {
         return (
           <p style={{ color: "#59A77B", fontWeight: "bold" }}>
@@ -75,18 +77,18 @@ const Contracts = () => {
       if (result.status === 200) {
         setCustomers(_.get(result, ["data", "message"]) || []);
       }
-    } catch (err) {}
+    } catch (err) { }
   }, [groupId, token]);
 
   const getContracts = useCallback(async () => {
     try {
-      const result = await axios.get(`/contracts?p=group:${groupId}`, {
+      const result = await axios.get(`/contracts/table-view?p=group:${groupId}`, {
         headers: {
           Authorization: token,
         },
       });
-      setContracts2(_.get(result, ["data", "message"]) || []);
-    } catch (err) {}
+      setContracts(_.get(result, ["data", "message"]) || []);
+    } catch (err) { }
   }, [groupId, token]);
 
   useEffect(() => {
@@ -94,29 +96,21 @@ const Contracts = () => {
     getContracts();
   }, [getCustomers, getContracts]);
 
-  const contracts = [
-    {
-      id: "1",
-      customer_name: "TDS",
-      contract_name: "contract 1",
-      project_count: 10,
-      actual_value: 220,
-    },
-    {
-      id: "2",
-      customer_name: "TDS 2",
-      contract_name: "contract 2",
-      project_count: 100,
-      actual_value: 1220,
-    },
-    {
-      id: "3",
-      customer_name: "TDS 3",
-      contract_name: "contract 3",
-      project_count: 160,
-      actual_value: 12200,
-    },
-  ];
+  const contractsData = useMemo(() => {
+    if (filters?.customerId || filters?.contractId) {
+      if (filters.customerId && filters.contractId) {
+        return contracts.filter((contract) => contract.contract_id === filters.contractId && contract.customer_id === filters.customerId)
+      }
+      if (filters.customerId) {
+        return contracts.filter((contract) => contract.customer_id === filters.customerId)
+      }
+      if (filters.contractId) {
+        return contracts.filter((contract) => contract.contract_id === filters.contractId)
+      }
+    } else {
+      return contracts;
+    }
+  }, [contracts, filters]);
 
   return (
     <div className="contractsContainer">
@@ -125,7 +119,7 @@ const Contracts = () => {
           <p className="contractsText">Contracts</p>
         </div>
         <div className="contractsHeaderRight">
-          <Filter customers={customers} contracts={contracts2} />
+          <Filter customers={customers} contracts={contracts} setFilters={setFilters} />
           <button
             className="editContractBtn"
             onClick={() => {
@@ -145,8 +139,8 @@ const Contracts = () => {
         </div>
       </div>
       <div className="contractTable">
-        <TableNew columns={columns} data={contracts} cellStyles={cellStyles} />
-        {contracts.length === 0 && (
+        <TableNew columns={columns} data={contractsData} cellStyles={cellStyles} />
+        {contracts.length === 0 || !contractsData.length && (
           <div className="activitiesNoData">
             <img
               src={skull}
@@ -164,17 +158,14 @@ const Contracts = () => {
         <EditContractModal
           showEditContractModal={showEditContractModal}
           setShowEditContractModal={setShowEditContractModal}
-          setShowDeleteContractModal={setShowDeleteContractModal}
           customers={customers}
-          contracts={contracts2}
+          contracts={contracts}
+          setSuccessMsg={setSuccessMsg}
+          getContracts={getContracts}
+          getCustomers={getCustomers}
         />
       )}
-      {showDeleteContractModal && (
-        <DeleteContractModal
-          showDeleteContractModal={showDeleteContractModal}
-          setShowDeleteContractModal={setShowDeleteContractModal}
-        />
-      )}
+
       {showCreateContractModal && (
         <CreateContractModal
           getContracts={getContracts}

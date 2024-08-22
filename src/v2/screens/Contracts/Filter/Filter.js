@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Filter = ({ customers, contracts }) => {
+const Filter = ({ customers, contracts, setFilters }) => {
   const classes = useStyles();
   const [newCustomers, setNewCustomers] = useState(null);
   const [newContracts, setNewContracts] = useState(null);
@@ -135,6 +135,10 @@ const Filter = ({ customers, contracts }) => {
             if (newValue) {
               manageCustomerContracts(newValue.id);
             }
+            setFilters((filters) => ({
+              customerId: newValue ? newValue.id : undefined,
+              contractId: undefined,
+            }));
           }}
           filterOptions={(options, params) => {
             const filtered = filter(options, params);
@@ -189,6 +193,11 @@ const Filter = ({ customers, contracts }) => {
             } else {
               setContract(newValue);
             }
+
+            setFilters((filters) => ({
+              ...filters,
+              contractId: newValue ? newValue.id : undefined,
+            }));
           }}
           filterOptions={(options, params) => {
             const filtered = filter(options, params);

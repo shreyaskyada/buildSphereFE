@@ -14,8 +14,11 @@ import ArrowDown from "../../../assets/v2/ArrowDown.svg";
 import Download from "../../../assets/v2/Download.svg";
 import Upload from "../../../assets/v2/Upload.svg";
 import _ from "lodash";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "../../../axios";
+import { HIDE_LOADER, SHOW_LOADER } from "../../../store/actions/v2/loader";
+import { SHOW_ERROR_MESSAGE } from "../../../store/actions/v2/message";
+import DeleteContractModal from "../DeleteContractModal/DeleteContractModal";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -83,9 +86,11 @@ const useStyles = makeStyles((theme) => ({
 const EditContractModal = ({
   showEditContractModal,
   setShowEditContractModal,
-  setShowDeleteContractModal,
   customers,
   contracts,
+  setSuccessMsg,
+  getContracts,
+  getCustomers
 }) => {
   const [selectedValueOfCustomer, setSelectedValueOfCustomer] = useState("0");
   const [customer, setCustomer] = useState(null);
@@ -94,12 +99,15 @@ const EditContractModal = ({
   const [contractName, setContractName] = useState(null);
   const [customerContracts, setCustomerContracts] = useState({});
   const [unitsFile, setUnitsFile] = useState(null);
+  const [showDeleteContractModal, setShowDeleteContractModal] = useState(false);
   const [error, setError] = useState({});
   const token = useSelector((state) => state.auth.token);
   const profile = useSelector((state) => JSON.parse(state.auth.profile));
   const groupId = _.get(profile, "group_id");
 
   const classes = useStyles();
+  const dispatch = useDispatch();
+
   const MenuProps = {
     PaperProps: {
       style: {
@@ -110,6 +118,7 @@ const EditContractModal = ({
       },
     },
   };
+
 
   const manageCustomerContracts = (customerId) => {
     if (!customerContracts?.[customerId]) {
@@ -128,7 +137,7 @@ const EditContractModal = ({
   const downloadUnitsTemplate = async () => {
     try {
       const result = await axios.get(
-        `/contracts/${contractNumber}/units?p=group:${groupId}`,
+        `/contracts/uploadedUnitsFile/${contractNumber}?p=group:${groupId}`,
         {
           headers: {
             Authorization: token,
@@ -145,7 +154,7 @@ const EditContractModal = ({
         document.body.appendChild(link);
         link.click();
       }
-    } catch (err) {}
+    } catch (err) { }
   };
 
   const validateData = () => {
@@ -168,6 +177,37 @@ const EditContractModal = ({
 
   const handleSaveContract = async () => {
     const isValid = validateData();
+
+    if (isValid) {
+      const formData = new FormData();
+
+      formData.append("file", unitsFile);
+
+      try {
+        dispatch({ type: SHOW_LOADER, data: 1 });
+        const url = `/contracts/${contractNumber}?p=group:${groupId}`;
+        const result = await axios.patch(url, formData, {
+          headers: {
+            Authorization: token,
+          },
+        });
+        dispatch({ type: HIDE_LOADER });
+
+        if (result.status === 200) {
+          setSuccessMsg("New Contract Created Successfully!");
+          setShowEditContractModal(false);
+        }
+      } catch (err) {
+        dispatch({ type: HIDE_LOADER });
+        dispatch({
+          type: SHOW_ERROR_MESSAGE,
+          data:
+            _.get(err, ["response", "data", "message"]) ||
+            "Something went wrong",
+        });
+      }
+
+    }
 
     // if (isValid) {
     //   const formData = new FormData();
@@ -243,141 +283,152 @@ const EditContractModal = ({
   };
 
   return (
-    <Modal
-      open={showEditContractModal}
-      className={classes.root}
-      BackdropComponent={Backdrop}
-      BackdropProps={{
-        classes: {
-          root: classes.backdrop,
-        },
-      }}
-    >
-      <Paper className={classes.paper}>
-        <div className="editContractTopBar">
-          <h4 className="editContractText">Edit Contract</h4>
-          <div
-            className="editContractCloseIconContainer"
-            onClick={() => {
-              setShowEditContractModal(false);
-            }}
-          >
-            <Cross style={{ width: "14px", height: "14px" }} />
-          </div>
-        </div>
-        <div className="editContractModal1stRow">
-          <div>
-            <p className="customer_text">Customer</p>
-            <Select
-              variant="standard"
-              className={classes.select}
-              value={selectedValueOfCustomer}
-              style={{
-                color: `${
-                  selectedValueOfCustomer !== "0" ? "#113C23" : "#84A391"
-                }`,
-              }}
-              IconComponent={() => {
-                return (
-                  <Grid className={classes.editContractArrowContainer}>
-                    <img src={ArrowDown} alt="Down" style={{ height: "4px" }} />
-                  </Grid>
-                );
-              }}
-              onChange={(e) => {
-                if (error.customer) {
-                  setError({});
-                }
-                setSelectedValueOfCustomer(e.target.value);
-                setCustomer(e.target.value);
-                setSelectedValueOfContract("0");
-                setContractNumber(null);
-                manageCustomerContracts(e.target.value);
-              }}
-              defaultValue={"0"}
-              MenuProps={MenuProps}
-              inputProps={{
-                classes: {
-                  select:
-                    selectedValueOfCustomer === "0" ? classes.placeholder : "",
-                },
+    <>
+      {showDeleteContractModal && (
+        <DeleteContractModal
+          showDeleteContractModal={showDeleteContractModal}
+          setShowDeleteContractModal={setShowDeleteContractModal}
+          setShowEditContractModal={setShowEditContractModal}
+          contractNumber={contractNumber}
+          setSuccessMsg={setSuccessMsg}
+          getContracts={getContracts}
+          getCustomers={getCustomers}
+        />
+      )}
+
+      <Modal
+        open={showEditContractModal}
+        className={classes.root}
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          classes: {
+            root: classes.backdrop,
+          },
+        }}
+      >
+        <Paper className={classes.paper}>
+          <div className="editContractTopBar">
+            <h4 className="editContractText">Edit Contract</h4>
+            <div
+              className="editContractCloseIconContainer"
+              onClick={() => {
+                setShowEditContractModal(false);
               }}
             >
-              {[
-                <MenuItem
-                  key={0}
-                  value={"0"}
-                  disabled
-                  className={classes.menulabels}
-                >
-                  Select Customer
-                </MenuItem>,
-                ...customers.map((customer, index) => {
+              <Cross style={{ width: "14px", height: "14px" }} />
+            </div>
+          </div>
+          <div className="editContractModal1stRow">
+            <div>
+              <p className="contractText">Customer</p>
+              <Select
+                variant="standard"
+                className={classes.select}
+                value={selectedValueOfCustomer}
+                style={{
+                  color: `${selectedValueOfCustomer !== "0" ? "#113C23" : "#84A391"
+                    }`,
+                }}
+                IconComponent={() => {
                   return (
-                    <MenuItem
-                      key={index}
-                      value={customer.customer_id}
-                      className={classes.menulabels}
-                    >
-                      {customer.customer.name}
-                    </MenuItem>
+                    <Grid className={classes.editContractArrowContainer}>
+                      <img src={ArrowDown} alt="Down" style={{ height: "4px" }} />
+                    </Grid>
                   );
-                }),
-              ]}
-            </Select>
-            <FormHelperText style={{ color: "red" }}>
-              {error.customer}
-            </FormHelperText>
-          </div>
-          <div>
-            <p className="contractText">Contract Number</p>
-            <Select
-              variant="standard"
-              disabled={!customer}
-              className={classes.select}
-              value={selectedValueOfContract}
-              style={{
-                color: `${
-                  selectedValueOfContract !== "0" ? "#113C23" : "#84A391"
-                }`,
-                opacity: `${!customer ? "0.5" : "1"}`,
-              }}
-              IconComponent={() => {
-                return (
-                  <Grid className={classes.editContractArrowContainer}>
-                    <img src={ArrowDown} alt="Down" style={{ height: "4px" }} />
-                  </Grid>
-                );
-              }}
-              onChange={(e) => {
-                if (error.contract) {
-                  setError({});
-                }
+                }}
+                onChange={(e) => {
+                  if (error.customer) {
+                    setError({});
+                  }
+                  setSelectedValueOfCustomer(e.target.value);
+                  setCustomer(e.target.value);
+                  setSelectedValueOfContract("0");
+                  setContractNumber(null);
+                  manageCustomerContracts(e.target.value);
+                }}
+                defaultValue={"0"}
+                MenuProps={MenuProps}
+                inputProps={{
+                  classes: {
+                    select:
+                      selectedValueOfCustomer === "0" ? classes.placeholder : "",
+                  },
+                }}
+              >
+                {[
+                  <MenuItem
+                    key={0}
+                    value={"0"}
+                    disabled
+                    className={classes.menulabels}
+                  >
+                    Select Customer
+                  </MenuItem>,
+                  ...customers.map((customer, index) => {
+                    return (
+                      <MenuItem
+                        key={index}
+                        value={customer.customer_id}
+                        className={classes.menulabels}
+                      >
+                        {customer.customer.name}
+                      </MenuItem>
+                    );
+                  }),
+                ]}
+              </Select>
+              <FormHelperText style={{ color: "red" }}>
+                {error.customer}
+              </FormHelperText>
+            </div>
+            <div>
+              <p className="contractText">Contract Number</p>
+              <Select
+                variant="standard"
+                disabled={!customer}
+                className={classes.select}
+                value={selectedValueOfContract}
+                style={{
+                  color: `${selectedValueOfContract !== "0" ? "#113C23" : "#84A391"
+                    }`,
+                  opacity: `${!customer ? "0.5" : "1"}`,
+                }}
+                IconComponent={() => {
+                  return (
+                    <Grid className={classes.editContractArrowContainer}>
+                      <img src={ArrowDown} alt="Down" style={{ height: "4px" }} />
+                    </Grid>
+                  );
+                }}
+                onChange={(e) => {
+                  if (error.contract) {
+                    setError({});
+                  }
 
-                setContractName(e.currentTarget.id);
-                setSelectedValueOfContract(e.target.value);
-                setContractNumber(e.target.value);
-              }}
-              defaultValue={"0"}
-              MenuProps={MenuProps}
-              inputProps={{
-                classes: {
-                  select:
-                    selectedValueOfContract === "0" ? classes.placeholder : "",
-                },
-              }}
-            >
-              {[
-                <MenuItem
-                  key={0}
-                  value={"0"}
-                  disabled
-                  className={classes.menulabels}
-                >
-                  Select Contract
-                </MenuItem>,
+                  setContractName(e.currentTarget.id);
+                  setSelectedValueOfContract(e.target.value);
+                  setContractNumber(e.target.value);
+                }}
+                defaultValue={"0"}
+                MenuProps={MenuProps}
+                inputProps={{
+                  classes: {
+                    select:
+                      selectedValueOfContract === "0" ? classes.placeholder : "",
+                  },
+                }}
+              >
+                {[
+                  <MenuItem
+                    key={0}
+                    value={"0"}
+                    disabled
+                    className={classes.menulabels}
+                  >
+                    Select Contract
+                  </MenuItem>,
 
-                customer &&
+                  customer &&
                   customerContracts[customer].map((contract, index) => {
                     return (
                       <MenuItem
@@ -390,81 +441,92 @@ const EditContractModal = ({
                       </MenuItem>
                     );
                   }),
-              ]}
-            </Select>
+                ]}
+              </Select>
 
-            <FormHelperText style={{ color: "red" }}>
-              {error.contract}
-            </FormHelperText>
+              <FormHelperText style={{ color: "red" }}>
+                {error.contract}
+              </FormHelperText>
+            </div>
           </div>
-        </div>
-        <div>
           <div>
-            <h3 className="unitListText">Unit List</h3>
-            <div className="editContractModal2ndRow">
-              <button
-                className="editContractDownloadUnitsBtn"
-                onClick={downloadUnitsTemplate.bind(this)}
-                disabled={!contractNumber}
-                style={{
-                  cursor: contractNumber ? "pointer" : "",
-                  opacity: contractNumber ? "1" : "0.5",
-                }}
-              >
-                <img src={Download} alt="Download" />
-                <p>Download Current Unit List</p>
-              </button>
-              <div onDrop={handleDrop} onDragOver={handleDragOver}>
+            <div>
+              <h3 className="unitListText">Unit List</h3>
+              <div className="editContractModal2ndRow">
                 <button
-                  className="editContractUploadUnitsBtn"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => {
-                    document.getElementById("unitsTemplate").click();
+                  className="editContractDownloadUnitsBtn"
+                  onClick={downloadUnitsTemplate.bind(this)}
+                  disabled={!contractNumber}
+                  style={{
+                    cursor: contractNumber ? "pointer" : "",
+                    opacity: contractNumber ? "1" : "0.5",
                   }}
                 >
-                  <img src={Upload} alt="Download" />
-                  <p>Upload Revised Unit List</p>
+                  <img src={Download} alt="Download" />
+                  <p>Download Current Unit List</p>
                 </button>
+                <div onDrop={handleDrop} onDragOver={handleDragOver}>
+                  <button
+                    className="editContractUploadUnitsBtn"
+                    style={{
+                      cursor: contractNumber ? "pointer" : "",
+                      opacity: contractNumber ? "1" : "0.5",
+                    }}
+                    disabled={!contractNumber}
+                    onClick={() => {
+                      document.getElementById("unitsTemplate").click();
+                    }}
+                  >
+                    <img src={Upload} alt="Download" />
+                    <p>Upload Revised Unit List</p>
+                  </button>
 
-                {error.unitsFile && (
-                  <FormHelperText style={{ color: "red" }}>
-                    {error.unitsFile}
-                  </FormHelperText>
-                )}
+                  {error.unitsFile && (
+                    <FormHelperText style={{ color: "red" }}>
+                      {error.unitsFile}
+                    </FormHelperText>
+                  )}
 
-                {unitsFile && (
-                  <FormHelperText style={{ color: "green" }}>
-                    {unitsFile.name}
-                  </FormHelperText>
-                )}
+                  {unitsFile && (
+                    <FormHelperText style={{ color: "green" }}>
+                      {unitsFile.name}
+                    </FormHelperText>
+                  )}
 
-                <input
-                  type="file"
-                  style={{ display: "none" }}
-                  id="unitsTemplate"
-                  onChange={(e) => {
-                    setUploadedFile(e.target.files[0]);
-                  }}
-                />
+                  <input
+                    type="file"
+                    style={{ display: "none" }}
+                    id="unitsTemplate"
+                    onChange={(e) => {
+                      setUploadedFile(e.target.files[0]);
+                    }}
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="editContractModal3rdRow">
-          <button className="saveContractBtn" onClick={handleSaveContract}>
-            Save Contract
-          </button>
-          <p
-            className="deleteContractBtn"
-            onClick={() => {
-              setShowDeleteContractModal(true);
-            }}
-          >
-            Delete Contract
-          </p>
-        </div>
-      </Paper>
-    </Modal>
+          <div className="editContractModal3rdRow">
+            <button className="saveContractBtn" onClick={handleSaveContract}>
+              Save Contract
+            </button>
+            <p
+              className="deleteContractBtn"
+              onClick={() => {
+                if (contractNumber) {
+                  setShowDeleteContractModal(true);
+                }
+              }}
+              style={{
+                opacity: contractNumber ? 1 : 0.5,
+                cursor: contractNumber ? "pointer" : "arrow",
+              }}
+            >
+              Delete Contract
+            </p>
+          </div>
+        </Paper>
+      </Modal>
+    </>
   );
 };
 

@@ -127,7 +127,7 @@ const theme = createMuiTheme({
       root: {
         backgroundColor: "#F4F4F4",
         fontColor: "#A8A0A0",
-        padding: "1% 2%",
+        // padding: "1% 2%",
         borderRadius: 5,
         outline: "1px solid transparent",
         "&$focused": {

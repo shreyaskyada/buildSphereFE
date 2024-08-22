@@ -15,7 +15,7 @@ const TableNew = ({
   columns,
   data,
   cellStyles,
-  handleRowClick = () => {},
+  handleRowClick = () => { },
   cursorPointer = false,
 }) => {
   const [defaultData, setDefaultData] = useState([]);
@@ -112,11 +112,18 @@ const TableNew = ({
                   fontFamily: "Manrope",
                   fontWeight: "650",
                   cursor: col.sortable ? "pointer" : "",
+                  ...(col?.style && {
+                    ...col.style
+                  })
                 }}
                 onClick={col.sortable ? handleSorting : null}
               >
                 <div
-                  style={{ display: "flex", alignItems: "center", gap: "5px" }}
+                  style={{
+                    display: "flex", alignItems: "center", gap: "5px", ...(col?.align && {
+                      justifyContent: col.align
+                    })
+                  }}
                 >
                   {col.headerName}
                   {col.sortable && (
@@ -162,7 +169,7 @@ const TableNew = ({
                   sx={{
                     ...cellStyles,
                     width: col.width || "auto",
-                    paddingRight: colIndex === 0 ? 0 : undefined,
+                    // paddingRight: colIndex === 0 ? 0 : undefined,
                   }}
                 >
                   {col.field === "checkbox" ? (
