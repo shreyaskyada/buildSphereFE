@@ -50,7 +50,7 @@ const Contracts = () => {
       align: 'center'
     },
     {
-      field: "actual_value",
+      field: "revenue",
       headerName: "Revenue",
       sortable: true,
       align: 'center',

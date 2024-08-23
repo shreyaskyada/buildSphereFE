@@ -145,12 +145,12 @@ const EditContractModal = ({
           responseType: "blob",
         }
       );
-
+      
       if (result.status === 200) {
         const url = URL.createObjectURL(new Blob([_.get(result, "data")]));
         const link = document.createElement("a");
         link.href = url;
-        link.setAttribute("download", "job_units.xlsx");
+        link.setAttribute("download", "Contract Units Template.xlsx");
         document.body.appendChild(link);
         link.click();
       }
