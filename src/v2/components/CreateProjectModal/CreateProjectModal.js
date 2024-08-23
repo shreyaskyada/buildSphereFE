@@ -203,7 +203,7 @@ const CreateProjectModal = ({
   const downloadUnitsTemplate = async () => {
     try {
       const result = await axios.get(
-        `/contracts/${contractNumber}/units?p=group:${groupId}`,
+        `/contracts/uploadedUnitsFile/${contractNumber}?p=group:${groupId}`,
         {
           headers: {
             Authorization: token,
