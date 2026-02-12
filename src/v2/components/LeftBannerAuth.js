@@ -1,8 +1,8 @@
-import { Grid, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
-import Logo from "../../../src/assets/v2/LogoWithText.svg";
-import StoreLogos from ".../../../src/assets/v2/StoreLogos.svg";
+import { Grid, makeStyles, Typography } from "@material-ui/core";
 import moment from "moment";
+import Logo from "../../assets/v2/LogoWithText.svg";
+import StoreLogos from "../../assets/v2/StoreLogos.svg";
 
 const h = window.innerHeight;
 
@@ -60,7 +60,7 @@ const LeftBannerAuth = (props) => {
       </Grid>
       <Grid item xs={12} style={{ paddingBottom: 0.07 * h }}>
         <Typography className={classes.leftContainerText2}>
-          (C) {year} Copilot Network LLC •  All rights reserved
+          (C) {year} BuildSphere •  All rights reserved
         </Typography>
       </Grid>
     </Grid>

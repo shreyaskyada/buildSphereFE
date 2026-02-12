@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Button,
   Checkbox,
@@ -8,17 +7,19 @@ import {
   Typography,
   withStyles,
 } from "@material-ui/core";
-import axios from "../../axios";
-import { useDispatch } from "react-redux";
 import _ from "lodash";
-import { LOGIN_ACTION } from "../../store/actions/auth";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import axios from "../../axios";
 import {
   ROUTE_FORCE_CHANGE_PASSWORD,
   ROUTE_HOME,
   ROUTE_RESET,
 } from "../../helpers/endpoints";
-import LeftBannerAuth from "../components/LeftBannerAuth";
+import { LOGIN_ACTION } from "../../store/actions/auth";
 import { SHOW_ERROR_MESSAGE } from "../../store/actions/v2/message";
+import LeftBannerAuth from "../components/LeftBannerAuth";
+
 const h = window.innerHeight;
 
 const useStyles = makeStyles((theme) => ({
@@ -51,12 +52,12 @@ const useStyles = makeStyles((theme) => ({
   },
   rightTextSecond: {
     fontSize: 16,
-    fontWeight: 400,
-    color: theme.v2.fonts.colors.greenShade1,
-    textDecorationLine: "underline",
-    textDecorationColor: theme.v2.fonts.colors.greenShade1,
+    fontWeight: 600,
+    color: "#a9def9",
+    textDecorationLine: "none",
     "&:hover": {
       cursor: "pointer",
+      textDecorationLine: "underline",
     },
   },
   rightSignupContainer: {
@@ -65,9 +66,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
   },
   loginText: {
-    fontSize: 25,
-    fontWeight: "bold",
-    fontColor: theme.v2.fonts.colors.blackShade1,
+    fontSize: 32,
+    fontWeight: 700,
+    color: "#1D1D1F",
+    marginBottom: "8px",
   },
   label: {
     fontSize: 16,
@@ -77,8 +79,8 @@ const useStyles = makeStyles((theme) => ({
   },
   loginBtnText: {
     fontSize: 18,
+    fontWeight: 600,
     color: theme.v2.fonts.colors.whiteFont,
-    padding: "5%",
   },
   rememberMe: {
     color: theme.v2.fonts.colors.brownShade1,
@@ -86,12 +88,14 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 400,
   },
   forgotPwd: {
-    color: theme.v2.fonts.colors.greenShade1,
+    color: "#a9def9",
     fontSize: 14,
     fontWeight: 600,
-    textDecorationLine: "underline",
-    textDecorationColor: theme.v2.fonts.colors.greenShade1,
+    textDecorationLine: "none",
     cursor: "pointer",
+    "&:hover": {
+      textDecorationLine: "underline",
+    },
   },
 }));
 
@@ -109,6 +113,7 @@ const Login = (props) => {
   const classes = useStyles();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
   const dispatch = useDispatch();
   const validateRequest = () => {
@@ -135,6 +140,7 @@ const Login = (props) => {
   };
   const submitForLogin = async () => {
     if (validateRequest()) {
+      setLoading(true);
       try {
         const result = await axios.post("/login/web", {
           email,
@@ -163,6 +169,8 @@ const Login = (props) => {
             _.get(err, ["response", "data", "message"]) ||
             "Something went wrong",
         });
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -255,10 +263,22 @@ const Login = (props) => {
         <Grid style={{ paddingBottom: 0.3 * h }}>
           <Button
             disableElevation
-            style={{ width: 150 }}
+            variant="contained"
+            disabled={loading}
+            style={{ 
+              width: 180, 
+              height: 52, 
+              borderRadius: 12,
+              backgroundColor: loading ? "#cccccc" : "#a9def9",
+              color: "#ffffff",
+              boxShadow: loading ? "none" : "0px 4px 12px rgba(169, 222, 249, 0.4)",
+              transition: "all 0.3s ease"
+            }}
             onClick={submitForLogin.bind(this)}
           >
-            <Typography className={classes.loginBtnText}>Login</Typography>
+            <Typography className={classes.loginBtnText}>
+              {loading ? "Logging in..." : "Login"}
+            </Typography>
           </Button>
         </Grid>
       </Grid>
