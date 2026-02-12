@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
 import {
-  Page,
-  Text,
-  View,
-  Document,
-  Image as Image2,
-  StyleSheet,
-  PDFDownloadLink,
+    Document,
+    Font,
+    Image as Image2,
+    Page,
+    PDFDownloadLink,
+    StyleSheet,
+    Text,
+    View,
 } from "@react-pdf/renderer";
-import { Font } from "@react-pdf/renderer";
-import RobotoFontRegular from "../../../assets/fonts/Roboto/Roboto-Regular.ttf";
+import _ from "lodash";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import RobotoFontBold from "../../../assets/fonts/Roboto/Roboto-Bold.ttf";
 import RobotoFontLight from "../../../assets/fonts/Roboto/Roboto-Light.ttf";
 import RobotoFontMedium from "../../../assets/fonts/Roboto/Roboto-Medium.ttf";
-import RobotoFontBold from "../../../assets/fonts/Roboto/Roboto-Bold.ttf";
+import RobotoFontRegular from "../../../assets/fonts/Roboto/Roboto-Regular.ttf";
 import RobotoFontThin from "../../../assets/fonts/Roboto/Roboto-Thin.ttf";
 import LogoBig from "../../../assets/v2/Logo.png";
 import ReportLogo from "../../../assets/v2/ReportLogo.png";
-import moment from "moment";
-import _ from "lodash";
 import axios from "../../../axios";
 
 const queryString = require("query-string");
@@ -278,7 +278,7 @@ const Footer = ({ pageNo, user, list_out_issues, signature }) => {
               fontFamily: "Roboto",
             }}
           >
-            RUS2BILL | Inspection Report
+            BuildSphere | Inspection Report
           </Text>
         </View>
         <View
@@ -418,7 +418,7 @@ const FirstPageBody = (props) => {
               fontSize: 15,
               fontWeight: 600,
               color: _.get(props, "completed_as_per_req")
-                ? "#04A349"
+                ? "#a9def9"
                 : "#EB4223",
             }}
           >
@@ -445,7 +445,7 @@ const FirstPageBody = (props) => {
               fontFamily: "Roboto",
               fontSize: 15,
               fontWeight: 600,
-              color: _.get(props, "red_lines") ? "#04A349" : "#EB4223",
+              color: _.get(props, "red_lines") ? "#a9def9" : "#EB4223",
             }}
           >
             {_.get(props, "red_lines") == true ? "Yes" : "No"}
@@ -472,7 +472,7 @@ const FirstPageBody = (props) => {
               fontFamily: "Roboto",
               fontSize: 15,
               fontWeight: 600,
-              color: _.get(props, "fac_inst_p_req") ? "#04A349" : "#EB4223",
+              color: _.get(props, "fac_inst_p_req") ? "#a9def9" : "#EB4223",
             }}
           >
             {_.get(props, "fac_inst_p_req") == true ? "Yes" : "No"}
@@ -499,7 +499,7 @@ const FirstPageBody = (props) => {
               fontFamily: "Roboto",
               fontSize: 15,
               fontWeight: 600,
-              color: _.get(props, "suff_traf_control") ? "#04A349" : "#EB4223",
+              color: _.get(props, "suff_traf_control") ? "#a9def9" : "#EB4223",
             }}
           >
             {_.get(props, "suff_traf_control") == true ? "Yes" : "No"}
@@ -547,7 +547,7 @@ const SecondPageBody = (props) => {
               fontFamily: "Roboto",
               fontSize: 15,
               fontWeight: 600,
-              color: _.get(props, "red_lines") ? "#04A349" : "#EB4223",
+              color: _.get(props, "red_lines") ? "#a9def9" : "#EB4223",
             }}
           >
             {_.get(props, "red_lines") == true ? "Yes" : "No"}
@@ -573,7 +573,7 @@ const SecondPageBody = (props) => {
               fontFamily: "Roboto",
               fontSize: 15,
               fontWeight: 600,
-              color: _.get(props, "units_ref_work") ? "#04A349" : "#EB4223",
+              color: _.get(props, "units_ref_work") ? "#a9def9" : "#EB4223",
             }}
           >
             {_.get(props, "units_ref_work") == true ? "Yes" : "No"}
@@ -600,7 +600,7 @@ const SecondPageBody = (props) => {
               fontFamily: "Roboto",
               fontSize: 15,
               fontWeight: 600,
-              color: _.get(props, "area_surr_fac") ? "#04A349" : "#EB4223",
+              color: _.get(props, "area_surr_fac") ? "#a9def9" : "#EB4223",
             }}
           >
             {_.get(props, "area_surr_fac") == true ? "Yes" : "No"}

@@ -1,26 +1,25 @@
-import React, { Suspense } from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import * as serviceWorker from "./serviceWorker";
-import { rootReducer as reducers } from "./rootReducer";
-import { applyMiddleware, createStore } from "redux";
-import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
-import ReduxThunk from "redux-thunk";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
-import { SnackbarProvider } from "notistack";
-import Interceptor from "./interceptor";
-import Loader from "./v2/components/Loader";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { SnackbarProvider } from "notistack";
+import React, { Suspense } from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+import { applyMiddleware, createStore } from "redux";
+import ReduxThunk from "redux-thunk";
 import LoaderError, { ErrorBoundary } from "../src/v2/components/LoaderError";
+import App from "./App";
+import "./index.css";
+import Interceptor from "./interceptor";
+import { rootReducer as reducers } from "./rootReducer";
+import * as serviceWorker from "./serviceWorker";
 const store = reducers && createStore(reducers, applyMiddleware(ReduxThunk));
 const theme = createMuiTheme({
   v2: {
     backgrounds: {
       darkBackground: "#1D1D1F",
-      greenBackground: "#04A349",
+      greenBackground: "#a9def9",
       lightBlueBackground: "#F4F4F4",
       whiteBackground: "#FFFFFF",
       darkBackgroundShade2: "#363837",
@@ -30,23 +29,23 @@ const theme = createMuiTheme({
       redBackground: "#E36767",
       redBackground2: "#E26666",
       greyBackground3: "#E2E2E2",
-      greenBackgroundShade2: "#7CAF82",
-      greenBackgroundShade3: "#58A77A",
+      greenBackgroundShade2: "#cdeaff",
+      greenBackgroundShade3: "#a9def9",
       darkBackgroundShade3: "#24231F",
-      greenBackgroundShade4: "#E5FAE7",
+      greenBackgroundShade4: "#f0f9ff",
       pinkBackgroundShade1: "#FFC5BA",
       yellowBackgroundShade1: "#FDF1A1",
       yellowBackgroundShade2: "#EF9D3D",
       redBackgroundShade3: "#673737",
       whiteBackgroundShade3: "#FBFBFC",
-      greenBackgroundShade5: "#EFFAF0",
+      greenBackgroundShade5: "#f0f9ff",
       blueBackgroundShade2: "#DAEDF8",
       redBackgroundShade4: "#F4E6E6",
       blueBackgroundShade3: "#1C1C1E",
       greyBackgroundShade4: "#323234",
-      greenBackgroundShade6: "#F0FBF6",
-      greenBackgroundShade7: "#6DCB95",
-      greenBackgroundShade8: "#305540",
+      greenBackgroundShade6: "#f0f9ff",
+      greenBackgroundShade7: "#a9def9",
+      greenBackgroundShade8: "#1c3d5a",
       yellowBackgroundShade3: "#E3BD67",
       yellowBackgroundShade4: "#5A452D",
     },
@@ -55,11 +54,11 @@ const theme = createMuiTheme({
         darkFont: "#696969",
         whiteFont: "#ffffff",
         whiteShade1: "#C4C4C4",
-        greenShade1: "#05A34A",
+        greenShade1: "#a9def9",
         blackShade1: "#1D1D1F",
         brownShade1: "#A8A0A0",
         blackShade2: "#24231F",
-        greenShade2: "#04A349",
+        greenShade2: "#a9def9",
         darkFont2: "#959592",
         redShade1: "#E36767",
         yellowShade1: "#EF9D3D",
@@ -67,32 +66,32 @@ const theme = createMuiTheme({
         redErrorMsg: "#f44336",
         greyShade1: "#A8A8A8",
         greyShade2: "#696865",
-        greenShade3: "#ACD9AB",
+        greenShade3: "#a9def9",
         greyShade4: "#585858",
         greyShade5: "#B4B4B4",
         redShade2: "#D46E6B",
-        greenShade4: "#58A77A",
+        greenShade4: "#a9def9",
         greyShade6: "#707071",
         greyShade7: "#E3E4E3",
-        greenShade5: "#58B18B",
+        greenShade5: "#a9def9",
       },
     },
     borders: {
-      lightGreen: "#A0DBA7",
+      lightGreen: "#a9def9",
       darkShade1: "#696969",
       lightGrey: "#E3E4E3",
       darkShade2: "#C4C4C4",
       lightGrey1: "#A2A1A1",
       lightGrey3: "#E2E2E2",
-      greenShade1: "#ACD9AB",
-      greenShade2: "#49A053",
+      greenShade1: "#a9def9",
+      greenShade2: "#a9def9",
       blueShade1: "#4196CB",
       redShade1: "#D46E6B",
       blackShade1: "#1D1D1F",
-      greenShade3: "#AFE8D0",
+      greenShade3: "#a9def9",
     },
     checkboxes: {
-      green: "#05A34A",
+      green: "#a9def9",
     },
   },
   props: {
@@ -106,12 +105,12 @@ const theme = createMuiTheme({
   overrides: {
     MuiButton: {
       root: {
-        backgroundColor: "#04A349",
+        backgroundColor: "#a9def9",
         color: "#ffffff",
         borderRadius: 10,
         textTransform: "none",
         "&:hover": {
-          backgroundColor: "#04B349",
+          backgroundColor: "#89cef9",
         },
         "&:disabled": {
           backgroundColor: "grey",
@@ -120,7 +119,7 @@ const theme = createMuiTheme({
       },
       disabled: {
         backgroundColor: "grey",
-        color: "#04A349",
+        color: "#a9def9",
       },
     },
     MuiInput: {
@@ -132,7 +131,7 @@ const theme = createMuiTheme({
         outline: "1px solid transparent",
         "&$focused": {
           backgroundColor: "#ffffff",
-          border: "1px solid #A0DBA7",
+          border: "1px solid #a9def9",
         },
       },
     },
@@ -143,16 +142,16 @@ const theme = createMuiTheme({
     },
     MuiSelect: {
       icon: {
-        color: "#05A34A",
+        color: "#a9def9",
       },
     },
     MuiCheckbox: {
       "&$checked": {
-        color: "#05A34A",
+        color: "#a9def9",
       },
       colorSecondary: {
         "&.Mui-checked": {
-          color: "#05A34A",
+          color: "#a9def9",
         },
       },
     },

@@ -26,11 +26,11 @@ $(document).ready(function() {
         const name = $("#name").val();
 
         
-        fetch("https://rus2bill.com/api/mail/mail1",{
+        fetch("https://buildsphere.com/api/mail/mail1",{
                // fetch("http://localhost:3001/mail/mail",{
                method:'POST',
                body:JSON.stringify({
-                  subject:"Contact Form Inquiry - Rus2Bill Site.",
+                  subject:"Contact Form Inquiry - BuildSphere Site.",
                   htmlMessage:`<div class='container'>
                   <p>Name : ${name} <br>
                   Company Name : ${compname} <br>
@@ -38,7 +38,7 @@ $(document).ready(function() {
                   Email : ${email}<br> 
                   Phone : ${phoneNumber}<br>
                   Message : ${message}<br><br>
-                  This message is coming from the website Rus2Bill.</p>
+                  This message is coming from the website BuildSphere.</p>
                   </div>`
                }),
                headers: new Headers({'content-type': 'application/json'}),

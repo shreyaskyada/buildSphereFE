@@ -56,13 +56,13 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: "2%",
     fontSize: "25px",
     fontWeight: 800,
-    color: "#113C23",
+    color: "#1c3d5a",
     fontFamily: "Manrope",
   },
 
   filterText: {
     fontSize: "15px",
-    color: "#113C23",
+    color: "#1c3d5a",
     marginLeft: "10px",
     fontFamily: "Manrope",
     fontWeight: "bolder",

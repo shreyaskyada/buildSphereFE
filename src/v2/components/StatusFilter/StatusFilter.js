@@ -57,7 +57,7 @@ const StatusFilter = ({ filters, setFilters }) => {
       <Select
         variant="standard"
         className={classes.chooseCustSelect}
-        style={{ color: `${selectedValue !== "0" ? "#113C23" : "#84A391"}` }}
+        style={{ color: `${selectedValue !== "0" ? "#1c3d5a" : "#84A391"}` }}
         IconComponent={() => {
           return (
             <Grid

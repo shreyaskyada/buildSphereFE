@@ -89,7 +89,7 @@ const MyProfile = () => {
               value={filterRole}
               className={classes.chooseCustSelect}
               style={{
-                color: `${filterRole !== "all" ? "#113C23" : "#84A391"}`,
+                color: `${filterRole !== "all" ? "#1c3d5a" : "#84A391"}`,
               }}
               IconComponent={() => {
                 return (

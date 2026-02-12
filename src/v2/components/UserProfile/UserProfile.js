@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
       //   opacity: 1,
     },
     "& .MuiInputBase-input:not(:placeholder-shown)": {
-      color: "#113C23",
+      color: "#1c3d5a",
     },
     "& .Mui-focused": {
       border: "2px solid #4BCE82",

@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     border: "2px solid #DBF4EE",
     height: "40px",
     fontSize: "14px",
-    color: "#113C23",
+    color: "#1c3d5a",
     fontWeight: 500,
     paddingLeft: "10px",
     fontFamily: "Manrope",
@@ -326,7 +326,7 @@ const EditContractModal = ({
                 className={classes.select}
                 value={selectedValueOfCustomer}
                 style={{
-                  color: `${selectedValueOfCustomer !== "0" ? "#113C23" : "#84A391"
+                  color: `${selectedValueOfCustomer !== "0" ? "#1c3d5a" : "#84A391"
                     }`,
                 }}
                 IconComponent={() => {
@@ -389,7 +389,7 @@ const EditContractModal = ({
                 className={classes.select}
                 value={selectedValueOfContract}
                 style={{
-                  color: `${selectedValueOfContract !== "0" ? "#113C23" : "#84A391"
+                  color: `${selectedValueOfContract !== "0" ? "#1c3d5a" : "#84A391"
                     }`,
                   opacity: `${!customer ? "0.5" : "1"}`,
                 }}

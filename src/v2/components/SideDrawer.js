@@ -25,7 +25,7 @@ import { NavLink } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   drawer: {
     width: "104px",
-    backgroundColor: "#113C23",
+    backgroundColor: "#1c3d5a",
     display: "flex",
     alignItems: "center",
     padding: "32px 0",
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     transition: "all 0.3s ease-in-out",
     opacity: 0.5,
     "& p": {
-      color: "#113C23",
+      color: "#1c3d5a",
       transition: "all 0.3s ease-in-out",
     },
     "&:hover p": {

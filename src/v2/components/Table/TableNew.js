@@ -107,7 +107,7 @@ const TableNew = ({
                 sx={{
                   fontSize: "12px",
                   paddingY: "10px",
-                  color: "#113C23",
+                  color: "#1c3d5a",
                   borderColor: "#DCF4EE",
                   fontFamily: "Manrope",
                   fontWeight: "650",

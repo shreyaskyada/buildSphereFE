@@ -1,38 +1,36 @@
-import React, { useEffect, useState } from "react";
-import "./App.css";
-import { lazy } from "react";
-import { Switch, withRouter, Route, Redirect } from "react-router-dom";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import { Button, IconButton } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import _ from "lodash";
-import {
-  ROUTE_ACCOUNTS_SUBSCRIPTION,
-  ROUTE_HOME,
-  ROUTE_LOGIN,
-  ROUTE_SIGNUP,
-  ROUTE_PROJECTS,
-  ROUTE_PAYMENTS,
-  ROUTE_RESET,
-  ROUTE_PROFILE,
-  ROUTE_MEMBERS,
-  RESET_PASSWORD,
-  ROUTE_LICENSE_SUBSCRIPTION,
-  ROUTE_FORCE_CHANGE_PASSWORD,
-  ROUTE_PAY_NOW,
-  ROUTE_INSPECTION_DOWNLOAD,
-  ROUTE_ACTIVITY_LOG,
-  ROUTE_CONTRACTS,
-  ROUTE_INSPECTION_CHECKLIST_LIBRARY,
-} from "./helpers/endpoints";
+import React, { lazy, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Redirect, Route, Switch, withRouter } from "react-router-dom";
+import "./App.css";
+import {
+    RESET_PASSWORD,
+    ROUTE_ACCOUNTS_SUBSCRIPTION,
+    ROUTE_ACTIVITY_LOG,
+    ROUTE_CONTRACTS,
+    ROUTE_FORCE_CHANGE_PASSWORD,
+    ROUTE_HOME,
+    ROUTE_INSPECTION_CHECKLIST_LIBRARY,
+    ROUTE_INSPECTION_DOWNLOAD,
+    ROUTE_LICENSE_SUBSCRIPTION,
+    ROUTE_LOGIN,
+    ROUTE_MEMBERS,
+    ROUTE_PAY_NOW,
+    ROUTE_PAYMENTS,
+    ROUTE_PROFILE,
+    ROUTE_PROJECTS,
+    ROUTE_RESET,
+    ROUTE_SIGNUP,
+} from "./helpers/endpoints";
 import Footer from "./v2/components/Footer/Footer";
-import ActivityLog from "./v2/screens/ActivityLog/ActivityLog.js";
 import ActivityLog2 from "./v2/screens/ActivityLog2/ActivityLog2.js";
-import MyProfile from "./v2/screens/MyProfile/MyProfile.js";
 import Contracts from "./v2/screens/Contracts/Contracts.js";
 import InspectionChecklistLibrary from "./v2/screens/InspectionChecklistLibrary/InspectionChecklistLibrary.js";
+import MyProfile from "./v2/screens/MyProfile/MyProfile.js";
 
 // import ProjectDetails from "./v2/screens/ProjectDetails";
 const ProjectDetails = lazy(() => import("./v2/screens/ProjectDetails"));
@@ -122,7 +120,7 @@ function App(props) {
           style={{
             height: 70,
             width: "100vw",
-            backgroundColor: "#58A77A",
+            backgroundColor: "#a9def9",
             position: "fixed",
             left: 0,
             zIndex: 9999,
@@ -149,7 +147,7 @@ function App(props) {
               }}
               style={{
                 backgroundColor: "white",
-                color: "#58A77A",
+                color: "#a9def9",
                 borderRadius: 10,
               }}
             >
@@ -198,7 +196,7 @@ function App(props) {
               }}
               style={{
                 backgroundColor: "white",
-                color: "#58A77A",
+                color: "#a9def9",
                 borderRadius: 10,
               }}
             >

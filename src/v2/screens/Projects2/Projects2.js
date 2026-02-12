@@ -306,7 +306,7 @@ const Projects2 = (props) => {
                     style={{
                       cursor: "pointer",
                       backgroundColor:
-                        activeStatus === filter ? "#113C23" : null,
+                        activeStatus === filter ? "#1c3d5a" : null,
                       color: activeStatus === filter ? "white" : null,
                     }}
                     onClick={(e) => {
@@ -366,7 +366,7 @@ const Projects2 = (props) => {
                 width: 60,
               }}
             />
-            <p style={{ marginTop: "0px", color: "#113C23" }}>No data</p>
+            <p style={{ marginTop: "0px", color: "#1c3d5a" }}>No data</p>
           </div>
         )}
       </div>

@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     width: "32%",
     fontSize: "18px",
     fontWeight: "750",
-    color: "#113C23",
+    color: "#1c3d5a",
     paddingLeft: "6%",
   },
 }));
@@ -157,7 +157,7 @@ const CostGraph = ({ projectsData }) => {
     plugins: {
       datalabels: {
         display: true,
-        color: "#113C23",
+        color: "#1c3d5a",
         font: {
           size: 12,
           family: "Manrope",

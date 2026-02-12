@@ -1,24 +1,24 @@
-import React, { useState } from "react";
 import {
-  Grid,
-  makeStyles,
-  TableBody,
-  TableHead,
-  TableCell,
-  Table,
-  TableRow,
-  Typography,
-  TableSortLabel,
-  TableContainer,
+    Grid,
+    makeStyles,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TableSortLabel,
+    Typography,
 } from "@material-ui/core";
 import clsx from "clsx";
 import _ from "lodash";
-import Skull from "../../assets/v2/Skull.svg";
-import EditIcon from "../../assets/v2/EditIcon.svg";
-import DeleteIcon from "../../assets/v2/DeleteIcon.svg";
+import React, { useState } from "react";
 import InviteIcon from "../../assets/v2/Attachment.svg";
-import { ReactComponent as Download } from "../../assets/v2/DownloadArrow.svg";
 import { ReactComponent as Delete } from "../../assets/v2/Cross.svg";
+import DeleteIcon from "../../assets/v2/DeleteIcon.svg";
+import { ReactComponent as Download } from "../../assets/v2/DownloadArrow.svg";
+import EditIcon from "../../assets/v2/EditIcon.svg";
+import Skull from "../../assets/v2/Skull.svg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -477,7 +477,7 @@ const GetEachCell = ({
                 height: 40,
                 width: 40,
                 borderRadius: 40,
-                backgroundColor: "#04A349",
+                backgroundColor: "#a9def9",
               }}
             >
               <Typography className={classes.imageText}>

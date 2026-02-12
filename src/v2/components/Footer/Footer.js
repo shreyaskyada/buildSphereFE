@@ -6,7 +6,7 @@ const Footer = () => {
     <div className="footerContainer">
       <div className="horizontalLine"></div>
       <div className="footerContent">
-        <p>© 2024 RUS2BILL. All rights reserved.</p>
+        <p>© 2024 BuildSphere. All rights reserved.</p>
         <p>Terms</p>
         <span className="footerDot"></span>
         <p>Privacy</p>

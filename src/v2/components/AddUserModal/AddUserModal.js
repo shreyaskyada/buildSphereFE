@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     border: "2px solid #DBF4EE",
     height: "40px",
     fontSize: "14px",
-    color: "#113C23",
+    color: "#1c3d5a",
     fontWeight: 500,
     paddingLeft: "10px",
     fontFamily: "Manrope",
@@ -133,7 +133,7 @@ const useStyles = makeStyles((theme) => ({
       //   opacity: 1,
     },
     "& .MuiInputBase-input:not(:placeholder-shown)": {
-      color: "#113C23",
+      color: "#1c3d5a",
     },
     "& .Mui-focused": {
       border: "2px solid #4BCE82",
@@ -320,7 +320,7 @@ const AddUserModal = ({
               className={classes.select}
               value={selectedValueOfRole}
               style={{
-                color: `${selectedValueOfRole !== "0" ? "#113C23" : "#84A391"}`,
+                color: `${selectedValueOfRole !== "0" ? "#1c3d5a" : "#84A391"}`,
               }}
               IconComponent={() => {
                 return (

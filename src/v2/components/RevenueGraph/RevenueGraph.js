@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     width: "35%",
     fontSize: "18px",
     fontWeight: "750",
-    color: "#113C23",
+    color: "#1c3d5a",
   },
 }));
 
@@ -193,7 +193,7 @@ const RevenueGraph = ({ projectsData }) => {
 
       datalabels: {
         display: true,
-        color: "#113C23",
+        color: "#1c3d5a",
         font: {
           size: 12,
           weight: "bold",
@@ -258,20 +258,20 @@ const RevenueGraph = ({ projectsData }) => {
     datasets: [
       {
         label: "Actual Revenue",
-        borderColor: "#113C23",
+        borderColor: "#1c3d5a",
         data: actualRevenue,
         pointBackgroundColor: "#C2E9A0",
         pointHoverBackgroundColor: "#C2E9A0",
-        pointBorderColor: "#113C23",
+        pointBorderColor: "#1c3d5a",
         pointHoverRadius: 3,
       },
 
       {
         label: "Forecast Revenue",
-        borderColor: "#113C23",
+        borderColor: "#1c3d5a",
         data: forecastRevenue,
         pointBackgroundColor: "#FBFBFB",
-        pointBorderColor: "#113C23",
+        pointBorderColor: "#1c3d5a",
         pointHoverRadius: 3,
         borderDash: [5, 3],
       },

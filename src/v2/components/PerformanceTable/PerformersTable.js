@@ -1,14 +1,12 @@
-import * as React from "react";
+import { Paper, makeStyles } from "@material-ui/core";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
-import { Paper, makeStyles } from "@material-ui/core";
-import skull from "../../../assets/v2/Skull.svg";
-import { useEffect, useState } from "react";
 import _ from "lodash";
 import moment from "moment";
-import "./style.css";
-import { BorderBottom } from "@material-ui/icons";
+import React, { useEffect, useState } from "react";
+import skull from "../../../assets/v2/Skull.svg";
 import { ROUTE_PROJECTS } from "../../../helpers/endpoints";
+import "./style.css";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -38,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontSize: "18px",
     fontWeight: "750",
-    color: "#113C23",
+    color: "#1c3d5a",
     marginTop: "30px",
   },
 }));

@@ -1,18 +1,18 @@
 import { Button, Grid, makeStyles, TextField } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-import LeftBannerAuth from "../../components/LeftBannerAuth";
-import OtpInput from "react-otp-input";
 import * as moment from "moment";
+import React, { useEffect, useState } from "react";
+import OtpInput from "react-otp-input";
+import { useDispatch } from "react-redux";
 import axios from "../../../axios";
 import {
-  ROUTE_ACCOUNTS_SUBSCRIPTION,
-  SIGNUP,
-  SIGNUP_GENERATE_OTP,
-  SIGNUP_SUBMIT_OTP,
+    ROUTE_ACCOUNTS_SUBSCRIPTION,
+    SIGNUP,
+    SIGNUP_GENERATE_OTP,
+    SIGNUP_SUBMIT_OTP,
 } from "../../../helpers/endpoints";
 import { LOGIN_ACTION } from "../../../store/actions/auth";
-import { useDispatch } from "react-redux";
 import { SHOW_ERROR_MESSAGE } from "../../../store/actions/v2/message";
+import LeftBannerAuth from "../../components/LeftBannerAuth";
 
 const _ = require("lodash");
 const OTP_TIMER = 60;
@@ -247,7 +247,7 @@ const Signup = (props) => {
             </Grid>
 
             <Grid xs={12} item container>
-              <div className={classes.formHeading}>Sign Up to RUS2BILL</div>
+              <div className={classes.formHeading}>Sign Up to BuildSphere</div>
               <form
                 style={{ width: "100%" }}
                 onSubmit={(e) => {
@@ -385,7 +385,7 @@ const Signup = (props) => {
                           width: 40,
                           height: 40,
                           borderWidth: 0,
-                          backgroundColor: "#F4F4F4",
+                          backgroundColor: "#a9def9",
                         }}
                         focusStyle={classes.focuseedotp}
                       />{" "}

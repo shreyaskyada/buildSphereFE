@@ -1,22 +1,23 @@
 import React from "react";
+
 import {
-  Page,
-  Text,
-  View,
-  Document,
-  Image,
-  StyleSheet,
-  PDFDownloadLink,
+    Document,
+    Font,
+    Image,
+    Page,
+    PDFDownloadLink,
+    StyleSheet,
+    Text,
+    View,
 } from "@react-pdf/renderer";
-import { Font } from "@react-pdf/renderer";
-import RobotoFontRegular from "../../assets/fonts/Roboto/Roboto-Regular.ttf";
-import RobotoFontLight from "../../assets/fonts/Roboto/Roboto-Light.ttf";
-import RobotoFontMedium from "../../assets/fonts/Roboto/Roboto-Medium.ttf";
-import RobotoFontBold from "../../assets/fonts/Roboto/Roboto-Bold.ttf";
-import RobotoFontThin from "../../assets/fonts/Roboto/Roboto-Thin.ttf";
-import Logo from "../../assets/v2/LogoWithName.png";
 import _ from "lodash";
 import moment from "moment";
+import RobotoFontBold from "../../assets/fonts/Roboto/Roboto-Bold.ttf";
+import RobotoFontLight from "../../assets/fonts/Roboto/Roboto-Light.ttf";
+import RobotoFontMedium from "../../assets/fonts/Roboto/Roboto-Medium.ttf";
+import RobotoFontRegular from "../../assets/fonts/Roboto/Roboto-Regular.ttf";
+import RobotoFontThin from "../../assets/fonts/Roboto/Roboto-Thin.ttf";
+import Logo from "../../assets/v2/LogoWithName.png";
 const fileDownload = require("js-file-download");
 
 Font.register({
@@ -239,13 +240,13 @@ const InvoicesTemplate = (props) => {
     <>
       <PDFDownloadLink
         document={<MyDocument {...props} />}
-        fileName="RUS2BILL_Invoice.pdf"
+        fileName="BuildSphere_Invoice.pdf"
       >
         {({ blob, url, loading, error }) => {
           if (error) console.log("error", error);
           else {
             if (!loading && url) {
-              fileDownload(blob, "RUS2BILL_Invoice.pdf");
+              fileDownload(blob, "BuildSphere_Invoice.pdf");
               props.onClose && props.onClose();
             }
           }

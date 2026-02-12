@@ -150,7 +150,7 @@ const Contracts = () => {
                 width: 60,
               }}
             />
-            <p style={{ marginTop: "0px", color: "#113C23" }}>No data</p>
+            <p style={{ marginTop: "0px", color: "#1c3d5a" }}>No data</p>
           </div>
         )}
       </div>

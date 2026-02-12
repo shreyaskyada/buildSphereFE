@@ -1,24 +1,24 @@
 import {
-  Button,
-  Grid,
-  makeStyles,
-  MenuItem,
-  Modal,
-  Paper,
-  TextField,
-  Typography,
+    Button,
+    Grid,
+    makeStyles,
+    MenuItem,
+    Modal,
+    Paper,
+    TextField,
+    Typography,
 } from "@material-ui/core";
-import React, { useCallback, useEffect, useState } from "react";
-import DefaultImage from "../../assets/v2/DefaultImageIcon.svg";
-import _ from "lodash";
-import axios from "../../axios";
-import { useDispatch, useSelector } from "react-redux";
-import clsx from "clsx";
-import DeleteIcon from "../../assets/v2/DeleteIcon.svg";
-import ConfirmationModal from "./ConfirmationModal";
-import { SHOW_ERROR_MESSAGE } from "../../store/actions/v2/message";
-import { SHOW_LOADER } from "../../store/actions/v2/loader";
 import { Autocomplete } from "@material-ui/lab";
+import clsx from "clsx";
+import _ from "lodash";
+import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import DefaultImage from "../../assets/v2/DefaultImageIcon.svg";
+import DeleteIcon from "../../assets/v2/DeleteIcon.svg";
+import axios from "../../axios";
+import { SHOW_LOADER } from "../../store/actions/v2/loader";
+import { SHOW_ERROR_MESSAGE } from "../../store/actions/v2/message";
+import ConfirmationModal from "./ConfirmationModal";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -617,7 +617,7 @@ const ActivityDetailsModal = (props) => {
                   })}
                   {
                     <MenuItem key={-1} value={-1}>
-                      <b style={{ color: "#04A349" }}>+ More Units</b>
+                      <b style={{ color: "#a9def9" }}>+ More Units</b>
                     </MenuItem>
                   }
                 </TextField>

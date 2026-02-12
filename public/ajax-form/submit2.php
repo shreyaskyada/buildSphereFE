@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	else {
         // Send email to specified address
         $to = "partnership@copilotdm.com";
-        $from = "Rus2Bill<no-reply@rus2bill.com>";
+        $from = "BuildSphere<no-reply@buildsphere.com>";
 	$headers  = 'MIME-Version: 1.0' . "\r\n";
     $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 	
@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      'Reply-To: '.$from."\r\n" .
      'X-Mailer: PHP/' . phpversion();
      
-        $subject = "Contact Form Inquiry - Rus2Bill Site.";
+        $subject = "Contact Form Inquiry - BuildSphere Site.";
        // $messageBody = "Name: $name\nIndustry: $industry\nEmail: $email\nPhone: $phone\nDate: $date\nTime: $time\nMessage: $message";
         $htmlContent = "<div class='container'>
         <p>Name : $name <br>
@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		Meeting Date: $date<br>
 		Meeting Time: $time<br>
 		Message : $message<br><br>
-        This message is coming from the website Rus2Bill.</p>
+        This message is coming from the website BuildSphere.</p>
         </div>";
        // $headers = "From: $email";
         

@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useState } from "react";
-import "./style.css";
-import { useDispatch, useSelector } from "react-redux";
 import _ from "lodash";
+import moment from "moment";
+import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import skull from "../../../assets/v2/Skull.svg";
 import axios from "../../../axios";
-import TableNew from "../Table/TableNew";
-import moment from "moment";
 import { HIDE_LOADER, SHOW_LOADER } from "../../../store/actions/v2/loader";
+import TableNew from "../Table/TableNew";
+import "./style.css";
 
 const MembersDatabase = ({ filterRole }) => {
   const [members, setMembers] = useState([]);
@@ -19,17 +19,17 @@ const MembersDatabase = ({ filterRole }) => {
   const cellStyles = {
     paddingY: "7px",
     fontSize: "14px",
-    color: "#123C23",
+    color: "#1c3d5a",
     fontWeight: "600",
-    borderColor: "#DCF4EE",
+    borderColor: "#e3f2fd",
     fontFamily: "Manrope",
   };
 
   const roleColor = {
-    "Field User": "#1292E5",
+    "Field User": "#a9def9",
     Inspector: "#E36767",
-    Admin: "#00c04b",
-    "Super Admin": "#0CA14A",
+    Admin: "#89cef9",
+    "Super Admin": "#a9def9",
   };
 
   const getDate = (date) => {
@@ -73,7 +73,7 @@ const MembersDatabase = ({ filterRole }) => {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    backgroundColor: "#04A349",
+                    backgroundColor: "#a9def9",
                   }}
                 >
                   <p
@@ -177,7 +177,7 @@ const MembersDatabase = ({ filterRole }) => {
               width: 60,
             }}
           />
-          <p style={{ marginTop: "0px", color: "#113C23" }}>No User</p>
+          <p style={{ marginTop: "0px", color: "#1c3d5a" }}>No User</p>
         </div>
       )}
     </div>

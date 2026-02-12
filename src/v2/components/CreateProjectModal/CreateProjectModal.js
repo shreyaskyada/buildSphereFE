@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     border: "2px solid #DBF4EE",
     height: "40px",
     fontSize: "14px",
-    color: "#113C23",
+    color: "#1c3d5a",
     fontWeight: 500,
     paddingLeft: "10px",
     fontFamily: "Manrope",
@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
       //   opacity: 1,
     },
     "& .MuiInputBase-input:not(:placeholder-shown)": {
-      color: "#113C23",
+      color: "#1c3d5a",
     },
     "& .Mui-focused": {
       border: "2px solid #4BCE82",
@@ -126,7 +126,7 @@ const useStyles = makeStyles((theme) => ({
       //   opacity: 1,
     },
     "& .MuiInputBase-input:not(:placeholder-shown)": {
-      color: "#113C23",
+      color: "#1c3d5a",
     },
     "& .Mui-focused": {
       border: "2px solid #4BCE82",
@@ -378,7 +378,7 @@ const CreateProjectModal = ({
               value={selectedValueOfCustomer}
               style={{
                 color: `${
-                  selectedValueOfCustomer !== "0" ? "#113C23" : "#84A391"
+                  selectedValueOfCustomer !== "0" ? "#1c3d5a" : "#84A391"
                 }`,
               }}
               IconComponent={() => {
@@ -609,7 +609,7 @@ const CreateProjectModal = ({
                 value={selectedValueOfContract}
                 style={{
                   color: `${
-                    selectedValueOfContract !== "0" ? "#113C23" : "#84A391"
+                    selectedValueOfContract !== "0" ? "#1c3d5a" : "#84A391"
                   }`,
                   opacity: `${!customer ? "0.5" : "1"}`,
                 }}

@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23">
   <g id="Group_10524" data-name="Group 10524" transform="translate(914.443 -937.487)">
     <g id="Group_10523" data-name="Group 10523">
-      <path id="noun_New_Spreadsheet_61588" data-name="noun_New Spreadsheet_61588" d="M20.9,2H4.1A2.106,2.106,0,0,0,2,4.1V20.9A2.106,2.106,0,0,0,4.1,23H20.9A2.106,2.106,0,0,0,23,20.9V4.1A2.106,2.106,0,0,0,20.9,2Z" transform="translate(-915.443 936.487)" fill="#fafbfb" stroke="#04a349" stroke-width="2"/>
-      <path id="noun_New_Spreadsheet_61588-2" data-name="noun_New Spreadsheet_61588" d="M20.9,10.4H10.4V20.9H8.3V10.4H4.1V8.3H8.3V4.1h2.1V8.3H20.9Z" transform="translate(-915.443 936.487)" fill="#04a349"/>
+      <path id="noun_New_Spreadsheet_61588" data-name="noun_New Spreadsheet_61588" d="M20.9,2H4.1A2.106,2.106,0,0,0,2,4.1V20.9A2.106,2.106,0,0,0,4.1,23H20.9A2.106,2.106,0,0,0,23,20.9V4.1A2.106,2.106,0,0,0,20.9,2Z" transform="translate(-915.443 936.487)" fill="#fafbfb" stroke="#a9def9" stroke-width="2"/>
+      <path id="noun_New_Spreadsheet_61588-2" data-name="noun_New Spreadsheet_61588" d="M20.9,10.4H10.4V20.9H8.3V10.4H4.1V8.3H8.3V4.1h2.1V8.3H20.9Z" transform="translate(-915.443 936.487)" fill="#a9def9"/>
     </g>
   </g>
 </svg>

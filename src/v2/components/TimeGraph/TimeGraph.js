@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontSize: "18px",
     fontWeight: "750",
-    color: "#113C23",
+    color: "#1c3d5a",
   },
 }));
 
@@ -261,7 +261,7 @@ const TimeGraph = ({ projectsData }) => {
 
         datalabels: {
           display: true,
-          color: "#113C23",
+          color: "#1c3d5a",
           font: {
             size: 12,
             weight: "bold",
