@@ -1,26 +1,24 @@
-import { Drawer, makeStyles, IconButton } from "@material-ui/core";
-import clsx from "clsx";
 import React from "react";
-import Logo from "../../assets/v2/Logo.svg";
-import { ReactComponent as Logout } from "../../assets/v2/Logout.svg";
-import { ReactComponent as Home } from "../../assets/v2/Home.svg";
-import { ReactComponent as Projects } from "../../assets/v2/Projects.svg";
-import { ReactComponent as Profile } from "../../assets/v2/Profile.svg";
-import { ReactComponent as ActivityLog } from "../../assets/v2/ActivityLog.svg";
-import { ReactComponent as Contracts } from "../../assets/v2/ContractIcon.svg";
-import { LOGOUT_ACTION } from "../../GlobalConstants";
+import { Drawer, IconButton, makeStyles } from "@material-ui/core";
+import clsx from "clsx";
 import { useDispatch } from "react-redux";
 import { withRouter } from "react-router";
-import {
-  ROUTE_HOME,
-  ROUTE_PROFILE,
-  ROUTE_PROJECTS,
-  ROUTE_ACTIVITY_LOG,
-  ROUTE_CONTRACTS,
-  ROUTE_INSPECTION_CHECKLIST_LIBRARY,
-} from "../../helpers/endpoints";
-import _ from "lodash";
 import { NavLink } from "react-router-dom";
+import { ReactComponent as ActivityLog } from "../../assets/v2/ActivityLog.svg";
+import Logo from "../../assets/v2/BuildSphereLogo.png";
+import { ReactComponent as Contracts } from "../../assets/v2/ContractIcon.svg";
+import { ReactComponent as Home } from "../../assets/v2/Home.svg";
+import { ReactComponent as Logout } from "../../assets/v2/Logout.svg";
+import { ReactComponent as Profile } from "../../assets/v2/Profile.svg";
+import { ReactComponent as Projects } from "../../assets/v2/Projects.svg";
+import { LOGOUT_ACTION } from "../../GlobalConstants";
+import {
+    ROUTE_ACTIVITY_LOG,
+    ROUTE_CONTRACTS,
+    ROUTE_HOME,
+    ROUTE_PROFILE,
+    ROUTE_PROJECTS
+} from "../../helpers/endpoints";
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -124,7 +122,7 @@ const SideDrawer = (props) => {
           src={Logo}
           className={classes.logo}
           alt={"Logo"}
-          style={{ height: "46px" }}
+          style={{ height: "46px", width: "46px", borderRadius: "8px" }}
         />
       </NavLink>
 

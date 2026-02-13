@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
     Document,
     Font,
@@ -17,7 +16,7 @@ import RobotoFontLight from "../../assets/fonts/Roboto/Roboto-Light.ttf";
 import RobotoFontMedium from "../../assets/fonts/Roboto/Roboto-Medium.ttf";
 import RobotoFontRegular from "../../assets/fonts/Roboto/Roboto-Regular.ttf";
 import RobotoFontThin from "../../assets/fonts/Roboto/Roboto-Thin.ttf";
-import Logo from "../../assets/v2/LogoWithName.png";
+import Logo from "../../assets/v2/BuildSphereLogo.png";
 const fileDownload = require("js-file-download");
 
 Font.register({
@@ -46,7 +45,7 @@ const Body = (props) => {
     <View style={{ padding: "5%" }}>
       <View style={{ flexDirection: "row", display: "flex" }}>
         <View style={{ width: "60%", justifyContent: "center" }}>
-          <Image src={Logo} style={{ height: 50, width: 350 }} />
+          <Image src={Logo} style={{ height: 60, width: 60 }} />
         </View>
         <View
           style={{

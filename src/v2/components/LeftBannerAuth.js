@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, makeStyles, Typography } from "@material-ui/core";
 import moment from "moment";
-import Logo from "../../assets/v2/LogoWithText.svg";
+import Logo from "../../assets/v2/BuildSphereLogo.png";
 import StoreLogos from "../../assets/v2/StoreLogos.svg";
 
 const h = window.innerHeight;
@@ -40,7 +40,7 @@ const LeftBannerAuth = (props) => {
           paddingTop: 0.2 * h,
         }}
       >
-        <img src={Logo} alt={"Logo"} />
+        <img src={Logo} alt={"Logo"} style={{ height: "100px", width: "100px", borderRadius: "20px" }} />
       </Grid>
       <Grid item xs={12} style={{ paddingTop: "5%" }}>
         <Typography className={classes.leftContainerHeader}>
